@@ -1,7 +1,5 @@
 // src/decisionTreeModel.js
 
-export const MODEL_VERSION = '1.4.0';
-
 // -------------------- Obligations Catalog --------------------
 // articles = "Paragraphen/Artikel" (Anzeige in Tooltips + Export)
 // items = konkrete Anforderungen (Requirement-Chain)
@@ -36,6 +34,40 @@ export const obligationsCatalog = {
       'Haben Sie Transparenzinformationen für Deployers bereitgestellt (Art. 13)?',
       'Haben Sie Human-Oversight-Maßnahmen implementiert (Art. 14)?',
       'Haben Sie Accuracy, Robustness und Cybersecurity nachweisbar erreicht (Art. 15)?',
+    ],
+  },
+
+  AI_TRANSPARENCY_ART_50: {
+    label: 'AI Act: Transparenzpflichten (Art. 50)',
+    regulation: 'AI Act',
+    articles: ['AI Act Art. 50 (Transparenzpflichten)'],
+    items: [
+      'Erfüllt das KI-System die Transparenzpflichten gemäß Art. 50 (z. B. Offenlegung, dass ein System KI-basiert ist)?',
+      'Werden betroffene Nutzerinnen und Nutzer klar darüber informiert, dass sie mit einem KI-System interagieren?',
+      'Haben Sie dokumentiert, in welchen Kanälen und Prozessen die Transparenzhinweise bereitgestellt werden?',
+    ],
+  },
+
+  AI_CONFORMITY_AND_DOC: {
+    label: 'AI Act: Konformitätsbewertung & Technische Dokumentation',
+    regulation: 'AI Act',
+    articles: ['AI Act Art. 16 ff., Art. 43 ff., Annex IV'],
+    items: [
+      'Wurde eine vollständige Konformitätsbewertung gemäß AI Act durchgeführt oder geplant?',
+      'Wurde technische Dokumentation gemäß Annex IV erstellt und aktuell gehalten?',
+      'Sind Rollen (Provider/Deployer) und Verantwortlichkeiten in der Dokumentation eindeutig beschrieben?',
+      'Sind Prüf- und Freigabeprozesse für Änderungen am KI-System dokumentiert?',
+    ],
+  },
+
+  AI_REGISTRATION_AND_CE: {
+    label: 'AI Act: Registrierung & CE-Kennzeichnung',
+    regulation: 'AI Act',
+    articles: ['AI Act Art. 49 ff. (Registrierung, CE-Kennzeichnung)'],
+    items: [
+      'Wurde das KI-System – sofern erforderlich – im EU-Datenbankregister registriert?',
+      'Wurde eine CE-Kennzeichnung für das KI-System oder das Produkt, in das es integriert ist, vorgenommen?',
+      'Sind Registrierungs- und Kennzeichnungsunterlagen nachvollziehbar dokumentiert und revisionssicher abgelegt?',
     ],
   },
 
@@ -96,6 +128,39 @@ export const obligationsCatalog = {
       'Haben Sie einen verbindlichen Change-/Release-Prozess für Modelländerungen (Retraining/Finetuning) etabliert?',
       'Haben Sie Monitoring (Drift/Performance/Security) und Alerting implementiert?',
       'Haben Sie Incident-Runbooks und Eskalationswege für Modellfehler/Cyber-Ereignisse definiert?',
+    ],
+  },
+
+  DORA_INCIDENT_MGMT: {
+    label: 'DORA: IKT-Vorfallserfassung & Meldeprozesse',
+    regulation: 'DORA',
+    articles: ['DORA Art. 17–23 (Incident-Management & Reporting)'],
+    items: [
+      'Gibt es dokumentierte Prozesse zur Erfassung von IKT-/Cybervorfällen gemäß DORA?',
+      'Sind Schwellenwerte und Kriterien für meldepflichtige Vorfälle definiert und kommuniziert?',
+      'Existieren Meldeprozesse an Aufsichtsbehörden (z. B. ESAs/nationale Aufsicht) inkl. Fristen und Verantwortlichkeiten?',
+    ],
+  },
+
+  DORA_TLPT: {
+    label: 'DORA: Resilienztests inkl. TLPT',
+    regulation: 'DORA',
+    articles: ['DORA Art. 24–27 (IKT-Resilienztests, TLPT)'],
+    items: [
+      'Wurde bewertet, ob das KI-System bzw. seine Infrastruktur in den Scope von TLPT-Tests fällt?',
+      'Sind regelmäßige IKT-Resilienztests für die betroffenen Komponenten geplant und dokumentiert?',
+      'Sind Rollen, Testabdeckung und Nachverfolgung von Findings aus Resilienztests definiert?',
+    ],
+  },
+
+  DORA_THIRDPARTY_DD: {
+    label: 'DORA: Drittanbieter-Due-Diligence & Vertragspflichten',
+    regulation: 'DORA',
+    articles: ['DORA Art. 28–30, 31–44 (IKT-Drittanbieter)'],
+    items: [
+      'Wurde für alle IKT-Drittanbieter eine Due-Diligence-Prüfung durchgeführt und dokumentiert?',
+      'Sind vertragliche Regelungen zu Exit-Strategien, Audit-Rechten und Sicherheits-SLAs implementiert?',
+      'Werden IKT-Drittanbieter laufend überwacht (z. B. Performance, Security, Resilienz) und regelmäßig neu bewertet?',
     ],
   },
 
@@ -205,7 +270,7 @@ export const decisionTree = {
     id: 'A3_HR',
     type: 'leaf',
     label: 'Hochrisiko-KI → Hochrisiko-Anforderungspaket.',
-    obligations: ['AI_HR_PROVIDER_OR_DEPLOYER'],
+    obligations: ['AI_HR_PROVIDER_OR_DEPLOYER', 'AI_CONFORMITY_AND_DOC','AI_REGISTRATION_AND_CE'],
     next: 'D0',
     position: P(420, 480),
     info:
@@ -221,7 +286,7 @@ export const decisionTree = {
     id: 'A3_NON_HR',
     type: 'leaf',
     label: 'Kein Hochrisiko → Transparenz/Minimales Risiko prüfen.',
-    obligations: ['AI_LIMITED_OR_MINIMAL'],
+    obligations: ['AI_LIMITED_OR_MINIMAL', 'AI_TRANSPARENCY_ART_50'],
     next: 'D0',
     position: P(0, 480),
     info:
@@ -287,7 +352,7 @@ export const decisionTree = {
     id: 'B2_H',
     type: 'leaf',
     label: 'Hohe Kritikalität → DORA Baseline + verstärkte Kontrollen.',
-    obligations: ['DORA_BASE'],
+    obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
     position: PD(-860, 1120),
     info:
@@ -351,7 +416,7 @@ export const decisionTree = {
     id: 'B3_R',
     type: 'leaf',
     label: 'Unklar → konservative Einstufung prüfen & dokumentieren.',
-    obligations: ['DORA_BASE'],
+    obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
     position: PD(20, 1120),
     info:
@@ -401,7 +466,7 @@ export const decisionTree = {
     id: 'B5_C',
     type: 'leaf',
     label: 'Kritischer oder quasi-kritischer IKT-Drittanbieter.',
-    obligations: ['DORA_THIRDPARTY_PLUS'],
+    obligations: ['DORA_THIRDPARTY_PLUS', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
     position: PD(20, 1640),
     info:
@@ -417,7 +482,7 @@ export const decisionTree = {
     id: 'B5_N',
     type: 'leaf',
     label: 'Nicht-kritischer IKT-Dienstleister (proportional).',
-    obligations: ['DORA_THIRDPARTY_STANDARD'],
+    obligations: ['DORA_THIRDPARTY_STANDARD', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
     position: PD(340, 1640),
     info:
@@ -518,7 +583,7 @@ export const decisionTree = {
     id: 'B8_D',
     type: 'leaf',
     label: 'Dynamisches Modell → verstärktes Monitoring/Change/Controls.',
-    obligations: ['DORA_MONITORING_AI'],
+    obligations: ['DORA_MONITORING_AI', 'DORA_INCIDENT_MGMT'],
     next: 'END',
     position: PD(-140, 2360),
     info:
@@ -534,7 +599,7 @@ export const decisionTree = {
     id: 'B8_S',
     type: 'leaf',
     label: 'Statisches Modell → normale Change-Prozesse (proportional).',
-    obligations: ['DORA_BASE_LIGHT'],
+    obligations: ['DORA_BASE_LIGHT', 'DORA_INCIDENT_MGMT'],
     next: 'END',
     position: PD(180, 2360),
     info:

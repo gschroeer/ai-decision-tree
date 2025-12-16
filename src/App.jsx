@@ -1,33 +1,116 @@
 // src/App.jsx
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 
 import {
   decisionTree,
   obligationsCatalog,
   getRequirementChain,
   getNextInRequirementChain,
-  MODEL_VERSION,
 } from './decisionTreeModel';
 
 // ---------- Styles ----------
 const uiCSS = `
-.toolbar{
-  position:fixed; top:10px; left:10px; right:10px; z-index:1000;
-  display:flex; gap:16px; align-items:center; justify-content:space-between;
-  padding:8px 12px; border:1px solid #e2e8f0; border-radius:10px;
-  background:rgba(255,255,255,0.96); box-shadow:0 2px 10px rgba(0,0,0,0.08);
+.app-root{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#f3f4f6;
+  color:#111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Header */
+.app-header{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  background:#f9fafb;
+  border-bottom:1px solid #e5e7eb;
+  box-shadow:0 2px 6px rgba(15,23,42,0.04);
+  z-index:1000;
+}
+
+.app-header-left,
+.app-header-center,
+.app-header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.app-header-center{
+  flex:1;
+  justify-content:center;
+}
+
+.app-model-badge{
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid #d1d5db;
+  background:#e5e7eb;
+  font-size:11px;
+  font-weight:500;
+}
+
+.app-title{
+  font-size:18px;
+  font-weight:600;
+  color:#111827;
+  text-align:center;
+}
+
+.app-meta{
   font-size:12px;
+  color:#6b7280;
 }
-.toolbar-left, .toolbar-right{
-  display:flex; gap:12px; align-items:center;
+
+.app-actions button{
+  font-size:12px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid #d1d5db;
+  background:#ffffff;
+  cursor:pointer;
 }
-.toolbar label{ display:flex; gap:6px; align-items:center; user-select:none; }
-.step-badge{
-  position:absolute; top:-10px; right:-10px; background:#111827; color:#fff;
-  font-size:11px; font-weight:800; border-radius:999px; width:24px; height:24px;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 2px 6px rgba(0,0,0,0.14);
+.app-actions button:not(:last-child){
+  margin-right:8px;
 }
+.app-actions button:hover{
+  background:#f3f4f6;
+}
+
+/* Main-Container unterhalb des Headers */
+.app-body{
+  position:absolute;
+  top:64px;
+  left:0;
+  right:0;
+  bottom:0;
+  display:flex;
+  min-height:0;
+}
+
+/* Sidebar kannst du lassen wie bisher – Stepper/Historie */
+/* Main Content */
+.app-main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  overflow:auto;
+  background:#f3f4f6;
+}
+.app-main-inner{
+  width:100%;
+  max-width:960px;
+  padding:24px 32px 32px;
+}
+
+/* Bestehende Badge-/Tooltip-Styles bitte beibehalten */
 .rf-meta{ font-size:11px; opacity:0.8; }
 .rf-badge{
   display:inline-block; font-size:11px; padding:2px 8px;
@@ -42,6 +125,14 @@ const uiCSS = `
   box-shadow:0 12px 30px rgba(0,0,0,0.14);
 }
 .rf-tt:hover .rf-tt-panel{ display:block; }
+
+/* Step-Badge in Cards */
+.step-badge{
+  position:absolute; top:-10px; right:-10px; background:#111827; color:#fff;
+  font-size:11px; font-weight:800; border-radius:999px; width:24px; height:24px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,0.14);
+}
 `;
 
 function WelcomeScreen({ onStart }) {
@@ -128,7 +219,7 @@ function WelcomeScreen({ onStart }) {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
           <div className="rf-meta">
-            Modell-Version: v{MODEL_VERSION} · Pfad wird während der Nutzung vollständig protokolliert.
+            Pfad wird während der Nutzung vollständig protokolliert.
           </div>
           <button
             type="button"
@@ -145,7 +236,103 @@ function WelcomeScreen({ onStart }) {
               boxShadow: '0 8px 18px rgba(56,189,248,0.45)',
             }}
           >
-            Entscheidungsbaum starten
+            Assessment starten!
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CreatorScreen({ value, onChange, onBack, onConfirm }) {
+  return (
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        background: '#0f172a',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 24,
+      }}
+    >
+      <style>{uiCSS}</style>
+
+      <div
+        style={{
+          maxWidth: 520,
+          width: '100%',
+          background: '#ffffff',
+          borderRadius: 16,
+          padding: '24px 28px',
+          boxShadow: '0 18px 45px rgba(15,23,42,0.45)',
+        }}
+      >
+        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 20 }}>
+          Wer erstellt dieses Assessment?
+        </h2>
+        <p style={{ marginTop: 0, marginBottom: 16, fontSize: 13, color: '#4b5563' }}>
+          Bitte geben Sie den Namen oder das Team an, das den Entscheidungsbaum ausfüllt.
+          Diese Information wird im Header und im Export ausgewiesen.
+        </p>
+
+        <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>
+          Ersteller (Vorname Nachname)
+        </label>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '8px 10px',
+            borderRadius: 8,
+            border: '1px solid #d1d5db',
+            fontSize: 13,
+            marginBottom: 18,
+          }}
+        />
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            style={{
+              padding: '6px 12px',
+              borderRadius: 999,
+              border: '1px solid #d1d5db',
+              background: '#ffffff',
+              fontSize: 12,
+              cursor: 'pointer',
+            }}
+          >
+            Zurück
+          </button>
+
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={!value.trim()}
+            style={{
+              padding: '6px 16px',
+              borderRadius: 999,
+              border: '1px solid #0ea5e9',
+              background: value.trim() ? '#0ea5e9' : '#e5e7eb',
+              color: value.trim() ? '#0f172a' : '#9ca3af',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: value.trim() ? 'pointer' : 'not-allowed',
+            }}
+          >
+            Weiter zum Entscheidungsbaum
           </button>
         </div>
       </div>
@@ -582,13 +769,40 @@ function ReqSummaryNode({ data }) {
 }
 
 // ---------- Wizard ----------
-function Wizard() {
+function Wizard({ createdBy, assessmentId }) {
   const [path, setPath] = useState([{ id: 'A1' }]);
   const [answers, setAnswers] = useState({});
   const exportIncludePkgs = true;
   const [isExporting, setIsExporting] = useState(false);
+  const [updatedAt, setUpdatedAt] = useState(() => new Date());
 
-  // ❗ Neu: gespeicherter Endpunkt (Pfad + Antworten), zu dem man zurückspringen kann
+    // Neue Assessment-Version (z. B. „v1.0“)
+    const [assessmentVersion, setAssessmentVersion] = useState('v1.0');
+
+    // Beim Start Version aus localStorage holen (falls vorhanden)
+    useEffect(() => {
+      const stored = window.localStorage.getItem('assessmentVersion');
+      if (stored) {
+        setAssessmentVersion(stored);
+      }
+    }, []);
+  
+    // Helper zum Hochzählen: v1.0 -> v2.0 -> v3.0, etc.
+    const bumpVersion = useCallback((current) => {
+      const str = current || 'v1.0';
+      const m = /^v(\d+)(?:\.(\d+))?$/.exec(str);
+      if (!m) return 'v1.0';
+      const major = parseInt(m[1] || '1', 10) + 1;
+      return `v${major}.0`;
+    }, []);
+
+    const resetAssessmentVersion = useCallback(() => {
+      const v = 'v1.0';
+      setAssessmentVersion(v);
+      window.localStorage.setItem('assessmentVersion', v);
+    }, []);
+
+  // Gespeicherter Endpunkt (Pfad + Antworten), zu dem man zurückspringen kann
   const [savedState, setSavedState] = useState(null);
 
   const currentStepIndex = path.length - 1;
@@ -697,6 +911,7 @@ function Wizard() {
     setPath([{ id: 'A1' }]);
     setAnswers({});
     setSavedState(null);
+    setUpdatedAt(new Date());
   }, []);
 
   const answerNode = useCallback(
@@ -715,6 +930,7 @@ function Wizard() {
           if (p[p.length - 1]?.id === nextId) return p;
           return [...p, { id: nextId }];
         });
+        setUpdatedAt(new Date());
         return;
       }
 
@@ -729,6 +945,7 @@ function Wizard() {
         if (p[p.length - 1]?.id === nextId) return p;
         return [...p, { id: nextId }];
       });
+      setUpdatedAt(new Date());
     },
     [answers]
   );
@@ -742,6 +959,7 @@ function Wizard() {
       if (p[p.length - 1]?.id === nextId) return p;
       return [...p, { id: nextId }];
     });
+    setUpdatedAt(new Date());
   }, []);
 
   const startCheck = useCallback((leafId) => {
@@ -753,6 +971,7 @@ function Wizard() {
       if (p.some((s) => s.id === firstId)) return p;
       return [...p, { id: firstId }];
     });
+    setUpdatedAt(new Date());
   }, []);
 
   const continueFromSummary = useCallback((leafId) => {
@@ -764,9 +983,10 @@ function Wizard() {
       if (p[p.length - 1]?.id === nextId) return p;
       return [...p, { id: nextId }];
     });
+    setUpdatedAt(new Date());
   }, []);
 
-  const buildExportPayload = useCallback(() => {
+  const buildExportPayload = useCallback((versionForExport) => {
     const pathPayload = path.map((step) => {
       const id = step.id;
       let label = id;
@@ -818,113 +1038,120 @@ function Wizard() {
       }));
     }
 
-    let packagesByLeaf;
-    if (exportIncludePkgs) {
-      packagesByLeaf = {};
-      for (const leafId of leavesInPath) {
-        const def = decisionTree[leafId];
-        if (!def?.obligations?.length) continue;
-        packagesByLeaf[leafId] = def.obligations.map((k) => ({
-          key: k,
-          label: obligationsCatalog[k]?.label ?? k,
-          articles: obligationsCatalog[k]?.articles ?? [],
-        }));
-      }
-    }
+  const packagesByLeaf = {};
+  for (const leafId of leavesInPath) {
+    const def = decisionTree[leafId];
+    if (!def?.obligations?.length) continue;
 
+  packagesByLeaf[leafId] = def.obligations.map((k) => ({
+    key: k,
+    label: obligationsCatalog[k]?.label ?? k,
+    articles: obligationsCatalog[k]?.articles ?? [],
+  }));
+}
+    
     return {
-      version: MODEL_VERSION,
-      exportedAt: new Date().toISOString(),
+      assessmentId: versionForExport,
+      createdBy,
+      lastUpdated: updatedAt.toISOString(),
       path: pathPayload,
       missing,
       packagesByLeaf,
     };
-  }, [path, answers, exportIncludePkgs]);
+  }, [path, answers, exportIncludePkgs, createdBy, updatedAt]);
 
   const handleExportPDF = useCallback(async () => {
     if (isExporting) return;
+  
     setIsExporting(true);
-
-    const payload = buildExportPayload();
-
-    const fallbackPrint = () => {
-      const win = window.open('', '_blank');
-      if (!win) return;
-      const esc = (s) =>
-        String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-      const missingHtml = Object.entries(payload.missing || {})
-        .map(([leafId, reqs]) => {
-          const leafLabel = decisionTree[leafId]?.label ?? leafId;
-          return `
-          <h3>Fehlende Anforderungen – ${esc(leafLabel)}</h3>
-          <ul>${reqs
-            .map(
-              (r) =>
-                `<li>${esc(r.text)} <small>(${esc(r.pkgLabel)}${
-                  r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''
-                })</small></li>`
-            )
-            .join('')}</ul>
-        `;
-        })
-        .join('');
-
-      const pkgsHtml = payload.packagesByLeaf
-        ? Object.entries(payload.packagesByLeaf)
-            .map(([leafId, pkgs]) => {
-              const leafLabel = decisionTree[leafId]?.label ?? leafId;
-              return `
-          <h3>Pakete – ${esc(leafLabel)}</h3>
-          <ul>${pkgs
-            .map(
-              (p) =>
-                `<li>${esc(p.label)}${
-                  p.articles?.length ? ` <small>(${esc(p.articles.join(', '))})</small>` : ''
-                }</li>`
-            )
-            .join('')}</ul>
-        `;
-            })
-            .join('')
-        : '';
-
-      win.document.write(`
-        <html><head><title>Decision Tree Export</title>
-          <meta charset="utf-8"/>
-          <style>
-            body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding:24px; }
-            h1{ margin:0 0 6px 0; } .meta{ color:#64748b; font-size:12px; margin-bottom:18px; }
-            ol{ padding-left:18px; } small{ color:#64748b; }
-            @media print { button { display:none; } }
-          </style>
-        </head><body>
-          <h1>AI Act & DORA – Entscheidungsbaum</h1>
-          <div class="meta">Model v${esc(payload.version)} • Export ${esc(payload.exportedAt)}</div>
-          <h2>Pfad</h2>
-          <ol>
-            ${payload.path
-              .map(
-                (p) =>
-                  `<li>${esc(p.label)}${
-                    p.answer ? ` <small>(${p.answer === 'yes' ? 'Ja' : 'Nein'})</small>` : ''
-                  }</li>`
-              )
-              .join('')}
-          </ol>
-          ${
-            missingHtml
-              ? `<h2>Fehlende Anforderungen</h2>${missingHtml}`
-              : `<h2>Fehlende Anforderungen</h2><p><small>Keine fehlenden Anforderungen erfasst.</small></p>`
-          }
-          ${pkgsHtml ? `<h2>Pflichtenpakete</h2>${pkgsHtml}` : ''}
-          <button onclick="window.print()">Als PDF drucken…</button>
-        </body></html>
-      `);
-      win.document.close();
-      win.focus();
-    };
-
+  
     try {
+      //Nächste Assessment-Version erzeugen und speichern
+      const nextVersion = bumpVersion(assessmentVersion);
+      setAssessmentVersion(nextVersion);
+      window.localStorage.setItem('assessmentVersion', nextVersion);
+
+      const payload = buildExportPayload(nextVersion); 
+  
+      const fallbackPrint = () => {
+        const win = window.open('', '_blank');
+        if (!win) return;
+  
+        const esc = (s) =>
+          String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  
+        const missingHtml = Object.entries(payload.missing || {})
+          .map(([leafId, reqs]) => {
+            const leafLabel = decisionTree[leafId]?.label ?? leafId;
+            return `
+              <h3>Fehlende Anforderungen – ${esc(leafLabel)}</h3>
+              <ul>${reqs
+                .map(
+                  (r) =>
+                    `<li>${esc(r.text)} <small>(${esc(r.pkgLabel)}${
+                      r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''
+                    })</small></li>`
+                )
+                .join('')}</ul>
+            `;
+          })
+          .join('');
+  
+        const pkgsHtml = payload.packagesByLeaf
+          ? Object.entries(payload.packagesByLeaf)
+              .map(([leafId, pkgs]) => {
+                const leafLabel = decisionTree[leafId]?.label ?? leafId;
+                return `
+                  <h3>Pakete – ${esc(leafLabel)}</h3>
+                  <ul>${pkgs
+                    .map(
+                      (p) =>
+                        `<li>${esc(p.label)}${
+                          p.articles?.length ? ` <small>(${esc(p.articles.join(', '))})</small>` : ''
+                        }</li>`
+                    )
+                    .join('')}</ul>
+                `;
+              })
+              .join('')
+          : '';
+  
+        win.document.write(`
+          <html><head><title>Decision Tree Export</title>
+            <meta charset="utf-8"/>
+            <style>
+              body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding:24px; }
+              h1{ margin:0 0 6px 0; } .meta{ color:#64748b; font-size:12px; margin-bottom:18px; }
+              ol{ padding-left:18px; } small{ color:#64748b; }
+              @media print { button { display:none; } }
+            </style>
+          </head><body>
+            <h1>AI Act & DORA – Entscheidungsbaum</h1>
+            <div class="meta"> Assessment-ID: ${esc(payload.assessmentId)} • Ersteller: ${esc(payload.createdBy || 'Unbekannt')} • Bearbeitungszeitpunkt: ${esc(new Date(payload.lastUpdated).toLocaleString('de-DE'))}</div>
+            <h2>Pfad</h2>
+            <ol>
+              ${payload.path
+                .map(
+                  (p) =>
+                    `<li>${esc(p.label)}${
+                      p.answer ? ` <small>(${p.answer === 'yes' ? 'Ja' : 'Nein'})</small>` : ''
+                    }</li>`
+                )
+                .join('')}
+            </ol>
+            ${
+              missingHtml
+                ? `<h2>Fehlende Anforderungen</h2>${missingHtml}`
+                : `<h2>Fehlende Anforderungen</h2><p><small>Keine fehlenden Anforderungen erfasst.</small></p>`
+            }
+            ${pkgsHtml ? `<h2>Pflichtenpakete</h2>${pkgsHtml}` : ''}
+            <button onclick="window.print()">Als PDF drucken…</button>
+          </body></html>
+        `);
+        win.document.close();
+        win.focus();
+      };
+  
       let jsPDF;
       try {
         const m = await import('jspdf');
@@ -932,17 +1159,17 @@ function Wizard() {
       } catch {
         jsPDF = null;
       }
-
+  
       if (!jsPDF) {
         fallbackPrint();
         return;
       }
-
+  
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
       const margin = 36;
       const width = doc.internal.pageSize.getWidth() - margin * 2;
       let y = margin;
-
+  
       const addLine = (s, size = 11, bold = false) => {
         doc.setFont('helvetica', bold ? 'bold' : 'normal');
         doc.setFontSize(size);
@@ -956,11 +1183,11 @@ function Wizard() {
           y += size + 4;
         }
       };
-
+  
       addLine('AI Act & DORA – Entscheidungsbaum', 16, true);
-      addLine(`Model v${payload.version} • Export ${payload.exportedAt}`, 10, false);
+      addLine(`Assessment-ID: ${(payload.assessmentId)} • Ersteller: ${(payload.createdBy || 'Unbekannt')} • Bearbeitungszeitpunkt: ${(new Date(payload.lastUpdated).toLocaleString('de-DE'))}`, 10, false);
       y += 6;
-
+  
       addLine('Pfad', 13, true);
       payload.path.forEach((p, idx) =>
         addLine(
@@ -970,7 +1197,7 @@ function Wizard() {
         )
       );
       y += 8;
-
+  
       addLine('Fehlende Anforderungen', 13, true);
       const missingEntries = Object.entries(payload.missing || {});
       if (!missingEntries.length) {
@@ -988,7 +1215,7 @@ function Wizard() {
           y += 6;
         }
       }
-
+  
       if (payload.packagesByLeaf) {
         y += 6;
         addLine('Pflichtenpakete', 13, true);
@@ -1004,12 +1231,15 @@ function Wizard() {
           y += 6;
         }
       }
-
-      doc.save(`decision-tree-summary_${new Date().toISOString().replace(/[:.]/g, '-')}.pdf`);
+  
+      doc.save(`Export_AI_Assessment_${payload.assessmentId}.pdf`);
+    } catch (err) {
+      console.error('Export failed:', err);
+      alert(`Export fehlgeschlagen: ${err?.message ?? err}`);
     } finally {
-      setIsExporting(false);
+      setIsExporting(false); 
     }
-  }, [isExporting, buildExportPayload]);
+  }, [isExporting, assessmentVersion, bumpVersion, buildExportPayload]);
 
   // Center-Card je nach Descriptor
   let centerCard = null;
@@ -1101,53 +1331,152 @@ function Wizard() {
   }
 
   return (
-    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#f3f4f6',
+      }}
+    >
       <style>{uiCSS}</style>
-
-      {/* Toolbar / Progress */}
-      <div className="toolbar">
-        <div className="toolbar-left">
-          <span className="rf-meta">Model v{MODEL_VERSION}</span>
-          <span className="rf-meta">
-            Schritt {stepNumber} von {totalSteps}
+  
+      {/* 🔷 HEADER (neu) */}
+      <header
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 64,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 24px',
+          background: '#f9fafb',
+          borderBottom: '1px solid #e5e7eb',
+          boxShadow: '0 2px 6px rgba(15,23,42,0.04)',
+          zIndex: 1000,
+        }}
+      >
+        {/* Links: Model Nr. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span
+            style={{
+              padding: '2px 8px',
+              borderRadius: 999,
+              border: '1px solid #d1d5db',
+              background: '#e5e7eb',
+              fontSize: 11,
+              fontWeight: 500,
+            }}
+          >
+            Assessment-ID: {assessmentVersion}
           </span>
-          {savedState && (
-            <span className="rf-meta">
-              Gespeicherter Endpunkt: {savedState.path.length} Schritte
-            </span>
-          )}
+          <span className="rf-meta">Ersteller: {createdBy || 'Unbekannt'}</span>
         </div>
-
-        <div className="toolbar-right">
-
+  
+        {/* Mitte: App-Name */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+              color: '#111827',
+              textAlign: 'center',
+            }}
+          >
+            Entscheidungsbaum zur sicheren Integration von KI
+          </div>
+        </div>
+  
+        {/* Rechts: Bearbeitungszeitpunkt + Actions */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <span className="rf-meta">
+            {new Date().toLocaleString('de-DE')}
+          </span>
+  
           {savedState && (
             <button
               onClick={restoreSavedPath}
               title="Zur zuletzt erreichten Endposition zurückkehren"
+              style={{
+                fontSize: 12,
+                padding: '6px 12px',
+                borderRadius: 999,
+                border: '1px solid #d1d5db',
+                background: '#ffffff',
+                cursor: 'pointer',
+              }}
             >
               Zurück zum Endpunkt
             </button>
           )}
-
-          <button onClick={handleExportPDF} disabled={isExporting} title="PDF-Zusammenfassung exportieren">
-            {isExporting ? 'Exportiert…' : 'Export PDF'}
+  
+          <button
+            onClick={handleExportPDF}
+            disabled={isExporting}
+            title="PDF-Zusammenfassung exportieren"
+            style={{
+              fontSize: 12,
+              padding: '6px 12px',
+              borderRadius: 999,
+              border: '1px solid #d1d5db',
+              background: isExporting ? '#e5e7eb' : '#ffffff',
+              cursor: isExporting ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {isExporting ? 'Exportiert…' : 'PDF Export'}
           </button>
 
-          <button onClick={handleReset} title="Pfad zurücksetzen">
+          <button
+            onClick={resetAssessmentVersion}
+            title="Setzt die Assessment-ID (Revision) auf v1.0 zurück"
+            style={{
+              fontSize: 12,
+              padding: '6px 12px',
+              borderRadius: 999,
+              border: '1px solid #d1d5db',
+              background: '#ffffff',
+              cursor: 'pointer',
+            }}
+          >
+            Version auf v1.0
+          </button>
+
+          <button
+            onClick={handleReset}
+            title="Pfad zurücksetzen"
+            style={{
+              fontSize: 12,
+              padding: '6px 12px',
+              borderRadius: 999,
+              border: '1px solid #d1d5db',
+              background: '#ffffff',
+              cursor: 'pointer',
+            }}
+          >
             Pfad zurücksetzen
           </button>
         </div>
-      </div>
-
-      {/* Hauptlayout */}
+      </header>
+  
+      {/* 🟦 Hauptlayout (Sidebar + Main) */}
       <div
         style={{
           display: 'flex',
           height: '100%',
-          paddingTop: 56,
+          paddingTop: 64, // Platz für Header
         }}
       >
-        {/* Links: Pfad / Historie */}
+        {/* Links: Pfad / Historie (unverändert) */}
         <div
           style={{
             width: 260,
@@ -1173,9 +1502,9 @@ function Wizard() {
               } else {
                 label = decisionTree[id]?.label ?? id;
               }
-
+  
               const isActive = idx === currentStepIndex;
-
+  
               return (
                 <li
                   key={id + idx}
@@ -1203,19 +1532,24 @@ function Wizard() {
             })}
           </ol>
         </div>
-
-        {/* Mitte: Decision Card */}
+  
+        {/* Mitte: Decision Card (zentriert, etwas breiter) */}
         <div
           style={{
             flex: 1,
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
             padding: 24,
             overflow: 'auto',
+            background: '#f3f4f6',
           }}
         >
-          {centerCard}
+          <div style={{ width: '100%', maxWidth: 960 }}>
+            <div className="rf-meta" style={{ marginBottom: 12 }}>
+            </div>
+            {centerCard}
+          </div>
         </div>
       </div>
     </div>
@@ -1223,12 +1557,28 @@ function Wizard() {
 }
 
 export default function App() {
-  const [view, setView] = useState('welcome'); // 'welcome' | 'wizard'
+  const [view, setView] = useState('welcome'); // 'welcome' | 'creator' | 'wizard'
+  const [creator, setCreator] = useState('');
 
   if (view === 'welcome') {
-    return <WelcomeScreen onStart={() => setView('wizard')} />;
+    return <WelcomeScreen onStart={() => setView('creator')} />;
   }
 
-  return <Wizard />;
+  if (view === 'creator') {
+    return (
+      <CreatorScreen
+        value={creator}
+        onChange={setCreator}
+        onBack={() => setView('welcome')}
+        onConfirm={() => {
+          if (creator.trim()) {
+            setView('wizard');
+          }
+        }}
+      />
+    );
+  }
+
+  return <Wizard createdBy={creator || 'Unbekannt'} />;
 }
 
