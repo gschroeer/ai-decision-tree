@@ -6,6 +6,7 @@ import {
   obligationsCatalog,
   getRequirementChain,
   getNextInRequirementChain,
+  validateNextNode,
 } from './decisionTreeModel';
 
 // ---------- Styles ----------
@@ -768,6 +769,109 @@ function ReqSummaryNode({ data }) {
   );
 }
 
+
+// Konsistenz- & Plausibilitätschecks
+// - High-Risk wird NUR über obligations erkannt (wie von dir gewünscht)
+// - gibt eine Liste an Violations zurück, die du entweder blockierst oder zu Review umleitest
+
+function validatePathConsistency({ decisionTree, obligationsCatalog, answers, pathIds }) {
+  const violations = [];
+
+  const isLeaf = (id) => decisionTree[id]?.type === 'leaf';
+  const nodeObligations = (id) => (decisionTree[id]?.obligations || []).filter(Boolean);
+
+  const leafIdsInPath = pathIds.filter((id) => !id.includes('__req__') && isLeaf(id));
+
+  // ---- Fact: "AI High-Risk gelockt" (nur über obligations)
+  // Du kannst hier später robust über articles 9–15/26–27 filtern.
+  const HIGH_RISK_KEYS = new Set(['AI_HR_PROVIDER_OR_DEPLOYER']); // <- nur obligations, kein Hardcode von Knoten-IDs
+  const highRiskLocked = leafIdsInPath.some((leafId) =>
+    nodeObligations(leafId).some((k) => HIGH_RISK_KEYS.has(k))
+  );
+
+  // ---- Fact: "Prohibited" (nur über obligations)
+  const prohibitedLocked = leafIdsInPath.some((leafId) =>
+    nodeObligations(leafId).includes('AI_PROHIBITED')
+  );
+
+  // ---- Rule 1: Wenn Prohibited erreicht wurde, darf nicht weiter "normal" gearbeitet werden
+  // (soll in deinem Baum ohnehin über Gate/Review passieren)
+  if (prohibitedLocked) {
+    // Falls danach weitere reguläre Fragen beantwortet wurden, ist das ein Widerspruch.
+    const afterProhibitedAnswered = Object.keys(answers).some((id) => {
+      if (id.includes('__req__')) return false;
+      if (id === 'A2') return false; // A2 ist die Quelle
+      // grobe Heuristik: weitere AI/DORA Questions nach Prohibited
+      const def = decisionTree[id];
+      return def?.type === 'question';
+    });
+
+    if (afterProhibitedAnswered) {
+      violations.push({
+        code: 'PROHIBITED_CONTINUED',
+        message:
+          'Verbotene Praxis wurde erreicht, aber der Pfad wurde ohne Review/Eskalation fortgesetzt.',
+        suggestedNodeId: 'W_AI_PROHIBITED_ESCALATION', // falls vorhanden
+      });
+    }
+  }
+
+  // ---- Rule 2: High-Risk darf nicht "heruntergestuft" werden
+  // Konkret in deinem Baum: A3 = Hochrisiko-Frage. Wenn High-Risk obligations bereits im Pfad sind,
+  // darf A3 nicht mit "no" beantwortet werden bzw. darf nicht in A3_NON_HR landen.
+  if (highRiskLocked) {
+    if (answers?.A3 === 'no') {
+      violations.push({
+        code: 'HIGH_RISK_DEESCALATION',
+        message:
+          'High-Risk Pflichtenpaket wurde bereits erreicht, später wurde High-Risk verneint (Herunterstufung).',
+        suggestedNodeId: 'W_AI_CONTRADICTION', // falls vorhanden
+      });
+    }
+
+    if (pathIds.includes('A3_NON_HR') || pathIds.includes('G_AI_NON_HR_PLAUSIBILITY')) {
+      violations.push({
+        code: 'HIGH_RISK_PATH_CONTRADICTION',
+        message:
+          'High-Risk Pflichtenpaket wurde erreicht, aber der Pfad läuft in den Non-High-Risk-Teil.',
+        suggestedNodeId: 'W_AI_CONTRADICTION',
+      });
+    }
+  }
+
+  // ---- Rule 3: KI-System verneint → keine AI-Act Klassifikationsfragen später
+  if (answers?.A1 === 'no') {
+    const aiActLaterAnswered = ['A2', 'A3'].some((qid) => answers[qid] != null);
+    if (aiActLaterAnswered) {
+      violations.push({
+        code: 'NO_AI_BUT_AI_ACT_CONTINUED',
+        message:
+          'Es wurde verneint, dass ein KI-System vorliegt (A1=no), aber AI-Act-Klassifikationsfragen wurden dennoch beantwortet.',
+        suggestedNodeId: 'W_AI_CONTRADICTION',
+      });
+    }
+  }
+
+  // ---- Rule 4 (optional): DORA Start verneint → keine DORA-Fragen danach
+  if (answers?.D0 === 'no') {
+    const doraQuestionAnswered = Object.keys(answers).some((id) => {
+      if (!/^B\d+/.test(id)) return false;
+      return answers[id] != null;
+    });
+    if (doraQuestionAnswered) {
+      violations.push({
+        code: 'DORA_SKIPPED_BUT_CONTINUED',
+        message:
+          'DORA-Teil wurde abgelehnt (D0=no), aber danach wurden DORA-Fragen beantwortet.',
+        suggestedNodeId: 'END',
+      });
+    }
+  }
+
+  return { violations, facts: { highRiskLocked, prohibitedLocked } };
+}
+
+
 // ---------- Wizard ----------
 function Wizard({ createdBy, assessmentId }) {
   const [path, setPath] = useState([{ id: 'A1' }]);
@@ -917,50 +1021,113 @@ function Wizard({ createdBy, assessmentId }) {
   const answerNode = useCallback(
     (id, answer) => {
       if (answers[id]) return;
-
+  
       // Ab hier wird ein neuer Zweig entschieden → gespeicherten Endpunkt verwerfen
       setSavedState(null);
-
+  
+      const pathIds = path.map((s) => s.id);
+  
+      // Requirement-Node (req-chain)
       if (id.includes('__req__')) {
         const { nextReqId, summaryId } = getNextInRequirementChain(id);
-        setAnswers((p) => ({ ...p, [id]: answer }));
+        const nextId = nextReqId ?? summaryId;
+        if (!nextId) return;
+  
+        const nextAnswers = { ...answers, [id]: answer };
+        const nextPathIds = [...pathIds, nextId];
+  
+        const { violations } = validatePathConsistency({
+          decisionTree,
+          obligationsCatalog,
+          answers: nextAnswers,
+          pathIds: nextPathIds,
+        });
+  
+        if (violations?.length) {
+          alert(
+            'Plausibilitätsprüfung fehlgeschlagen:\n\n' +
+              violations.map((v) => '• ' + v.message).join('\n')
+          );
+          return; 
+        }
+  
+        setAnswers(nextAnswers);
         setPath((p) => {
-          const nextId = nextReqId ?? summaryId;
-          if (!nextId) return p;
           if (p[p.length - 1]?.id === nextId) return p;
           return [...p, { id: nextId }];
         });
         setUpdatedAt(new Date());
         return;
       }
-
+      // Normaler Question-Node
       const def = decisionTree[id];
       if (!def || def.type !== 'question') return;
+  
+      const rawNextId = answer === 'yes' ? def.yes : def.no;
+      if (!rawNextId) return;
+  
+      const nextAnswers = { ...answers, [id]: answer };
+      const nextPathIds = [...pathIds, rawNextId];
+  
+      const { violations } = validatePathConsistency({
+        decisionTree,
+        obligationsCatalog,
+        answers: nextAnswers,
+        pathIds: nextPathIds,
+      });
+  
+      if (violations?.length) {
+        alert(
+          'Plausibilitätsprüfung fehlgeschlagen:\n\n' +
+            violations.map((v) => '• ' + v.message).join('\n')
+        );
+        return; 
+      }
+  
+      setAnswers(nextAnswers);
+      setPath((p) => {
+        if (p[p.length - 1]?.id === rawNextId) return p;
+        return [...p, { id: rawNextId }];
+      });
+      setUpdatedAt(new Date());
+    },
+    [answers, path, decisionTree, obligationsCatalog]
+  );
+  
 
-      const nextId = answer === 'yes' ? def.yes : def.no;
+  const continueFromLeaf = useCallback((leafId) => {
+      const def = decisionTree[leafId];
+      const nextId = def?.next;
       if (!nextId) return;
-
-      setAnswers((p) => ({ ...p, [id]: answer }));
+  
+      // Konsistenzprüfung: nächster Schritt wird als "geplant" validiert
+      const nextPathIds = [...path.map((s) => s.id), nextId];
+  
+      const { violations } = validatePathConsistency({
+        decisionTree,
+        obligationsCatalog,
+        answers,
+        pathIds: nextPathIds,
+      });
+  
+      if (violations?.length) {
+        alert(
+          'Der nächste Schritt ist aufgrund eines Konsistenzkonflikts nicht möglich:\n\n' +
+            violations.map((v) => '• ' + v.message).join('\n')
+        );
+        return;
+      }
+  
+      setSavedState(null);
       setPath((p) => {
         if (p[p.length - 1]?.id === nextId) return p;
         return [...p, { id: nextId }];
       });
       setUpdatedAt(new Date());
     },
-    [answers]
+    [answers, path, decisionTree, obligationsCatalog]
   );
-
-  const continueFromLeaf = useCallback((leafId) => {
-    const def = decisionTree[leafId];
-    const nextId = def?.next;
-    if (!nextId) return;
-    setSavedState(null);
-    setPath((p) => {
-      if (p[p.length - 1]?.id === nextId) return p;
-      return [...p, { id: nextId }];
-    });
-    setUpdatedAt(new Date());
-  }, []);
+  
 
   const startCheck = useCallback((leafId) => {
     const { reqs } = getRequirementChain(leafId);
@@ -975,16 +1142,37 @@ function Wizard({ createdBy, assessmentId }) {
   }, []);
 
   const continueFromSummary = useCallback((leafId) => {
-    const def = decisionTree[leafId];
-    const nextId = def?.next;
-    if (!nextId) return;
-    setSavedState(null);
-    setPath((p) => {
-      if (p[p.length - 1]?.id === nextId) return p;
-      return [...p, { id: nextId }];
-    });
-    setUpdatedAt(new Date());
-  }, []);
+      const def = decisionTree[leafId];
+      const nextId = def?.next;
+      if (!nextId) return;
+  
+      const nextPathIds = [...path.map((s) => s.id), nextId];
+  
+      const { violations } = validatePathConsistency({
+        decisionTree,
+        obligationsCatalog,
+        answers,
+        pathIds: nextPathIds,
+      });
+  
+      if (violations?.length) {
+        alert(
+          'Der nächste Schritt ist aufgrund eines Konsistenzkonflikts nicht möglich:\n\n' +
+            violations.map((v) => '• ' + v.message).join('\n')
+        );
+        return;
+      }
+  
+      setSavedState(null);
+      setPath((p) => {
+        if (p[p.length - 1]?.id === nextId) return p;
+        return [...p, { id: nextId }];
+      });
+      setUpdatedAt(new Date());
+    },
+    [answers, path, decisionTree, obligationsCatalog]
+  );
+  
 
   const buildExportPayload = useCallback((versionForExport) => {
     const pathPayload = path.map((step) => {
@@ -1085,14 +1273,39 @@ function Wizard({ createdBy, assessmentId }) {
             const leafLabel = decisionTree[leafId]?.label ?? leafId;
             return `
               <h3>Fehlende Anforderungen – ${esc(leafLabel)}</h3>
-              <ul>${reqs
-                .map(
-                  (r) =>
-                    `<li>${esc(r.text)} <small>(${esc(r.pkgLabel)}${
-                      r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''
-                    })</small></li>`
-                )
-                .join('')}</ul>
+              <table style="width:100%; border-collapse:collapse; margin-top:8px;">
+                <thead>
+                  <tr>
+                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left;">
+                      Fehlende Anforderung
+                    </th>
+                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
+                      Durchgeführt durch
+                    </th>
+                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
+                      Geprüft von
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${reqs
+                    .map(
+                      (r) => `
+                      <tr>
+                        <td style="border:1px solid #e5e7eb; padding:6px;">
+                          ${esc(r.text)}
+                          <br/>
+                          <small style="color:#64748b;">
+                            ${esc(r.pkgLabel)}${r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''}
+                          </small>
+                        </td>
+                        <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
+                        <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
+                      </tr>`
+                    )
+                    .join('')}
+                </tbody>
+              </table>
             `;
           })
           .join('');
@@ -1199,6 +1412,8 @@ function Wizard({ createdBy, assessmentId }) {
       y += 8;
   
       addLine('Fehlende Anforderungen', 13, true);
+      addLine('Anforderung | Durchgeführt durch | Geprüft von', 10, true);
+      addLine('------------------------------------------------------------', 10, false);
       const missingEntries = Object.entries(payload.missing || {});
       if (!missingEntries.length) {
         addLine('Keine fehlenden Anforderungen erfasst.', 11, false);
@@ -1206,12 +1421,7 @@ function Wizard({ createdBy, assessmentId }) {
         for (const [leafId, reqs] of missingEntries) {
           addLine(`Leaf: ${decisionTree[leafId]?.label ?? leafId}`, 11, true);
           reqs.forEach((r) =>
-            addLine(
-              `• ${r.text} (${r.pkgLabel}${r.articles?.length ? ` • ${r.articles.join(', ')}` : ''})`,
-              10,
-              false
-            )
-          );
+            addLine(`${r.text} | ____________ | ____________`, 10, false));
           y += 6;
         }
       }

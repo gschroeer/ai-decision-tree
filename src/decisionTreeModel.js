@@ -42,9 +42,9 @@ export const obligationsCatalog = {
     regulation: 'AI Act',
     articles: ['AI Act Art. 50 (Transparenzpflichten)'],
     items: [
-      'Erfüllt das KI-System die Transparenzpflichten gemäß Art. 50 (z. B. Offenlegung, dass ein System KI-basiert ist)?',
-      'Werden betroffene Nutzerinnen und Nutzer klar darüber informiert, dass sie mit einem KI-System interagieren?',
-      'Haben Sie dokumentiert, in welchen Kanälen und Prozessen die Transparenzhinweise bereitgestellt werden?',
+      'Wird transparent kommuniziert, dass Nutzende mit einem KI-System interagieren?',
+      'Werden KI-generierte Inhalte (z. B. Texte/Bilder/Audio) als solche gekennzeichnet, sofern erforderlich?',
+      'Gibt es Informationen zu Zweck, Grenzen und erwarteter Nutzung des Systems für betroffene Nutzende?',
     ],
   },
 
@@ -72,13 +72,14 @@ export const obligationsCatalog = {
   },
 
   AI_LIMITED_OR_MINIMAL: {
-    label: 'AI Act: Begrenztes/Minimales Risiko',
-    articles: ['AI Act: Transparenzpflichten (z. B. Art. 50 je nach Fassung)'],
+    label: 'AI Act: Begrenztes/Minimales Risiko (Governance-Baseline)',
+    articles: ['AI Act (allg. Grundsätze)'],
     items: [
-      'Haben Sie die relevanten Transparenzpflichten geprüft (z. B. Kennzeichnung/Information)?',
-      'Haben Sie sichergestellt, dass interne Policies greifen (Model Risk, IT-Security)?',
+      'Haben Sie interne Governance- und Freigabeprozesse (Model Risk, Compliance, IT-Security) für den Einsatz definiert?',
+      'Haben Sie dokumentiert, warum das System nicht als Hochrisiko eingestuft wird (inkl. Begründung/Scope)?',
+      'Haben Sie Datenschutz- und Informationssicherheitsanforderungen (z. B. DLP, Logging, Zugriffskontrollen) umgesetzt?',
     ],
-  },
+  },  
 
   DORA_BASE: {
     label: 'DORA: IKT-Risikomanagement (Baseline)',
@@ -175,11 +176,10 @@ export const obligationsCatalog = {
 };
 
 // -------------------- Decision Tree --------------------
-const P = (x, y) => ({ x, y });
 
-// 👉 DORA rechts neben AI Act (Offset in X)
-let DORA_OFFSET_X = 2200;
-const PD = (x, y) => P(x + DORA_OFFSET_X, y);
+export const CONSISTENCY_LOCKS = {
+  AI_HIGH_RISK: 'AI_HIGH_RISK',
+};
 
 export const decisionTree = {
   // --- AI Act (Kompakt) ---
@@ -189,7 +189,6 @@ export const decisionTree = {
     label: 'Handelt es sich um ein KI-System nach Art. 3 AI Act?',
     yes: 'A2',
     no: 'A0',
-    position: P(0, 0),
     info:
       'Hier geht es um die Grundsatzfrage, ob das betrachtete System überhaupt unter die KI-Definition des AI Act fällt. ' +
       'Nur wenn dies bejaht wird, greifen die weiteren Pflichten des AI Act.',
@@ -205,7 +204,7 @@ export const decisionTree = {
     type: 'leaf',
     label: 'Kein KI-System → AI Act nicht anwendbar.',
     obligations: ['AI_ACT_NOT_APPLICABLE'],
-    position: P(-420, 160),
+    next: 'END',
     info:
       'Wenn das System nicht unter die Definition eines KI-Systems im Sinne des AI Act fällt, gelten die spezifischen AI-Act-Pflichten nicht. ' +
       'Trotzdem sollten Governance, IT-Sicherheit und DORA-Anforderungen geprüft werden.',
@@ -221,7 +220,6 @@ export const decisionTree = {
     label: 'Liegt eine potenziell verbotene Praxis vor (AI Act – Prohibited)?',
     yes: 'A2_ja',
     no: 'A3',
-    position: P(0, 160),
     info:
       'Hier wird geprüft, ob das KI-System in eine Kategorie fällt, die nach AI Act grundsätzlich unzulässig ist ' +
       '(z. B. bestimmte Social-Scoring-Systeme oder manipulative Anwendungen). ' +
@@ -237,8 +235,7 @@ export const decisionTree = {
     type: 'leaf',
     label: 'Verbotene Praxis → Nutzung untersagen / Rechtsprüfung.',
     obligations: ['AI_PROHIBITED'],
-    next: 'D0',
-    position: P(-420, 320),
+    next: 'G_AI_PROHIBITED_REVIEW',
     info:
       'Wird eine verbotene Praxis festgestellt, darf das System grundsätzlich nicht betrieben werden. ' +
       'Es sind sofortige Maßnahmen erforderlich: Stopp des Deployments bzw. Betriebs und eine vertiefte Rechtsprüfung.',
@@ -254,7 +251,6 @@ export const decisionTree = {
     label: 'Hochrisiko-Einstufung nach AI Act (Verwendungszweck/Annex)?',
     yes: 'A3_HR',
     no: 'A3_NON_HR',
-    position: P(0, 320),
     info:
       'An dieser Stelle wird geprüft, ob das System als Hochrisiko-KI nach AI Act gilt (z. B. aufgrund des Annex, ' +
       'etwa bei Kreditwürdigkeitsprüfungen, Beschäftigungs- oder kritischer Infrastrukturprozessen). ' +
@@ -271,8 +267,7 @@ export const decisionTree = {
     type: 'leaf',
     label: 'Hochrisiko-KI → Hochrisiko-Anforderungspaket.',
     obligations: ['AI_HR_PROVIDER_OR_DEPLOYER', 'AI_CONFORMITY_AND_DOC','AI_REGISTRATION_AND_CE'],
-    next: 'D0',
-    position: P(420, 480),
+    next: 'G_AI_HR_LOCK',
     info:
       'Das System ist als Hochrisiko-KI eingestuft. Damit greifen die umfangreichen Pflichten aus Art. 8–15 AI Act, ' +
       'u. a. Risikomanagement, Daten-Governance, technische Dokumentation, Logging, Human Oversight und Robustheit.',
@@ -288,7 +283,6 @@ export const decisionTree = {
     label: 'Kein Hochrisiko → Transparenz/Minimales Risiko prüfen.',
     obligations: ['AI_LIMITED_OR_MINIMAL', 'AI_TRANSPARENCY_ART_50'],
     next: 'D0',
-    position: P(0, 480),
     info:
       'Das System fällt nicht in eine Hochrisiko-Kategorie. Es können dennoch Transparenz- und interne Governance-Pflichten bestehen, ' +
       'insbesondere Kennzeichnungspflichten und allgemeine IT-/Risikomanagementvorgaben.',
@@ -298,6 +292,63 @@ export const decisionTree = {
     ],
   },
 
+  // -------------------- AI ACT: VALIDATION / REVIEW GATES --------------------
+
+  /**
+   * Gate: High-Risk Lock wird bestätigt und „festgeschrieben“.
+   * Implementierung in App über validateNextNode: wenn Gate erreicht, wird Lock gesetzt.
+   */
+  G_AI_HR_LOCK: {
+    id: 'G_AI_HR_LOCK',
+    type: 'question',
+    regulation: 'AI Act',
+    label: 'Plausibilitätscheck: High-Risk Einstufung bestätigen und als verbindlich festschreiben?',
+    yes: 'D0', 
+    no: 'W_AI_HR_REVIEW',
+    info: 'Dieser Gate-Knoten verhindert, dass High-Risk später implizit „heruntergestuft“ wird.',
+    examples:
+      'Wenn Unsicherheit besteht: Review/Eskalation durchführen (Legal/Compliance/Risk/ISB) und Begründung dokumentieren.',
+  },
+
+  G_AI_PROHIBITED_REVIEW: {
+    id: 'G_AI_PROHIBITED_REVIEW',
+    type: 'question',
+    label: 'Review-Gate: Wurde der Einsatz gestoppt und eine Eskalation an Legal/Compliance dokumentiert?',
+    yes: 'END',
+    no: 'W_AI_PROHIBITED_ESCALATION',
+    info: 'Sichert ab, dass verbotene Praktiken nicht „weitergeklickt“ werden können.',
+    examples: 'No-Go, Management-Entscheid, Maßnahmenplan, Aufbewahrung der Entscheidungsdokumentation.',
+  },
+
+  W_AI_HR_REVIEW: {
+    id: 'W_AI_HR_REVIEW',
+    type: 'leaf',
+    label: 'Warnung/Review: High-Risk Einstufung unsicher → Eskalation & Dokumentation erforderlich.',
+    obligations: [],
+    next: 'END',
+    info: 'Dieser Knoten fordert formale Klärung (Legal/Compliance/Risk/ISB) vor weiterer Nutzung.',
+    examples: 'Review-Protokoll, Klassifikationsbegründung, ggf. externe Beratung.',
+  },
+
+  W_AI_CONTRADICTION: {
+    id: 'W_AI_CONTRADICTION',
+    type: 'leaf',
+    label: 'Widerspruch erkannt: Pfad ist inkonsistent → Review/Eskalation erforderlich.',
+    obligations: [],
+    next: 'END',
+    info: 'Inkonsistente Antworten dürfen nicht zu einer stillen „Herunterstufung“ führen.',
+    examples: 'Pfad prüfen, Entscheidungen re-validieren, Management/Compliance einschalten.',
+  },
+
+  W_AI_PROHIBITED_ESCALATION: {
+    id: 'W_AI_PROHIBITED_ESCALATION',
+    type: 'leaf',
+    label: 'Eskalation erforderlich: Verbotene Praxis → Stop + Legal/Compliance Freigabe fehlt.',
+    obligations: [],
+    next: 'END',
+    info: 'Ohne dokumentierte Eskalation darf kein weiterer Fortschritt erfolgen.',
+    examples: 'Freigabevermerk, Ticket/Case-ID, Entscheidungsgremium.',
+  },
   // --- DORA Start ---
   D0: {
     id: 'D0',
@@ -305,7 +356,6 @@ export const decisionTree = {
     label: 'Soll mit dem DORA-Teil gestartet werden?',
     yes: 'B1',
     no: 'END',
-    position: PD(-420, 640),
     info:
       'Hier wird entschieden, ob zusätzlich zum AI Act eine strukturierte DORA-Analyse durchgeführt werden soll. ' +
       'Insbesondere Finanzunternehmen müssen die IKT-Risiken und Resilienzanforderungen aus DORA berücksichtigen.',
@@ -322,7 +372,6 @@ export const decisionTree = {
     label: 'Unterstützt das KI-System eine kritische oder wichtige Funktion?',
     yes: 'B2',
     no: 'B3',
-    position: PD(-420, 800),
     info:
       'Diese Frage klärt, ob das KI-System in Prozessen eingesetzt wird, die für das Institut kritisch oder wichtig sind. ' +
       'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden.',
@@ -338,7 +387,6 @@ export const decisionTree = {
     label: 'Hat das System direkten Einfluss auf operative/finanzielle Entscheidungen?',
     yes: 'B2_H',
     no: 'B2_M',
-    position: PD(-700, 960),
     info:
       'Die Frage differenziert innerhalb der kritischen/wichtigen Funktionen, ob das KI-System selbst direkt ' +
       'Entscheidungen trifft oder „nur“ unterstützt. Direkter Einfluss führt zu strengeren Kontrollanforderungen.',
@@ -354,7 +402,6 @@ export const decisionTree = {
     label: 'Hohe Kritikalität → DORA Baseline + verstärkte Kontrollen.',
     obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
-    position: PD(-860, 1120),
     info:
       'Das System hat hohe Kritikalität und direkten Einfluss auf Entscheidungen. ' +
       'Es gilt mindestens die DORA-Baseline plus zusätzliche interne Kontrollen und Überwachung.',
@@ -370,7 +417,6 @@ export const decisionTree = {
     label: 'Mittlere Kritikalität → proportionale DORA Baseline.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B4',
-    position: PD(-540, 1120),
     info:
       'Das System ist für wichtige Funktionen relevant, trifft aber keine vollautomatischen Entscheidungen. ' +
       'Die DORA-Baseline kann proportional und risikoangemessen umgesetzt werden.',
@@ -386,7 +432,6 @@ export const decisionTree = {
     label: 'Wird KI lediglich unterstützend eingesetzt (ohne kritische Wirkung)?',
     yes: 'B3_N',
     no: 'B3_R',
-    position: PD(-140, 960),
     info:
       'Hier wird geprüft, ob das KI-System zwar eingesetzt wird, aber nur eine nachgeordnete, nicht kritische Rolle spielt. ' +
       'Trotzdem können grundlegende DORA-Anforderungen relevant sein.',
@@ -402,7 +447,6 @@ export const decisionTree = {
     label: 'Nicht-kritische KI-Unterstützung.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B4',
-    position: PD(-300, 1120),
     info:
       'Die KI wird nur unterstützend und nicht in kritischen Kernprozessen eingesetzt. ' +
       'Es gelten grundsätzliche, aber weniger weitreichende IKT-Kontrollen.',
@@ -418,7 +462,6 @@ export const decisionTree = {
     label: 'Unklar → konservative Einstufung prüfen & dokumentieren.',
     obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
-    position: PD(20, 1120),
     info:
       'Wenn die Kritikalität unklar ist, sollte eine konservative Einstufung gewählt und sauber dokumentiert werden. ' +
       'Die DORA-Anforderungen werden eher strenger als zu lax ausgelegt.',
@@ -435,7 +478,6 @@ export const decisionTree = {
     label: 'Wird das System (ganz/teilweise) von externem IKT-Dienstleister bereitgestellt?',
     yes: 'B5',
     no: 'B6',
-    position: PD(-420, 1320),
     info:
       'Diese Frage klärt, ob das KI-System als externer Service (z. B. Cloud-/KI-Plattform) bezogen wird. ' +
       'Das bestimmt, welche DORA-Anforderungen an IKT-Drittanbieter gelten.',
@@ -448,11 +490,9 @@ export const decisionTree = {
   B5: {
     id: 'B5',
     type: 'question',
-    label:
-      'Ist der Dienstleister potenziell kritischer IKT-Drittanbieter (z. B. Hyperscaler/KI-Plattform)?',
+    label: 'Ist der Dienstleister potenziell kritischer IKT-Drittanbieter (z. B. Hyperscaler/KI-Plattform)?',
     yes: 'B5_C',
     no: 'B5_N',
-    position: PD(-140, 1480),
     info:
       'Hier wird unterschieden, ob es sich um einen potenziell kritischen IKT-Drittanbieter handelt ' +
       '(z. B. große Cloud-Plattformen oder zentrale KI-Provider), auf die das Institut stark angewiesen ist.',
@@ -468,7 +508,6 @@ export const decisionTree = {
     label: 'Kritischer oder quasi-kritischer IKT-Drittanbieter.',
     obligations: ['DORA_THIRDPARTY_PLUS', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
-    position: PD(20, 1640),
     info:
       'Bei (potenziell) kritischen IKT-Drittanbietern gelten erweiterte Anforderungen aus DORA, ' +
       'insbesondere zu Monitoring, Konzentrationsrisiken, Exit-Strategien und ggf. Aufsichtsinteraktion.',
@@ -484,7 +523,6 @@ export const decisionTree = {
     label: 'Nicht-kritischer IKT-Dienstleister (proportional).',
     obligations: ['DORA_THIRDPARTY_STANDARD', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
-    position: PD(340, 1640),
     info:
       'Der IKT-Dienstleister wird nicht als kritisch eingestuft. Es gelten die „normalen“ DORA-Anforderungen ' +
       'für IKT-Drittanbieter, proportional zum Risiko.',
@@ -500,7 +538,6 @@ export const decisionTree = {
     label: 'Kein externer IKT-Dienstleister (volle interne Verantwortung).',
     obligations: ['DORA_BASE'],
     next: 'B7',
-    position: PD(-700, 1480),
     info:
       'Das KI-System wird vollständig intern betrieben. Das Institut trägt die volle technische und organisatorische Verantwortung ' +
       'für Betrieb, Sicherheit und Resilienz.',
@@ -514,11 +551,9 @@ export const decisionTree = {
   B7: {
     id: 'B7',
     type: 'question',
-    label:
-      'Werden produktive Kunden-/Transaktionsdaten oder kritische Informationen an externe KI gesendet?',
+    label: 'Werden produktive Kunden-/Transaktionsdaten oder kritische Informationen an externe KI gesendet?',
     yes: 'B7_S',
     no: 'B7_N',
-    position: PD(-420, 1840),
     info:
       'Diese Frage fokussiert auf den Datenfluss: Werden sensible oder produktive Daten an externe KI-Dienste übermittelt? ' +
       'Davon hängen Anforderungen an Schutzmaßnahmen, Verschlüsselung und vertragliche Regelungen ab.',
@@ -534,7 +569,6 @@ export const decisionTree = {
     label: 'Sensible Daten → starker Schutz-/Monitoring-Pfad.',
     obligations: ['DORA_DATA_PROTECTION_STRONG'],
     next: 'B8',
-    position: PD(-140, 2000),
     info:
       'Werden produktive oder sensible Daten an externe KI übertragen, sind starke Schutzmaßnahmen erforderlich: ' +
       'Datenklassifizierung, Verschlüsselung, DLP, Logging und klare vertragliche Regelungen.',
@@ -550,7 +584,6 @@ export const decisionTree = {
     label: 'Keine/lediglich Testdaten → Standard-Sicherheitsmaßnahmen.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B8',
-    position: PD(180, 2000),
     info:
       'Wenn keine produktiven oder kritischen Daten an externe KI übermittelt werden, reichen in der Regel ' +
       'Standard-Sicherheitsmaßnahmen aus. Eine Dokumentation der Annahmen bleibt dennoch wichtig.',
@@ -564,11 +597,9 @@ export const decisionTree = {
   B8: {
     id: 'B8',
     type: 'question',
-    label:
-      'Verändert sich das Modell im Betrieb (Online-Learning, Finetuning, regelmäßiges Retraining)?',
+    label: 'Verändert sich das Modell im Betrieb (Online-Learning, Finetuning, regelmäßiges Retraining)?',
     yes: 'B8_D',
     no: 'B8_S',
-    position: PD(-420, 2200),
     info:
       'Hier wird geprüft, ob das Modell sich im Betrieb verändert (dynamisches Modell) oder statisch bleibt. ' +
       'Dynamische Modelle erfordern stärkere Change- und Monitoringprozesse.',
@@ -585,7 +616,6 @@ export const decisionTree = {
     label: 'Dynamisches Modell → verstärktes Monitoring/Change/Controls.',
     obligations: ['DORA_MONITORING_AI', 'DORA_INCIDENT_MGMT'],
     next: 'END',
-    position: PD(-140, 2360),
     info:
       'Bei dynamischen Modellen sind strukturierte Change-, Freigabe- und Monitoringprozesse zwingend: ' +
       'Drift-Überwachung, Performance-Checks, Dokumentation von Änderungen und klare Eskalationswege.',
@@ -601,7 +631,6 @@ export const decisionTree = {
     label: 'Statisches Modell → normale Change-Prozesse (proportional).',
     obligations: ['DORA_BASE_LIGHT', 'DORA_INCIDENT_MGMT'],
     next: 'END',
-    position: PD(180, 2360),
     info:
       'Statische Modelle erfordern zwar ebenfalls Change- und Freigabeprozesse, diese können aber ' +
       'proportional und weniger häufig ausgestaltet werden.',
@@ -617,7 +646,6 @@ export const decisionTree = {
     type: 'leaf',
     label: 'Analyse beendet.',
     obligations: [],
-    position: P(-420, 2520),
     info:
       'Der Entscheidungs- und Prüfpfad ist abgeschlossen. Ergebnisse können dokumentiert, exportiert ' +
       'und für interne Freigabeprozesse (z. B. Governance- oder Risk-Committees) genutzt werden.',
@@ -627,6 +655,53 @@ export const decisionTree = {
     ],
   },
 };
+
+/**
+ * Ableitung von Locks/Flags aus dem bisherigen Pfad/Antworten.
+ * - High-Risk wird „gelockt“, sobald G_AI_HR_LOCK = yes beantwortet wurde.
+ */
+export function deriveConsistencyLocks({ answers, pathIds }) {
+  const locks = new Set();
+
+  if (answers?.G_AI_HR_LOCK === 'yes') {
+    locks.add(CONSISTENCY_LOCKS.AI_HIGH_RISK);
+  }
+
+  // Optional: auch direkt aus A3=yes locken (strenger):
+  // if (answers?.A3 === 'yes') locks.add(CONSISTENCY_LOCKS.AI_HIGH_RISK);
+
+  void pathIds;
+  return locks;
+}
+
+/**
+ * Globale Validierungsregeln pro Transition.
+ * Call this BEFORE you commit a nextId to path.
+ *
+ * Returns:
+ *  - { nextId } normal
+ *  - { nextId: 'W_AI_CONTRADICTION' } if inconsistent
+ */
+export function validateNextNode({ currentId, answer, nextId, answers, pathIds }) {
+  const locks = deriveConsistencyLocks({ answers, pathIds });
+
+  // Rule 1: Wenn High-Risk gelockt, darf nicht in Non-HR Pfade „entschärft“ werden.
+  // Konkreter Konflikt: A3=no (führt zu A3_NON_HR) nachdem HR-Lock gesetzt wurde.
+  if (locks.has(CONSISTENCY_LOCKS.AI_HIGH_RISK)) {
+    const isTryingToDeescalate = (currentId === 'A3' && answer === 'no') || nextId === 'A3_NON_HR';
+
+    if (isTryingToDeescalate) {
+      return { nextId: 'W_AI_CONTRADICTION' };
+    }
+  }
+
+  // Rule 2: Verbotene Praxis darf nicht ohne Review-Gate „weiter“ führen
+  if (currentId === 'A2' && answer === 'yes' && nextId !== 'A2_ja') {
+    return { nextId: 'W_AI_PROHIBITED_ESCALATION' };
+  }
+
+  return { nextId };
+}
 
 // -------------------- Requirements API --------------------
 export function getRequirementChain(leafId) {
@@ -661,416 +736,5 @@ export function getNextInRequirementChain(currentReqId) {
   const idx = reqs.findIndex((r) => r.id === currentReqId);
   const nextReqId = idx >= 0 && idx + 1 < reqs.length ? reqs[idx + 1].id : undefined;
   return { leafId, nextReqId, summaryId };
-}
-
-// -------- Blueprint / Layout --------
-const GRID_Y = 140;
-const STEP_X = 280;
-const MIN_DX = 240;
-const MIN_DY = 110;
-
-// Ab wann wir zusätzlich in X ausweichen, wenn Y zu groß wird
-const MAX_Y = 4200;
-const MAX_TRIES = 400;
-
-function isCollision(a, b) {
-  return Math.abs(a.x - b.x) < MIN_DX && Math.abs(a.y - b.y) < MIN_DY;
-}
-
-function computeBinarySubtreeLayout(rootId, anchor) {
-  // Binary layout via yes/no edges, classic: No=links, Yes=rechts.
-  const visited = new Set();
-  function dfs(id) {
-    if (!id || visited.has(id)) return;
-    const n = decisionTree[id];
-    if (!n) return;
-    visited.add(id);
-    if (n.type === 'question') {
-      dfs(n.no);
-      dfs(n.yes);
-    }
-  }
-  dfs(rootId);
-
-  let cursor = 0;
-  const xIndex = {};
-  const level = {};
-  function dfsLayout(id, depth = 0) {
-    const n = decisionTree[id];
-    if (!n) return;
-    level[id] = depth;
-    if (n.type === 'question' && n.no) dfsLayout(n.no, depth + 1);
-    xIndex[id] = cursor++;
-    if (n.type === 'question' && n.yes) dfsLayout(n.yes, depth + 1);
-  }
-  dfsLayout(rootId, 0);
-
-  const xs = Object.values(xIndex);
-  const mid = xs.length ? (Math.min(...xs) + Math.max(...xs)) / 2 : 0;
-
-  let maxDepth = 0;
-  for (const d of Object.values(level)) maxDepth = Math.max(maxDepth, d);
-
-  const positions = {};
-  visited.forEach((id) => {
-    positions[id] = {
-      x: anchor.x + ((xIndex[id] ?? 0) - mid) * STEP_X,
-      y: anchor.y + (level[id] ?? 0) * GRID_Y,
-    };
-  });
-
-  return { positions, maxDepth };
-}
-
-// ======================
-// 🔹 Auto-Spacing Calibration für DORA-Bereich
-// ======================
-function computeDynamicDoraOffset(positions, aiNodes, baseOffset = 2200, minGap = 400) {
-  // finde die rechte Kante aller AI-Nodes
-  let maxRight = -Infinity;
-  for (const id of aiNodes) {
-    const pos = positions.get(id);
-    if (!pos) continue;
-    // schätze Nodebreite grob mit 360px
-    const rightEdge = pos.x + 360;
-    if (rightEdge > maxRight) maxRight = rightEdge;
-  }
-
-  // falls keine AI-Nodes gesetzt → nutze Standard-Offset
-  if (maxRight === -Infinity) return baseOffset;
-
-  // neue DORA-Start-Position = rechte Kante + Mindestabstand
-  const dynamicOffset = maxRight + minGap;
-
-  // Sicherheit: nie kleiner als Baseline
-  return Math.max(dynamicOffset, baseOffset);
-}
-
-function computeDoraPhasedLayoutFromD0Anchor(d0Pos) {
-  // DORA startet bei D0: B1 direkt darunter, danach Achsen B4/B7/B8 jeweils darunter.
-  const stageRoots = ['B1', 'B4', 'B7', 'B8'];
-  const baseX = d0Pos.x;
-
-  let baseY = d0Pos.y + GRID_Y;
-  const out = {};
-
-  for (const rootId of stageRoots) {
-    if (!decisionTree[rootId]) continue;
-    const { positions, maxDepth } = computeBinarySubtreeLayout(rootId, { x: baseX, y: baseY });
-    Object.assign(out, positions);
-    baseY = baseY + (maxDepth + 1) * GRID_Y;
-  }
-
-  return out;
-}
-
-/**
- * Erzeugt Knoten & Kanten (inkl. Positionen, aktive Edges) für die aktuell besuchten IDs.
- * Optional: debugLayout=true -> console.warn bei Layout-Kollisionen.
- */
-export function buildGraphBlueprint({ visitedIds, answers, continued, expanded, debugLayout = false }) {
-  void continued;
-
-  // --- globale Layout-Parameter ---
-  const placed = [];
-  const occupied = new Set();
-  const positions = new Map();
-  const nodes = [];
-  const edges = [];
-
-  const seen = new Set(visitedIds);
-  const stepOf = (id) => visitedIds.indexOf(id) + 1;
-  const expandedSet = expanded ? new Set(expanded) : new Set();
-
-  // --- grid setup ---
-  const slotKey = (x, y) => `${Math.round(x / STEP_X)}:${Math.round(y / GRID_Y)}`;
-
-  // =====================================================
-  // 🔹 Cluster Setup: eigene Kollisionsräume für AI + DORA
-  // =====================================================
-  const clusterPools = {
-    AI: { placed: [], occupied: new Set() },
-    DORA: { placed: [], occupied: new Set() },
-  };
-
-  const getClusterOf = (id) => (id.startsWith('B') || id === 'D0' ? 'DORA' : 'AI');
-
-  // =====================================================
-  // 🔹 Helper: Collision-Avoidance pro Cluster
-  // =====================================================
-  function avoidCollision(pos, id = '?', { lockX = false } = {}) {
-    const cluster = getClusterOf(id);
-    const { placed: placedC, occupied: occC } = clusterPools[cluster];
-
-    const startX = pos.x;
-    const startY = pos.y;
-    let x = startX;
-    let y = startY;
-
-    for (let attempt = 0; attempt < MAX_TRIES; attempt++) {
-      const key = slotKey(x, y);
-
-      let conflict = null;
-      if (occC.has(key)) {
-        conflict = placedC.find((p) => slotKey(p.x, p.y) === key) || null;
-      } else {
-        conflict = placedC.find((p) => isCollision({ x, y }, p)) || null;
-      }
-
-      if (!conflict) {
-        occC.add(key);
-        placedC.push({ id, x, y });
-        return { x, y };
-      }
-
-      if (debugLayout) {
-        console.warn(`Layout conflict: ${id} overlaps with ${conflict.id}`);
-      }
-
-      // immer erst vertikal verschieben
-      y += GRID_Y;
-      if (!lockX && y > MAX_Y) {
-        x += STEP_X;
-        y = startY;
-      }
-    }
-
-    placedC.push({ id, x, y });
-    return { x, y };
-  }
-
-  // =====================================================
-  // 🔹 Helper: Baumverzweigung (Ja/Nein-Spreizung)
-  // =====================================================
-  function computeBranchPosition(parentPos, side = 'yes', depth = 1) {
-    const dx = side === 'yes' ? STEP_X * 0.8 : -STEP_X * 0.8;
-    const dy = GRID_Y * depth;
-    return { x: parentPos.x + dx, y: parentPos.y + dy };
-  }
-
-  // =====================================================
-  // 🔹 Helper: Dynamische DORA-Abstands-Kalibrierung
-  // =====================================================
-  function computeDynamicDoraOffset(positions, aiNodes, baseOffset = 2200, minGap = 400) {
-    let maxRight = -Infinity;
-    for (const id of aiNodes) {
-      const pos = positions.get(id);
-      if (!pos) continue;
-      const rightEdge = pos.x + 360;
-      if (rightEdge > maxRight) maxRight = rightEdge;
-    }
-    if (maxRight === -Infinity) return baseOffset;
-    return Math.max(maxRight + minGap, baseOffset);
-  }
-
-  // =====================================================
-  // 🔹 PASS 1: Grundknoten (AI + DORA Entry)
-  // =====================================================
-  for (const id of visitedIds) {
-    const def = decisionTree[id];
-    if (!def) continue;
-
-    const pos = avoidCollision(def.position ?? { x: 0, y: 0 }, id);
-
-    positions.set(id, pos);
-    nodes.push({
-      id,
-      kind: def.type,
-      position: pos,
-      meta: {
-        label: def.label,
-        obligationKeys: def.obligations,
-        nextId: def.next,
-        answer: answers[id],
-        step: stepOf(id),
-      },
-    });
-  }
-
-  // =====================================================
-  // 🔹 PASS 2: Requirements (rechts neben Leaf; Summary darunter)
-  // =====================================================
-  const REQ_OFFSET_X = STEP_X * 2.6; // mehr horizontaler Abstand
-  for (const leafId of expandedSet) {
-    const def = decisionTree[leafId];
-    if (!def) continue;
-
-    const { reqs, summaryId } = getRequirementChain(leafId);
-    const leafPos = positions.get(leafId) ?? (def.position ?? { x: 0, y: 0 });
-
-    const baseX = leafPos.x + REQ_OFFSET_X;
-    const baseY = leafPos.y;
-
-    reqs.forEach((r, idx) => {
-      if (!seen.has(r.id)) return;
-
-      const pos = avoidCollision({ x: baseX, y: baseY + idx * GRID_Y }, r.id, { lockX: true });
-      positions.set(r.id, pos);
-      nodes.push({
-        id: r.id,
-        kind: 'req',
-        position: pos,
-        meta: {
-          label: r.text,
-          pkgLabel: r.pkgLabel,
-          articles: r.articles,
-          answer: answers[r.id],
-          step: stepOf(r.id),
-        },
-      });
-    });
-
-    if (seen.has(summaryId)) {
-      const pos = avoidCollision(
-        { x: baseX, y: baseY + (reqs.length + 1.5) * GRID_Y },
-        summaryId,
-        { lockX: true }
-      );
-      positions.set(summaryId, pos);
-      nodes.push({
-        id: summaryId,
-        kind: 'summary',
-        position: pos,
-        meta: { step: stepOf(summaryId) },
-      });
-    }
-  }
-
-  // =====================================================
-  // 🔹 Dynamische DORA-Positionierung nach AI-Layout
-  // =====================================================
-  const aiNodeIds = [...positions.keys()].filter((id) => id.startsWith('A'));
-  DORA_OFFSET_X = computeDynamicDoraOffset(positions, aiNodeIds, 2200, 400);
-  if (debugLayout) {
-    console.info(`[Layout] Dynamischer DORA Offset gesetzt auf: ${DORA_OFFSET_X}px`);
-  }
-
-  // =====================================================
-  // 🔹 PASS 3: DORA-Baum phasenweise, stabil
-  // =====================================================
-  if (seen.has('D0')) {
-    const d0Pos = positions.get('D0') ?? (decisionTree.D0?.position ?? { x: 0, y: 0 });
-    const rawDora = computeDoraPhasedLayoutFromD0Anchor({
-      x: d0Pos.x + DORA_OFFSET_X,
-      y: d0Pos.y,
-    });
-
-    const doraIds = visitedIds
-      .filter((id) => id.startsWith('B') && rawDora[id])
-      .sort((a, b) => rawDora[a].y - rawDora[b].y || rawDora[a].x - rawDora[b].x);
-
-    let shiftY = 0;
-    const collidesWithPlaced = () => {
-      for (const id of doraIds) {
-        const base = rawDora[id];
-        const testPos = { x: base.x, y: base.y + shiftY };
-        for (const p of clusterPools.DORA.placed) {
-          if (isCollision(testPos, p)) return true;
-        }
-      }
-      return false;
-    };
-    while (collidesWithPlaced()) shiftY += GRID_Y;
-
-    for (const id of doraIds) {
-      const def = decisionTree[id];
-      if (!def) continue;
-
-      const base = rawDora[id];
-      const pos = avoidCollision(
-        { x: base.x, y: base.y + shiftY },
-        id,
-        { lockX: true }
-      );
-
-      positions.set(id, pos);
-      nodes.push({
-        id,
-        kind: def.type === 'question' ? 'question' : 'leaf',
-        position: pos,
-        meta: {
-          label: def.label,
-          obligationKeys: def.obligations,
-          nextId: def.next,
-          answer: answers[id],
-          step: stepOf(id),
-        },
-      });
-    }
-  }
-
-  // 🔹 Edges (optional)
-  for (const id of visitedIds) {
-    const def = decisionTree[id];
-    if (!def) continue;
-
-    if (def.yes && positions.has(def.yes))
-      edges.push({ id: `${id}-yes`, source: id, target: def.yes });
-    if (def.no && positions.has(def.no))
-      edges.push({ id: `${id}-no`, source: id, target: def.no });
-    if (def.next && positions.has(def.next))
-      edges.push({ id: `${id}-next`, source: id, target: def.next });
-  }
-
- // ---- Requirements Edges ----
- for (const leafId of expandedSet) {
-  const { reqs, summaryId } = getRequirementChain(leafId);
-
-  if (reqs.length) {
-    const first = reqs[0].id;
-    if (seen.has(leafId) && seen.has(first)) {
-      edges.push({ id: `${leafId}-check-${first}`, source: leafId, target: first, label: 'Check' });
-    }
-  }
-
-  reqs.forEach((r, idx) => {
-    const next = reqs[idx + 1];
-    if (next && seen.has(r.id) && seen.has(next.id)) {
-      edges.push({ id: `${r.id}-yes-${next.id}`, source: r.id, target: next.id, label: 'Ja' });
-      edges.push({ id: `${r.id}-no-${next.id}`, source: r.id, target: next.id, label: 'Nein' });
-    } else if (!next && seen.has(r.id) && seen.has(summaryId)) {
-      edges.push({ id: `${r.id}-yes-${summaryId}`, source: r.id, target: summaryId, label: 'Ja' });
-      edges.push({ id: `${r.id}-no-${summaryId}`, source: r.id, target: summaryId, label: 'Nein' });
-    }
-  });
-
-  const nextId = decisionTree[leafId]?.next;
-  if (nextId && seen.has(summaryId) && seen.has(nextId)) {
-    edges.push({ id: `${summaryId}-next-${nextId}`, source: summaryId, target: nextId, label: 'Weiter' });
-  }
-}
-
-// ---- Active edges entlang visited Pfad ----
-const activeIds = new Set();
-for (let i = 0; i < visitedIds.length - 1; i++) {
-  const a = visitedIds[i];
-  const b = visitedIds[i + 1];
-  const n = decisionTree[a];
-
-  if (n?.type === 'question') {
-    if (n.yes === b && answers[a] === 'yes') activeIds.add(`${a}-yes-${b}`);
-    if (n.no === b && answers[a] === 'no') activeIds.add(`${a}-no-${b}`);
-  } else if (a.includes('__req__')) {
-    const ans = answers[a];
-    if (ans === 'yes') activeIds.add(`${a}-yes-${b}`);
-    if (ans === 'no') activeIds.add(`${a}-no-${b}`);
-  } else {
-    if (n?.next === b) activeIds.add(`${a}-next-${b}`);
-    const { reqs } = getRequirementChain(a);
-    if (reqs?.[0]?.id === b) activeIds.add(`${a}-check-${b}`);
-  }
-}
-edges.forEach((e) => {
-  e.active = activeIds.has(e.id);
-});
-
-// ---- missingByLeaf (für Summary/Export) ----
-const missingByLeaf = {};
-for (const leafId of expandedSet) {
-  const { reqs } = getRequirementChain(leafId);
-  missingByLeaf[leafId] = reqs.filter((r) => answers[r.id] !== 'yes');
-}
-
-return { nodes, edges, missingByLeaf };
 }
 
