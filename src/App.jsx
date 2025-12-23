@@ -237,7 +237,7 @@ function WelcomeScreen({ onStart }) {
               boxShadow: '0 8px 18px rgba(56,189,248,0.45)',
             }}
           >
-            Assessment starten!
+            KI-System prüfen!
           </button>
         </div>
       </div>
@@ -271,7 +271,7 @@ function CreatorScreen({ value, onChange, onBack, onConfirm }) {
         }}
       >
         <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 20 }}>
-          Wer erstellt dieses Assessment?
+          Wer führt die Prüfung durch?
         </h2>
         <p style={{ marginTop: 0, marginBottom: 16, fontSize: 13, color: '#4b5563' }}>
           Bitte geben Sie den Namen oder das Team an, das den Entscheidungsbaum ausfüllt.
@@ -333,7 +333,7 @@ function CreatorScreen({ value, onChange, onBack, onConfirm }) {
               cursor: value.trim() ? 'pointer' : 'not-allowed',
             }}
           >
-            Weiter zum Entscheidungsbaum
+            Weiter zur Prüfung
           </button>
         </div>
       </div>
@@ -576,7 +576,7 @@ function LeafNode({ data }) {
 }
 
 function ReqQuestionNode({ data }) {
-  const { text, pkgLabel, articles = [], onYes, onNo, disabled, answer, step, cluster, info, examples } = data;
+  const { question, pkgLabel, articles = [], onYes, onNo, disabled, answer, step, cluster, info, examples } = data;
 
   const [showHints, setShowHints] = useState(false);
 
@@ -617,7 +617,7 @@ function ReqQuestionNode({ data }) {
       <div className="step-badge">{step}</div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
-        <div style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 15 }}>{text}</div>
+        <div style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 15 }}>{question}</div>
         <span className="rf-badge">{cluster}</span>
       </div>
 
@@ -736,7 +736,7 @@ function ReqSummaryNode({ data }) {
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           {missing.map((m) => (
             <li key={m.id}>
-              {m.text}{' '}
+              {m.question}{' '}
               <span className="rf-meta">
                 ({m.pkgLabel}{m.articles?.length ? ` • ${m.articles.join(', ')}` : ''})
               </span>
@@ -941,7 +941,7 @@ function Wizard({ createdBy, assessmentId }) {
         kind: 'req',
         id: currentId,
         leafId,
-        text: req.text,
+        question: req?.question ?? '',
         pkgLabel: req.pkgLabel,
         articles: req.articles ?? [],
         cluster,
@@ -1188,7 +1188,7 @@ function Wizard({ createdBy, assessmentId }) {
         const [leafId] = id.split('__req__');
         const { reqs } = getRequirementChain(leafId);
         const req = reqs.find((r) => r.id === id);
-        label = req?.text ?? id;
+        label = req?.question ?? id;
         kind = 'requirement';
       } else {
         const def = decisionTree[id];
@@ -1219,7 +1219,7 @@ function Wizard({ createdBy, assessmentId }) {
       if (!missingReqs.length) continue;
       missing[leafId] = missingReqs.map((r) => ({
         id: r.id,
-        text: r.text,
+        question: r.question ?? '',
         pkgKey: r.pkgKey,
         pkgLabel: r.pkgLabel,
         articles: r.articles ?? [],
@@ -1293,7 +1293,7 @@ function Wizard({ createdBy, assessmentId }) {
                       (r) => `
                       <tr>
                         <td style="border:1px solid #e5e7eb; padding:6px;">
-                          ${esc(r.text)}
+                          ${esc(r.question ?? '')}
                           <br/>
                           <small style="color:#64748b;">
                             ${esc(r.pkgLabel)}${r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''}
@@ -1421,7 +1421,7 @@ function Wizard({ createdBy, assessmentId }) {
         for (const [leafId, reqs] of missingEntries) {
           addLine(`Leaf: ${decisionTree[leafId]?.label ?? leafId}`, 11, true);
           reqs.forEach((r) =>
-            addLine(`${r.text} | ____________ | ____________`, 10, false));
+            addLine(`${r.question ?? ''} | ____________ | ____________`, 10, false));
           y += 6;
         }
       }
@@ -1493,7 +1493,7 @@ function Wizard({ createdBy, assessmentId }) {
     centerCard = (
       <ReqQuestionNode
         data={{
-          text: descriptor.text,
+          question: descriptor.question,
           pkgLabel: descriptor.pkgLabel,
           articles: descriptor.articles,
           step: stepNumber,
@@ -1708,7 +1708,7 @@ function Wizard({ createdBy, assessmentId }) {
                 const [leafId] = id.split('__req__');
                 const { reqs } = getRequirementChain(leafId);
                 const req = reqs.find((r) => r.id === id);
-                label = req?.text ?? id;
+                label = req?.question ?? id;
               } else {
                 label = decisionTree[id]?.label ?? id;
               }

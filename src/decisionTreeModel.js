@@ -4,368 +4,928 @@
 // articles = "Paragraphen/Artikel" (Anzeige in Tooltips + Export)
 // items = konkrete Anforderungen (Requirement-Chain)
 export const obligationsCatalog = {
-  AI_ACT_NOT_APPLICABLE: {
-    label: 'AI Act nicht anwendbar',
-    articles: ['AI Act (Scope/Definitionen)'],
-    items: [
-      'Haben Sie dokumentiert, warum kein KI-System i. S. d. AI Act vorliegt?',
-      'Haben Sie sichergestellt, dass trotzdem interne Governance/IT-Sicherheit (inkl. DORA) geprüft wird?',
-    ],
-  },
 
-  AI_PROHIBITED: {
-    label: 'AI Act: Verbotene Praktiken',
-    articles: ['AI Act: Verbotene Praktiken (Titel/Artikel je nach Fassung)'],
-    items: [
-      'Haben Sie die Nutzung gestoppt und das Deployment verhindert?',
-      'Haben Sie eine Rechtsprüfung durchgeführt und einen Maßnahmenplan erstellt?',
-      'Haben Sie relevante Stakeholder informiert (Compliance, Legal, IT-Security)?',
-    ],
-  },
+AI_ACT_NOT_APPLICABLE: {
+  label: 'EU AI Act: Nicht anwendbar – Baseline-Hinweise',
+  regulation: 'EU AI Act',
+  articles: ['EU AI Act (2024), Art. 3 (Definition KI-System)'],
+  items: [
+    {
+      id: 'AI_NA_CLASSIFICATION_NOTE',
+      question:
+        'Ist die Einstufung „kein KI-System“ dokumentiert und begründet (Scope, Systembeschreibung, Abgrenzung)?',
+      reference: 'EU AI Act (2024), Art. 3',
+      evidence: 'Nachweis: Klassifikationsmemo, Systembeschreibung, Freigabe/Review',
+    },
+    {
+      id: 'AI_NA_GOVERNANCE_BASELINE',
+      question:
+        'Sind trotz Nicht-Anwendbarkeit des EU AI Act interne Governance- und Freigabekontrollen für das System definiert?',
+      reference: 'EU AI Act (2024) – Governance-Baseline (intern)',
+      evidence: 'Nachweis: Freigabeprozess, RACI, Richtlinie/Checkliste',
+    },
+  ],
+},
+
+AI_PROHIBITED: {
+  label: 'EU AI Act: Verbotene Praxis – Sofortmaßnahmen & Eskalation',
+  regulation: 'EU AI Act',
+  articles: ['EU AI Act (2024), Kapitel II (Verbotene Praktiken)'],
+  items: [
+    {
+      id: 'AI_PROH_STOP_DEPLOYMENT',
+      question:
+        'Wurde die Nutzung bzw. (geplante) Inbetriebnahme des Systems gestoppt und als Maßnahme dokumentiert?',
+      reference: 'EU AI Act (2024), Kapitel II',
+      evidence: 'Nachweis: Stop-Entscheid, Ticket/Change, Betriebsfreigabe entzogen',
+    },
+    {
+      id: 'AI_PROH_ESCALATION',
+      question:
+        'Wurde eine formale Eskalation an Legal/Compliance/Risk durchgeführt und dokumentiert?',
+      reference: 'EU AI Act (2024), Kapitel II',
+      evidence: 'Nachweis: Eskalationsmail/Case-ID, Review-Protokoll, Entscheidungsgremium',
+    },
+    {
+      id: 'AI_PROH_REMEDIATION_DECISION',
+      question:
+        'Liegt eine dokumentierte Entscheidung vor, ob das Vorhaben abgebrochen oder regelkonform neu zugeschnitten wird?',
+      reference: 'EU AI Act (2024), Kapitel II',
+      evidence: 'Nachweis: Managemententscheidung, Maßnahmenplan, neue Scope-Definition',
+    },
+  ],
+},
+
 
   AI_HR_PROVIDER_OR_DEPLOYER: {
-    label: 'AI Act: Hochrisiko (Provider/Deployer) – Anforderungen',
-    articles: ['AI Act Art. 8–15 (High-Risk Requirements)'],
+    label: 'EU AI Act: Hochrisiko-KI – Kernpflichten (Anbieter/Betreiber)',
+    regulation: 'EU AI Act',
+    articles: ['EU AI Act (2024), Art. 9–15'],
     items: [
-      'Haben Sie ein Risikomanagementsystem über den gesamten Lebenszyklus etabliert (Art. 9)?',
-      'Haben Sie Daten- und Data-Governance sichergestellt (Art. 10)?',
-      'Haben Sie technische Dokumentation erstellt und halten Sie diese aktuell (Art. 11)?',
-      'Haben Sie Logging und Record-Keeping sichergestellt (Art. 12)?',
-      'Haben Sie Transparenzinformationen für Deployers bereitgestellt (Art. 13)?',
-      'Haben Sie Human-Oversight-Maßnahmen implementiert (Art. 14)?',
-      'Haben Sie Accuracy, Robustness und Cybersecurity nachweisbar erreicht (Art. 15)?',
+      {
+        id: 'AI_HR_RM_PROCESS',
+        question:
+          'Gibt es einen dokumentierten KI-Risikomanagementprozess, der Risiken identifiziert, bewertet und Maßnahmen festlegt?',
+        reference: 'EU AI Act (2024), Art. 9',
+        evidence: 'Nachweis: Prozessbeschreibung, Risiko-Register, Freigabeprotokoll',
+      },
+      {
+        id: 'AI_HR_RM_LIFECYCLE',
+        question:
+          'Werden KI-Risiken vor Go-live bewertet und während des Betriebs bei relevanten Änderungen regelmäßig überprüft?',
+        reference: 'EU AI Act (2024), Art. 9',
+        evidence: 'Nachweis: Risk-Reviews, Change-Impact-Analysen, Monitoring-Reports',
+      },
+      {
+        id: 'AI_HR_DATA_LINEAGE_RIGHTS',
+        question:
+          'Sind Datenquellen, Datenherkunft und Nutzungsrechte für Training und Test dokumentiert?',
+        reference: 'EU AI Act (2024), Art. 10',
+        evidence: 'Nachweis: Data-Lineage/Datasheets, Verträge/Lizenzen, Datenkatalog',
+      },
+      {
+        id: 'AI_HR_DATA_QUALITY_CRITERIA',
+        question:
+          'Gibt es definierte Kriterien zur Datenqualität und werden diese vor Einsatz des Modells nachweisbar geprüft?',
+        reference: 'EU AI Act (2024), Art. 10',
+        evidence: 'Nachweis: Data-Quality-Report, Prüfprotokoll, Freigabeentscheidung',
+      },
+      {
+        id: 'AI_HR_BIAS_MITIGATION',
+        question:
+          'Sind Maßnahmen zur Erkennung und Reduktion von Bias in Trainings- und Testdaten dokumentiert und umgesetzt?',
+        reference: 'EU AI Act (2024), Art. 10',
+        evidence: 'Nachweis: Bias-Checks, Fairness-Report, Maßnahmenplan',
+      },
+      {
+        id: 'AI_HR_TECH_DOC_UPTODATE',
+        question:
+          'Wurde eine technische Dokumentation erstellt und wird sie bei Änderungen aktuell gehalten?',
+        reference: 'EU AI Act (2024), Art. 11',
+        evidence: 'Nachweis: Dokumentationspaket, Versionshistorie, Change-Links',
+      },
+      {
+        id: 'AI_HR_LOGGING_ENABLED',
+        question:
+          'Ist Protokollierung (Logging) für relevante Systemereignisse aktiviert und nachvollziehbar auswertbar?',
+        reference: 'EU AI Act (2024), Art. 12',
+        evidence: 'Nachweis: Log-Konfiguration, Log-Auszüge, Retention-Regeln',
+      },
+      {
+        id: 'AI_HR_INFO_FOR_OPERATORS',
+        question:
+          'Werden Betreibern (Deployer) ausreichende Informationen zur sicheren Nutzung bereitgestellt (Zweck, Grenzen, Betriebsvoraussetzungen)?',
+        reference: 'EU AI Act (2024), Art. 13',
+        evidence: 'Nachweis: Nutzer-/Betriebsdokumentation, Handbuch, Release Notes',
+      },
+      {
+        id: 'AI_HR_HUMAN_OVERSIGHT',
+        question:
+          'Sind Human-Oversight-Maßnahmen definiert und implementiert (z. B. manuelle Prüfung, Eingriffsrechte, Abschaltmöglichkeit)?',
+        reference: 'EU AI Act (2024), Art. 14',
+        evidence: 'Nachweis: Oversight-Konzept, RACI, Bedien-/Abschaltverfahren',
+      },
+      {
+        id: 'AI_HR_PERFORMANCE_TESTS',
+        question:
+          'Sind messbare Leistungskennzahlen definiert und durch Tests vor Go-live belegt?',
+        reference: 'EU AI Act (2024), Art. 15',
+        evidence: 'Nachweis: Testreport, Akzeptanzkriterien, Freigabeprotokoll',
+      },
+      {
+        id: 'AI_HR_ROBUSTNESS_TESTS',
+        question:
+          'Wurde Robustheit gegen typische Stör- und Fehlerszenarien getestet und dokumentiert?',
+        reference: 'EU AI Act (2024), Art. 15',
+        evidence: 'Nachweis: Robustness-Testplan, Testergebnisse, Maßnahmenplan',
+      },
+      {
+        id: 'AI_HR_SECURITY_ASSESSMENT',
+        question:
+          'Wurde ein Cybersecurity-/Security-Assessment für die KI-Komponente durchgeführt und dokumentiert?',
+        reference: 'EU AI Act (2024), Art. 15',
+        evidence: 'Nachweis: Security-Assessment, PenTest/Threat-Model, Hardening-Plan',
+      },
     ],
   },
 
   AI_TRANSPARENCY_ART_50: {
-    label: 'AI Act: Transparenzpflichten (Art. 50)',
-    regulation: 'AI Act',
-    articles: ['AI Act Art. 50 (Transparenzpflichten)'],
+    label: 'EU AI Act: Transparenzpflichten',
+    regulation: 'EU AI Act',
+    articles: ['EU AI Act (2024), Art. 50'],
     items: [
-      'Wird transparent kommuniziert, dass Nutzende mit einem KI-System interagieren?',
-      'Werden KI-generierte Inhalte (z. B. Texte/Bilder/Audio) als solche gekennzeichnet, sofern erforderlich?',
-      'Gibt es Informationen zu Zweck, Grenzen und erwarteter Nutzung des Systems für betroffene Nutzende?',
+      {
+        id: 'AI_TP_INTERACTION_NOTICE',
+        question:
+          'Erhalten Nutzende einen klaren Hinweis, dass sie mit einem KI-System interagieren (z. B. UI-Hinweis/Disclaimer)?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: Screenshot/UI-Text, freigegebene Disclaimer',
+      },
+      {
+        id: 'AI_TP_GENERATIVE_OUTPUTS',
+        question:
+          'Erzeugt das System Inhalte (Text, Bild, Audio oder Video), die an Nutzende ausgegeben werden?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: Use-Case-Beschreibung, UI-Flows',
+      },
+      {
+        id: 'AI_TP_CONTENT_LABELING',
+        question:
+          'Werden KI-generierte Inhalte in den relevanten Fällen eindeutig gekennzeichnet?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: UI/Template, Content-Policy, Freigabe',
+      },
+      {
+        id: 'AI_TP_PURPOSE_INFO',
+        question:
+          'Ist der Zweck des KI-Systems für Nutzende dokumentiert und verfügbar?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: Nutzerinformation/Handbuch, Intranet-Seite',
+      },
+      {
+        id: 'AI_TP_LIMITATIONS_INFO',
+        question:
+          'Sind bekannte Grenzen und Limitierungen des Systems dokumentiert und verfügbar?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: Limitations-Abschnitt, Release Notes, Known-Issues',
+      },
+      {
+        id: 'AI_TP_ALLOWED_USE',
+        question:
+          'Sind Vorgaben zur zulässigen Nutzung (Do/Don’t) dokumentiert und verfügbar?',
+        reference: 'EU AI Act (2024), Art. 50',
+        evidence: 'Nachweis: Nutzungsrichtlinie, Schulungsunterlagen',
+      },
     ],
   },
 
   AI_CONFORMITY_AND_DOC: {
-    label: 'AI Act: Konformitätsbewertung & Technische Dokumentation',
-    regulation: 'AI Act',
-    articles: ['AI Act Art. 16 ff., Art. 43 ff., Annex IV'],
+    label: 'EU AI Act: Konformitätsbewertung & Technische Dokumentation',
+    regulation: 'EU AI Act',
+    articles: ['EU AI Act (2024), Art. 16 ff., Art. 43 ff., Anhang IV'],
     items: [
-      'Wurde eine vollständige Konformitätsbewertung gemäß AI Act durchgeführt oder geplant?',
-      'Wurde technische Dokumentation gemäß Annex IV erstellt und aktuell gehalten?',
-      'Sind Rollen (Provider/Deployer) und Verantwortlichkeiten in der Dokumentation eindeutig beschrieben?',
-      'Sind Prüf- und Freigabeprozesse für Änderungen am KI-System dokumentiert?',
+      {
+        id: 'AI_CONF_NEED_DETERMINED',
+        question:
+          'Wurde dokumentiert festgestellt, ob für das System eine Konformitätsbewertung erforderlich ist?',
+        reference: 'EU AI Act (2024), Art. 43 ff.',
+        evidence: 'Nachweis: Klassifikationsmemo, Legal/Compliance-Note',
+      },
+      {
+        id: 'AI_CONF_DONE',
+        question:
+          'Wurde die Konformitätsbewertung durchgeführt und liegt ein dokumentiertes Ergebnis vor?',
+        reference: 'EU AI Act (2024), Art. 43 ff.',
+        evidence: 'Nachweis: Konformitätsbewertungsbericht, Freigabeentscheidung',
+      },
+      {
+        id: 'AI_CONF_PLAN_IF_OPEN',
+        question:
+          'Gibt es einen datierten Plan mit Verantwortlichen, falls die Konformitätsbewertung noch aussteht?',
+        reference: 'EU AI Act (2024), Art. 43 ff.',
+        evidence: 'Nachweis: Projektplan, RACI, Meilensteine',
+      },
+      {
+        id: 'AI_DOC_ANNEX_IV_MINIMUM',
+        question:
+          'Deckt die technische Dokumentation mindestens Zweck, Modellbeschreibung, Daten, Tests, Risiken und Betriebsvoraussetzungen ab?',
+        reference: 'EU AI Act (2024), Anhang IV',
+        evidence: 'Nachweis: Anhang-IV-Indexliste, Dokumentationspaket',
+      },
+      {
+        id: 'AI_ROLES_DEFINED',
+        question:
+          'Sind Rollen (Anbieter/Betreiber) und Verantwortlichkeiten im Dokumentationspaket eindeutig beschrieben?',
+        reference: 'EU AI Act (2024), Art. 16 ff.',
+        evidence: 'Nachweis: Rollenbeschreibung, RACI, Vertrag/SoW (falls extern)',
+      },
+      {
+        id: 'AI_CHANGE_CONTROL_DOC',
+        question:
+          'Gibt es einen dokumentierten Change-Prozess, der Modelländerungen (Retraining/Finetuning) vor Go-live freigibt?',
+        reference: 'EU AI Act (2024), Art. 11–12 (i. V. m. Governance)',
+        evidence: 'Nachweis: Change-Policy, CAB-Protokolle, Release Notes',
+      },
     ],
   },
 
   AI_REGISTRATION_AND_CE: {
-    label: 'AI Act: Registrierung & CE-Kennzeichnung',
-    regulation: 'AI Act',
-    articles: ['AI Act Art. 49 ff. (Registrierung, CE-Kennzeichnung)'],
+    label: 'EU AI Act: Registrierung & Kennzeichnung',
+    regulation: 'EU AI Act',
+    articles: ['EU AI Act (2024), Art. 49 ff., Art. 60'],
     items: [
-      'Wurde das KI-System – sofern erforderlich – im EU-Datenbankregister registriert?',
-      'Wurde eine CE-Kennzeichnung für das KI-System oder das Produkt, in das es integriert ist, vorgenommen?',
-      'Sind Registrierungs- und Kennzeichnungsunterlagen nachvollziehbar dokumentiert und revisionssicher abgelegt?',
+      {
+        id: 'AI_REG_REQUIRED',
+        question:
+          'Wurde geprüft und dokumentiert, ob das System registrierungspflichtig ist (z. B. Hochrisiko-KI mit Registerpflicht)?',
+        reference: 'EU AI Act (2024), Art. 60',
+        evidence: 'Nachweis: Klassifikationsmemo, Registerpflicht-Entscheid',
+      },
+      {
+        id: 'AI_REG_DONE',
+        question:
+          'Wurde die Registrierung durchgeführt und ist die Registrierungs-ID nachvollziehbar dokumentiert?',
+        reference: 'EU AI Act (2024), Art. 60',
+        evidence: 'Nachweis: Register-ID, Screenshot/PDF, Ablageort',
+      },
+      {
+        id: 'AI_CE_REQUIRED_CHECK',
+        question:
+          'Wurde geprüft und dokumentiert, ob eine Kennzeichnung (z. B. CE) erforderlich ist (Produkt/integriertes System)?',
+        reference: 'EU AI Act (2024), Art. 49 ff.',
+        evidence: 'Nachweis: Legal/Compliance-Note, Konformitätsunterlagen',
+      },
+      {
+        id: 'AI_RECORDS_REPO',
+        question:
+          'Sind Registrierungs- und Kennzeichnungsunterlagen versioniert, zugriffsgeschützt und auffindbar abgelegt?',
+        reference: 'EU AI Act (2024), Art. 49 ff.',
+        evidence: 'Nachweis: Repository-Link, Zugriffskonzept, Versionshistorie',
+      },
     ],
   },
 
   AI_LIMITED_OR_MINIMAL: {
-    label: 'AI Act: Begrenztes/Minimales Risiko (Governance-Baseline)',
-    articles: ['AI Act (allg. Grundsätze)'],
+    label: 'EU AI Act: Nicht-Hochrisiko – Governance-Baseline',
+    regulation: 'EU AI Act',
+    articles: ['EU AI Act (2024), Art. 50 (falls anwendbar)'],
     items: [
-      'Haben Sie interne Governance- und Freigabeprozesse (Model Risk, Compliance, IT-Security) für den Einsatz definiert?',
-      'Haben Sie dokumentiert, warum das System nicht als Hochrisiko eingestuft wird (inkl. Begründung/Scope)?',
-      'Haben Sie Datenschutz- und Informationssicherheitsanforderungen (z. B. DLP, Logging, Zugriffskontrollen) umgesetzt?',
+      {
+        id: 'AI_BASE_APPROVAL_PROCESS',
+        question:
+          'Gibt es einen dokumentierten Freigabeprozess für KI-Use-Cases (Owner, Schritte, Gremien)?',
+        reference: 'EU AI Act (2024) – Governance-Baseline (intern)',
+        evidence: 'Nachweis: Prozessbeschreibung, RACI, Gremienprotokoll',
+      },
+      {
+        id: 'AI_BASE_RESPONSIBILITIES',
+        question:
+          'Sind Zuständigkeiten für Compliance, Risk und IT-Security im KI-Freigabeprozess festgelegt?',
+        reference: 'EU AI Act (2024) – Governance-Baseline (intern)',
+        evidence: 'Nachweis: RACI, Rollenbeschreibung, Organigramm',
+      },
+      {
+        id: 'AI_BASE_MIN_CONTROLS',
+        question:
+          'Gibt es definierte Mindestkontrollen für nicht-hochriskante KI (z. B. Zugriff, Logging, Datenschutz)?',
+        reference: 'EU AI Act (2024) – Governance-Baseline (intern)',
+        evidence: 'Nachweis: Control-Baseline, Checkliste, Freigabekriterien',
+      },
+      {
+        id: 'AI_NON_HR_JUSTIFICATION',
+        question:
+          'Ist die Nicht-Hochrisiko-Einstufung inklusive Use-Case-Scope, Nutzerkreis und Begründung dokumentiert?',
+        reference: 'EU AI Act (2024), Art. 6 (Klassifikation)',
+        evidence: 'Nachweis: Klassifikationsmemo, Scope-Beschreibung',
+      },
+      {
+        id: 'AI_BASE_ACCESS_CONTROL',
+        question:
+          'Sind Zugriffskontrollen für Daten, Modelle und Outputs umgesetzt (Rollen/Least Privilege)?',
+        reference: 'Governance/IT-Security Baseline',
+        evidence: 'Nachweis: IAM-Konzept, Rollenmatrix, Berechtigungsnachweise',
+      },
+      {
+        id: 'AI_BASE_AUDIT_LOGS',
+        question:
+          'Ist ein Audit-Trail für Nutzung und Änderungen am System aktiviert und aufbewahrt?',
+        reference: 'Governance/IT-Security Baseline',
+        evidence: 'Nachweis: Logging-Konfig, Retention, Beispiel-Logs',
+      },
+      {
+        id: 'AI_BASE_DLP',
+        question:
+          'Sind Maßnahmen gegen Datenabfluss (z. B. DLP-Regeln) definiert und aktiv, sofern relevante Kanäle genutzt werden?',
+        reference: 'Governance/IT-Security Baseline',
+        evidence: 'Nachweis: DLP-Policy, Regelsets, Testprotokoll',
+      },
     ],
-  },  
+  },
 
   DORA_BASE: {
-    label: 'DORA: IKT-Risikomanagement (Baseline)',
-    articles: ['DORA Art. 5–16 (Kapitel II)'],
+    label: 'DORA: IKT-Risikomanagement – Baseline',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 5–16'],
     items: [
-      'Haben Sie IKT-Governance und Verantwortlichkeiten definiert (Art. 5)?',
-      'Haben Sie ein IKT-Risikomanagement-Framework etabliert (Art. 6)?',
-      'Haben Sie IKT-Asset-Management, Schutzmaßnahmen und Resilienzmaßnahmen umgesetzt?',
-      'Haben Sie BCM/Recovery/Backups regelmäßig getestet und dokumentiert?',
+      {
+        id: 'DORA_GOV_ROLES',
+        question:
+          'Sind IKT-Governance und Verantwortlichkeiten für die KI-relevanten Systeme definiert und dokumentiert?',
+        reference: 'DORA (2022), Art. 5',
+        evidence: 'Nachweis: Governance-Dokument, RACI, Rollenbeschreibung',
+      },
+      {
+        id: 'DORA_ICT_RMF',
+        question:
+          'Gibt es ein dokumentiertes IKT-Risikomanagement-Framework inklusive Rollen, Kontrollen und Risikoappetit?',
+        reference: 'DORA (2022), Art. 6',
+        evidence: 'Nachweis: Framework, Policies, Kontrollkatalog',
+      },
+      {
+        id: 'DORA_ASSET_INVENTORY',
+        question:
+          'Gibt es ein aktuelles Inventar der IKT-Assets, die für das KI-System genutzt werden?',
+        reference: 'DORA (2022), Art. 6–9 (i. V. m. Governance)',
+        evidence: 'Nachweis: Asset-Register/CMDB-Auszug, Architekturdiagramm',
+      },
+      {
+        id: 'DORA_PROTECTION_MEASURES',
+        question:
+          'Sind Schutzmaßnahmen für die KI-relevanten Komponenten definiert und umgesetzt (z. B. IAM, Patch, Hardening)?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Security-Baseline, Patch-Reports, IAM-Nachweise',
+      },
+      {
+        id: 'DORA_RESILIENCE_MEASURES',
+        question:
+          'Sind Resilienzmaßnahmen für die KI-relevanten Komponenten definiert (z. B. Redundanz, Failover, Kapazität)?',
+        reference: 'DORA (2022), Art. 11–12',
+        evidence: 'Nachweis: Architektur, DR-Konzept, Failover-Tests',
+      },
+      {
+        id: 'DORA_BACKUP_RECOVERY_TESTS',
+        question:
+          'Werden Backup- und Recovery-Verfahren für die KI-relevanten Systeme regelmäßig getestet und dokumentiert?',
+        reference: 'DORA (2022), Art. 11–12',
+        evidence: 'Nachweis: Testreport, RTO/RPO, Protokolle',
+      },
     ],
   },
 
   DORA_THIRDPARTY_STANDARD: {
-    label: 'DORA: IKT-Drittanbieter (Standard)',
-    articles: ['DORA Art. 28–30 (Kap. V, Sec. I)'],
+    label: 'DORA: IKT-Drittanbieter – Standardanforderungen',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 28–30'],
     items: [
-      'Haben Sie Drittanbieter-Risiken als Teil des IKT-Risikomanagements erfasst (Art. 28)?',
-      'Haben Sie ein Register/eine Informationsübersicht zu IKT-Verträgen gepflegt?',
-      'Haben Sie Vertragsanforderungen und eine Exit-Strategie definiert?',
+      {
+        id: 'DORA_VENDOR_REGISTER_RISK',
+        question:
+          'Werden IKT-Drittanbieter in einem Register geführt und risikobasiert bewertet?',
+        reference: 'DORA (2022), Art. 28',
+        evidence: 'Nachweis: Vendor-Register, Risk-Rating, Review-Protokolle',
+      },
+      {
+        id: 'DORA_CONTRACT_REGISTER_FIELDS',
+        question:
+          'Enthält das Vertragsregister Mindestangaben zu Service, Kritikalität, Datenzugriff, Subdienstleistern und Laufzeiten?',
+        reference: 'DORA (2022), Art. 28–29',
+        evidence: 'Nachweis: Register-Auszug, Datenmodell/Template',
+      },
+      {
+        id: 'DORA_CONTRACT_MIN_CLAUSES',
+        question:
+          'Enthalten Drittanbieter-Verträge Mindestklauseln zu Sicherheit, Audit-Rechten und Incident-Reporting?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Vertragsanhang, Musterklauseln, SoW',
+      },
+      {
+        id: 'DORA_EXIT_STRATEGY',
+        question:
+          'Gibt es eine dokumentierte Exit-Strategie inklusive Datenrückgabe/-löschung und Übergangsplan?',
+        reference: 'DORA (2022), Art. 28–30',
+        evidence: 'Nachweis: Exit-Plan, Migration-Runbook, Vertrag',
+      },
     ],
   },
 
   DORA_THIRDPARTY_PLUS: {
-    label: 'DORA: (Pot.) kritischer IKT-Drittanbieter (erweitert)',
-    articles: ['DORA Art. 28–44 (Kapitel V)'],
+    label: 'DORA: (Pot.) kritischer IKT-Drittanbieter – Erweiterte Anforderungen',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 31–44'],
     items: [
-      'Haben Sie Konzentrationsrisiken geprüft und eine Multi-Vendor-Strategie dokumentiert?',
-      'Haben Sie erweitertes Monitoring und eine Exit-Planung (inkl. Subdienstleister) implementiert?',
-      'Haben Sie zusätzliche Anforderungen und Kooperationen mit Aufsicht/Lead Overseer berücksichtigt?',
+      {
+        id: 'DORA_CONCENTRATION_RISK',
+        question:
+          'Wurde das Konzentrationsrisiko (Single Point of Failure) für den Anbieter bewertet und dokumentiert?',
+        reference: 'DORA (2022), Art. 28–29 (i. V. m. Governance)',
+        evidence: 'Nachweis: Konzentrationsanalyse, Risikoentscheidung',
+      },
+      {
+        id: 'DORA_CONCENTRATION_MITIGATION',
+        question:
+          'Gibt es eine dokumentierte Strategie zur Reduktion des Konzentrationsrisikos (z. B. Zweitanbieter/Exit)?',
+        reference: 'DORA (2022), Art. 28–30',
+        evidence: 'Nachweis: Multi-Vendor-/Exit-Strategie, Management-Freigabe',
+      },
+      {
+        id: 'DORA_SUBCONTRACTORS',
+        question:
+          'Sind Subdienstleister identifiziert, vertraglich geregelt und werden sie risikobasiert überprüft?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Subdienstleister-Liste, Vertragsklauseln, Reviews',
+      },
+      {
+        id: 'DORA_VENDOR_MONITORING',
+        question:
+          'Werden Anbieter anhand definierter KPIs/SLAs regelmäßig überwacht (Security, Verfügbarkeit, Resilienz)?',
+        reference: 'DORA (2022), Art. 28–30',
+        evidence: 'Nachweis: SLA-Reports, Security-Reports, Review-Protokolle',
+      },
+      {
+        id: 'DORA_SUPERVISORY_READINESS',
+        question:
+          'Sind interne Prozesse definiert, um Aufsichtsanforderungen zu kritischen IKT-Drittanbietern zu erfüllen (Anfragen, Audits, Auskünfte)?',
+        reference: 'DORA (2022), Art. 31–44',
+        evidence: 'Nachweis: Prozessbeschreibung, Ansprechpartner, Audit-Playbook',
+      },
     ],
   },
 
   DORA_DATA_PROTECTION_STRONG: {
-    label: 'DORA: Datenfluss zu externer KI – starker Schutzpfad',
-    articles: ['DORA Art. 5–16 (Kapitel II)'],
+    label: 'DORA: Datenübermittlung an externe KI – Schutzmaßnahmen',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 5–16 (i. V. m. IKT-Kontrollen)'],
     items: [
-      'Haben Sie Datenklassifizierung und einen Freigabeprozess für externe Verarbeitung definiert?',
-      'Haben Sie Verschlüsselung/Tokenisierung, DLP und Monitoring aktiviert?',
-      'Haben Sie vertraglich Datenlokation, Löschung, Auditrechte und Subprozessoren abgesichert?',
+      {
+        id: 'DORA_DATA_CLASS_AND_APPROVAL',
+        question:
+          'Gibt es eine Datenklassifizierung und eine dokumentierte Freigabe für die Übermittlung an externe KI-Dienste?',
+        reference: 'DORA (2022), Art. 6–9',
+        evidence: 'Nachweis: Klassifizierungsrichtlinie, Freigabeprotokoll',
+      },
+      {
+        id: 'DORA_ENCRYPTION',
+        question:
+          'Werden Daten bei Übertragung und Speicherung für externe KI-Dienste verschlüsselt?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Crypto-Konfiguration, Architektur, Key-Management',
+      },
+      {
+        id: 'DORA_PSEUDONYMIZATION',
+        question:
+          'Werden sensible Daten vor Übermittlung an externe KI-Dienste pseudonymisiert oder tokenisiert, sofern erforderlich?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Pseudonymisierungskonzept, Datenflussdiagramm',
+      },
+      {
+        id: 'DORA_DLP_CONTROLS',
+        question:
+          'Sind DLP-Kontrollen für relevante Kanäle aktiv, um Datenabfluss bei Nutzung externer KI zu verhindern?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: DLP-Policy, Regelsets, Testprotokoll',
+      },
+      {
+        id: 'DORA_CONTRACT_DATA_LOCATION',
+        question:
+          'Ist Datenlokation oder Hostingregion für externe KI-Dienste vertraglich festgelegt?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Vertrag/Anhang, Hosting-Addendum',
+      },
+      {
+        id: 'DORA_CONTRACT_DELETION_RETURN',
+        question:
+          'Sind Datenrückgabe und Löschung nach Vertragsende vertraglich geregelt?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Vertrag/Anhang, Löschkonzept',
+      },
+      {
+        id: 'DORA_CONTRACT_AUDIT_RIGHTS',
+        question:
+          'Sind Audit- und Prüfrechte gegenüber dem Anbieter vertraglich geregelt?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Vertrag/Anhang, Audit-Klausel',
+      },
+      {
+        id: 'DORA_CONTRACT_SUBPROCESSORS',
+        question:
+          'Sind Subprozessoren transparent benannt und ist deren Einsatz vertraglich geregelt (z. B. Zustimmungspflicht)?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Subprocessor-Liste, Vertragsklauseln',
+      },
     ],
   },
 
   DORA_MONITORING_AI: {
-    label: 'DORA: Dynamisches Modell – Monitoring/Change/Controls',
-    articles: ['DORA Art. 5–16 (Kapitel II)'],
+    label: 'DORA: Modellbetrieb – Monitoring, Change und Kontrollen',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 5–16'],
     items: [
-      'Haben Sie einen verbindlichen Change-/Release-Prozess für Modelländerungen (Retraining/Finetuning) etabliert?',
-      'Haben Sie Monitoring (Drift/Performance/Security) und Alerting implementiert?',
-      'Haben Sie Incident-Runbooks und Eskalationswege für Modellfehler/Cyber-Ereignisse definiert?',
+      {
+        id: 'DORA_MODEL_CHANGE_IMPACT',
+        question:
+          'Gibt es einen dokumentierten Change-Prozess, der Modelländerungen nur nach Risiko- und Impact-Analyse freigibt?',
+        reference: 'DORA (2022), Art. 6–9',
+        evidence: 'Nachweis: Change-Policy, Impact-Template, Freigaben',
+      },
+      {
+        id: 'DORA_MONITORING_PERFORMANCE',
+        question:
+          'Werden Leistungskennzahlen des Modells im Betrieb überwacht und gibt es definierte Schwellenwerte für Eskalation?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Monitoring-Dashboard, Alert-Regeln',
+      },
+      {
+        id: 'DORA_MONITORING_DRIFT',
+        question:
+          'Wird Daten- oder Konzeptdrift überwacht und sind Maßnahmen bei Überschreitung von Schwellenwerten definiert?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Drift-Report, Runbooks, Alerts',
+      },
+      {
+        id: 'DORA_MONITORING_SECURITY',
+        question:
+          'Gibt es Security-Monitoring für KI-relevante Komponenten (z. B. unautorisierte Zugriffe, Anomalien)?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: SIEM-Use-Cases, Logs, Alerting',
+      },
+      {
+        id: 'DORA_RUNBOOKS_MODEL_INCIDENTS',
+        question:
+          'Gibt es Runbooks für Modellfehler (z. B. Fehlentscheidungen, Ausfälle) inklusive Eskalationskette?',
+        reference: 'DORA (2022), Art. 17',
+        evidence: 'Nachweis: Runbooks, On-Call-Plan, Eskalationsmatrix',
+      },
+      {
+        id: 'DORA_RUNBOOKS_CYBER',
+        question:
+          'Gibt es Runbooks für Cyber- und IKT-Vorfälle in den KI-Komponenten inklusive Eskalationskette?',
+        reference: 'DORA (2022), Art. 17',
+        evidence: 'Nachweis: IR-Playbooks, Rollen, Übungen',
+      },
     ],
   },
 
   DORA_INCIDENT_MGMT: {
-    label: 'DORA: IKT-Vorfallserfassung & Meldeprozesse',
+    label: 'DORA: IKT-Vorfallmanagement & Meldeprozesse',
     regulation: 'DORA',
-    articles: ['DORA Art. 17–23 (Incident-Management & Reporting)'],
+    articles: ['DORA (2022), Art. 17–23'],
     items: [
-      'Gibt es dokumentierte Prozesse zur Erfassung von IKT-/Cybervorfällen gemäß DORA?',
-      'Sind Schwellenwerte und Kriterien für meldepflichtige Vorfälle definiert und kommuniziert?',
-      'Existieren Meldeprozesse an Aufsichtsbehörden (z. B. ESAs/nationale Aufsicht) inkl. Fristen und Verantwortlichkeiten?',
+      {
+        id: 'DORA_INC_PROCESS',
+        question:
+          'Gibt es einen dokumentierten Prozess zur Erfassung, Klassifikation und Bearbeitung von IKT-Vorfällen?',
+        reference: 'DORA (2022), Art. 17',
+        evidence: 'Nachweis: Prozessbeschreibung, Ticket-Workflow, Rollen',
+      },
+      {
+        id: 'DORA_INC_THRESHOLDS',
+        question:
+          'Sind Kriterien und Schwellenwerte für meldepflichtige IKT-Vorfälle dokumentiert und verbindlich kommuniziert?',
+        reference: 'DORA (2022), Art. 18–19',
+        evidence: 'Nachweis: Policy, Schulungsnachweis, Kommunikationsmail',
+      },
+      {
+        id: 'DORA_INC_REPORTING',
+        question:
+          'Gibt es einen dokumentierten Meldeprozess an die zuständige Aufsicht inklusive Fristen, Rollen und Vorlagen?',
+        reference: 'DORA (2022), Art. 19–20',
+        evidence: 'Nachweis: Meldeprozess, Templates, RACI',
+      },
+      {
+        id: 'DORA_INC_POSTMORTEM',
+        question:
+          'Werden schwerwiegende IKT-Vorfälle mit Abschlussbericht, Ursachenanalyse und Maßnahmenplan dokumentiert?',
+        reference: 'DORA (2022), Art. 19–20',
+        evidence: 'Nachweis: Abschlussbericht, RCA, Maßnahmen-Tracker',
+      },
     ],
   },
 
   DORA_TLPT: {
-    label: 'DORA: Resilienztests inkl. TLPT',
+    label: 'DORA: IKT-Resilienztests (inkl. TLPT)',
     regulation: 'DORA',
-    articles: ['DORA Art. 24–27 (IKT-Resilienztests, TLPT)'],
+    articles: ['DORA (2022), Art. 24–27'],
     items: [
-      'Wurde bewertet, ob das KI-System bzw. seine Infrastruktur in den Scope von TLPT-Tests fällt?',
-      'Sind regelmäßige IKT-Resilienztests für die betroffenen Komponenten geplant und dokumentiert?',
-      'Sind Rollen, Testabdeckung und Nachverfolgung von Findings aus Resilienztests definiert?',
+      {
+        id: 'DORA_TLPT_SCOPE_CHECK',
+        question:
+          'Wurde geprüft, ob das KI-System oder seine Infrastruktur in den Scope fortgeschrittener Resilienztests (z. B. TLPT) fällt?',
+        reference: 'DORA (2022), Art. 26',
+        evidence: 'Nachweis: Scope-Entscheid, Risikoanalyse',
+      },
+      {
+        id: 'DORA_TEST_PLAN',
+        question:
+          'Sind Resilienztests für KI-relevante Komponenten (Model Serving, Datenpipeline, Cloud) geplant und terminiert?',
+        reference: 'DORA (2022), Art. 24–25',
+        evidence: 'Nachweis: Testplan, Kalender/Meilensteine',
+      },
+      {
+        id: 'DORA_TEST_ROLES_COVERAGE',
+        question:
+          'Sind Rollen, Testabdeckung und Testkriterien für die Resilienztests dokumentiert?',
+        reference: 'DORA (2022), Art. 24–25',
+        evidence: 'Nachweis: Testkonzept, RACI, Abdeckungsmatrix',
+      },
+      {
+        id: 'DORA_FINDINGS_TRACKING',
+        question:
+          'Gibt es einen Prozess, der Test-Findings priorisiert, Maßnahmen zuweist und fristgerecht nachverfolgt?',
+        reference: 'DORA (2022), Art. 25',
+        evidence: 'Nachweis: Findings-Tracker, Remediation-Plan, Statusreports',
+      },
     ],
   },
 
   DORA_THIRDPARTY_DD: {
-    label: 'DORA: Drittanbieter-Due-Diligence & Vertragspflichten',
+    label: 'DORA: Drittanbieter – Due Diligence, Verträge und Monitoring',
     regulation: 'DORA',
-    articles: ['DORA Art. 28–30, 31–44 (IKT-Drittanbieter)'],
+    articles: ['DORA (2022), Art. 28–30, 31–44'],
     items: [
-      'Wurde für alle IKT-Drittanbieter eine Due-Diligence-Prüfung durchgeführt und dokumentiert?',
-      'Sind vertragliche Regelungen zu Exit-Strategien, Audit-Rechten und Sicherheits-SLAs implementiert?',
-      'Werden IKT-Drittanbieter laufend überwacht (z. B. Performance, Security, Resilienz) und regelmäßig neu bewertet?',
+      {
+        id: 'DORA_DD_MINIMUM_SCOPE',
+        question:
+          'Umfasst die Due-Diligence mindestens Security, Resilienz, Subdienstleister und Datenverarbeitung – und ist sie dokumentiert?',
+        reference: 'DORA (2022), Art. 28–29',
+        evidence: 'Nachweis: DD-Report, Fragebogen, Risikoentscheidung',
+      },
+      {
+        id: 'DORA_CONTRACT_AUDIT_RIGHTS',
+        question:
+          'Sind Audit- und Prüfrechte gegenüber dem Anbieter vertraglich geregelt?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: Vertrag/Anhang, Audit-Klausel',
+      },
+      {
+        id: 'DORA_CONTRACT_SECURITY_SLA',
+        question:
+          'Sind Sicherheitsanforderungen (z. B. SLAs/KPIs, Mindeststandards) vertraglich geregelt?',
+        reference: 'DORA (2022), Art. 30',
+        evidence: 'Nachweis: SLA/Anhang, Security-Addendum',
+      },
+      {
+        id: 'DORA_EXIT_PLAN',
+        question:
+          'Ist eine Exit-Strategie inklusive Datenmigration und Übergangsbetrieb dokumentiert?',
+        reference: 'DORA (2022), Art. 28–30',
+        evidence: 'Nachweis: Exit-Plan, Migrations-Runbook, Verantwortliche',
+      },
+      {
+        id: 'DORA_VENDOR_REVIEW_CADENCE',
+        question:
+          'Werden Drittanbieter risikobasiert regelmäßig anhand definierter KPIs überprüft und neu bewertet?',
+        reference: 'DORA (2022), Art. 28–30',
+        evidence: 'Nachweis: KPI-Reports, Review-Protokolle, Re-Rating',
+      },
     ],
   },
 
   DORA_BASE_LIGHT: {
-    label: 'DORA: Baseline (proportional/light)',
-    articles: ['DORA Art. 5–16 (Kapitel II)'],
+    label: 'DORA: IKT-Risikomanagement – Proportionale Baseline',
+    regulation: 'DORA',
+    articles: ['DORA (2022), Art. 5–16 (proportional)'],
     items: [
-      'Haben Sie proportionale Mindestkontrollen dokumentiert?',
-      'Haben Sie Basis-IT-Security und Governance sichergestellt?',
+      {
+        id: 'DORA_LIGHT_MIN_CONTROLS',
+        question:
+          'Sind risikobasierte Mindestkontrollen (z. B. Zugriff, Logging, Backup) definiert und dokumentiert?',
+        reference: 'DORA (2022), Art. 6',
+        evidence: 'Nachweis: Control-Baseline, Checkliste',
+      },
+      {
+        id: 'DORA_LIGHT_RESPONSIBILITIES',
+        question:
+          'Sind Verantwortlichkeiten für Betrieb und Sicherheit der KI-relevanten Systeme festgelegt?',
+        reference: 'DORA (2022), Art. 5',
+        evidence: 'Nachweis: RACI, Rollenbeschreibung',
+      },
+      {
+        id: 'DORA_LIGHT_LOGGING',
+        question:
+          'Ist Logging für die KI-relevanten Systeme aktiviert und wird es gemäß Retention-Vorgaben aufbewahrt?',
+        reference: 'DORA (2022), Art. 9',
+        evidence: 'Nachweis: Log-Konfiguration, Retention, Beispiel-Logs',
+      },
     ],
   },
 };
-
+// =======================================================
 // -------------------- Decision Tree --------------------
+// =======================================================
 
 export const CONSISTENCY_LOCKS = {
   AI_HIGH_RISK: 'AI_HIGH_RISK',
 };
 
 export const decisionTree = {
-  // --- AI Act (Kompakt) ---
+  // ===================================================
+  // -------------------- EU AI Act --------------------
+  // ===================================================
   A1: {
     id: 'A1',
     type: 'question',
-    label: 'Handelt es sich um ein KI-System nach Art. 3 AI Act?',
+    label: 'Handelt es sich um ein KI-System nach Art. 3 EU AI Act?',
     yes: 'A2',
     no: 'A0',
     info:
-      'Hier geht es um die Grundsatzfrage, ob das betrachtete System überhaupt unter die KI-Definition des AI Act fällt. ' +
-      'Nur wenn dies bejaht wird, greifen die weiteren Pflichten des AI Act.',
+      'Hier wird geprüft, ob das betrachtete System unter die Definition eines KI-Systems fällt. ' +
+      'Nur wenn dies bejaht wird, greifen die weiteren Pflichten des EU AI Act.',
     examples: [
-      'Ein Machine-Learning-Modell, das automatisch Kreditrisiken bewertet → typischerweise KI-System.',
-      'Ein statischer, rein regelbasierter Report ohne Lernkomponente → eher kein KI-System.',
-      'Ein extern genutzter Foundation- oder LLM-Service, der in Prozesse eingebunden wird → kann ein KI-System sein.',
+      'Ein Machine-Learning-Modell, das Kreditrisiken automatisiert bewertet.',
+      'Ein statisches, rein regelbasiertes System ohne Lern- oder Inferenzlogik.',
+      'Ein externer LLM-/Foundation-Model-Service, der in Prozesse eingebunden wird.',
     ],
   },
 
   A0: {
     id: 'A0',
     type: 'leaf',
-    label: 'Kein KI-System → AI Act nicht anwendbar.',
+    label: 'Kein KI-System → EU AI Act nicht anwendbar.',
     obligations: ['AI_ACT_NOT_APPLICABLE'],
     next: 'END',
     info:
-      'Wenn das System nicht unter die Definition eines KI-Systems im Sinne des AI Act fällt, gelten die spezifischen AI-Act-Pflichten nicht. ' +
-      'Trotzdem sollten Governance, IT-Sicherheit und DORA-Anforderungen geprüft werden.',
+      'Wenn das System nicht unter die Definition eines KI-Systems fällt, gelten die spezifischen EU-AI-Act-Pflichten nicht. ' +
+      'DORA- und interne Governance-/Security-Anforderungen können dennoch relevant sein.',
     examples: [
-      'Reine Datenvisualisierung ohne automatisierte Entscheidungslogik.',
-      'Ein klassisches Workflow-Tool ohne ML/AI-Funktionalität.',
+      'Reine Datenvisualisierung ohne KI-Logik.',
+      'Klassisches Workflow-Tool ohne ML/AI-Komponente.',
     ],
   },
 
   A2: {
     id: 'A2',
     type: 'question',
-    label: 'Liegt eine potenziell verbotene Praxis vor (AI Act – Prohibited)?',
+    label: 'Liegt eine potenziell verbotene Praxis nach EU AI Act vor?',
     yes: 'A2_ja',
     no: 'A3',
     info:
-      'Hier wird geprüft, ob das KI-System in eine Kategorie fällt, die nach AI Act grundsätzlich unzulässig ist ' +
-      '(z. B. bestimmte Social-Scoring-Systeme oder manipulative Anwendungen). ' +
+      'Hier wird geprüft, ob das KI-System in eine Kategorie fällt, die nach EU AI Act grundsätzlich unzulässig ist. ' +
       'Bei verbotenen Praktiken ist der Einsatz grundsätzlich nicht erlaubt.',
     examples: [
-      'Ein System, das staatenübergreifendes Social Scoring von Bürgern vornimmt.',
-      'Ein System, das verdeckt das Verhalten von Personen manipulierend beeinflusst, um Entscheidungen zu steuern.',
+      'Systeme, die Menschen verdeckt manipulieren, um Entscheidungen zu beeinflussen.',
+      'Bestimmte Social-Scoring-Konstellationen.',
     ],
   },
 
   A2_ja: {
     id: 'A2_ja',
     type: 'leaf',
-    label: 'Verbotene Praxis → Nutzung untersagen / Rechtsprüfung.',
+    label: 'Verbotene Praxis → Nutzung untersagen und Eskalation auslösen.',
     obligations: ['AI_PROHIBITED'],
     next: 'G_AI_PROHIBITED_REVIEW',
     info:
-      'Wird eine verbotene Praxis festgestellt, darf das System grundsätzlich nicht betrieben werden. ' +
-      'Es sind sofortige Maßnahmen erforderlich: Stopp des Deployments bzw. Betriebs und eine vertiefte Rechtsprüfung.',
+      'Bei verbotenen Praktiken darf das System grundsätzlich nicht betrieben werden. ' +
+      'Es sind Stop-Maßnahmen und eine formale Eskalation erforderlich.',
     examples: [
-      'Ein bereits pilotiertes Social-Scoring-System wird gestoppt und aus der Produktionsumgebung entfernt.',
-      'Das Projekt wird an Legal & Compliance übergeben, um Alternativen oder einen Abbruch zu prüfen.',
+      'Pilot wird gestoppt und aus Produktionsumgebungen entfernt.',
+      'Übergabe an Legal & Compliance zur Abbruch-/Re-Design-Entscheidung.',
     ],
   },
 
   A3: {
     id: 'A3',
     type: 'question',
-    label: 'Hochrisiko-Einstufung nach AI Act (Verwendungszweck/Annex)?',
+    label: 'Ist das KI-System als Hochrisiko-KI nach EU AI Act einzustufen (Verwendungszweck/Anhang)?',
     yes: 'A3_HR',
     no: 'A3_NON_HR',
     info:
-      'An dieser Stelle wird geprüft, ob das System als Hochrisiko-KI nach AI Act gilt (z. B. aufgrund des Annex, ' +
-      'etwa bei Kreditwürdigkeitsprüfungen, Beschäftigungs- oder kritischer Infrastrukturprozessen). ' +
-      'Das Ergebnis steuert, welche Anforderungspakete gelten.',
+      'Hier wird geprüft, ob eine Hochrisiko-Klassifikation greift (z. B. Annex-Fälle wie Kreditwürdigkeitsprüfungen). ' +
+      'Das Ergebnis steuert, welche Pflichtenpakete gelten.',
     examples: [
-      'Kreditwürdigkeitsbewertung zur Vergabe von Verbraucherkrediten → typischer Hochrisiko-Fall.',
-      'KI im HR-Bereich (z. B. automatisierte Bewerbervorauswahl) → potenziell Hochrisiko.',
-      'Ein reines Chat-Assistenzsystem ohne Einfluss auf Entscheidungen → eher kein Hochrisiko.',
+      'Kreditwürdigkeitsbewertung zur Vergabe von Verbraucherkrediten.',
+      'Automatisierte Bewerbervorauswahl.',
+      'Assistenzsystem ohne Entscheidungswirkung.',
     ],
   },
 
   A3_HR: {
     id: 'A3_HR',
     type: 'leaf',
-    label: 'Hochrisiko-KI → Hochrisiko-Anforderungspaket.',
-    obligations: ['AI_HR_PROVIDER_OR_DEPLOYER', 'AI_CONFORMITY_AND_DOC','AI_REGISTRATION_AND_CE'],
+    label: 'Hochrisiko-KI → Hochrisiko-Pflichten anwenden.',
+    obligations: ['AI_HR_PROVIDER_OR_DEPLOYER', 'AI_CONFORMITY_AND_DOC', 'AI_REGISTRATION_AND_CE'],
     next: 'G_AI_HR_LOCK',
     info:
-      'Das System ist als Hochrisiko-KI eingestuft. Damit greifen die umfangreichen Pflichten aus Art. 8–15 AI Act, ' +
-      'u. a. Risikomanagement, Daten-Governance, technische Dokumentation, Logging, Human Oversight und Robustheit.',
+      'Das System ist als Hochrisiko-KI eingestuft. Damit greifen die umfangreichen Pflichten (u. a. Risiko-, Daten- und Governance-Anforderungen).',
     examples: [
-      'Ein Scoring-Modell, das automatisiert Kreditentscheidungen trifft und damit Zugang zu Finanzprodukten steuert.',
-      'Ein Modell, das über Annahme/Ablehnung von Bewerbenden entscheidet.',
+      'Scoring-Modell zur (teil-)automatisierten Kreditentscheidung.',
+      'Modelle mit erheblicher Wirkung auf Zugang zu Finanzprodukten.',
     ],
   },
 
   A3_NON_HR: {
     id: 'A3_NON_HR',
     type: 'leaf',
-    label: 'Kein Hochrisiko → Transparenz/Minimales Risiko prüfen.',
+    label: 'Kein Hochrisiko → Transparenz und Governance-Baseline prüfen.',
     obligations: ['AI_LIMITED_OR_MINIMAL', 'AI_TRANSPARENCY_ART_50'],
     next: 'D0',
     info:
-      'Das System fällt nicht in eine Hochrisiko-Kategorie. Es können dennoch Transparenz- und interne Governance-Pflichten bestehen, ' +
-      'insbesondere Kennzeichnungspflichten und allgemeine IT-/Risikomanagementvorgaben.',
+      'Wenn keine Hochrisiko-Klassifikation greift, können dennoch Transparenzpflichten und interne Governance-Anforderungen relevant sein.',
     examples: [
-      'Ein interner KI-Assistent zur Textunterstützung ohne direkten Einfluss auf Kundentransaktionen.',
-      'Ein Empfehlungssystem für interne Wissensartikel.',
+      'Interner KI-Assistent ohne unmittelbaren Einfluss auf Kundentransaktionen.',
+      'Wissenssuche/Content-Summarization ohne Entscheidungsautomatisierung.',
     ],
   },
 
-  // -------------------- AI ACT: VALIDATION / REVIEW GATES --------------------
-
-  /**
-   * Gate: High-Risk Lock wird bestätigt und „festgeschrieben“.
-   * Implementierung in App über validateNextNode: wenn Gate erreicht, wird Lock gesetzt.
-   */
+  // -------------------- EU AI Act: Gates / Review --------------------
   G_AI_HR_LOCK: {
     id: 'G_AI_HR_LOCK',
     type: 'question',
-    regulation: 'AI Act',
-    label: 'Plausibilitätscheck: High-Risk Einstufung bestätigen und als verbindlich festschreiben?',
-    yes: 'D0', 
+    regulation: 'EU AI Act',
+    label: 'Plausibilitätscheck: Soll die Hochrisiko-Einstufung als verbindlich dokumentiert werden?',
+    yes: 'D0',
     no: 'W_AI_HR_REVIEW',
-    info: 'Dieser Gate-Knoten verhindert, dass High-Risk später implizit „heruntergestuft“ wird.',
+    info:
+      'Dieser Gate-Knoten stellt sicher, dass eine Hochrisiko-Einstufung nicht ungeprüft relativiert wird.',
     examples:
-      'Wenn Unsicherheit besteht: Review/Eskalation durchführen (Legal/Compliance/Risk/ISB) und Begründung dokumentieren.',
+      'Bei Unsicherheit: Review/Eskalation (Legal/Compliance/Risk/ISB) und Begründung dokumentieren.',
   },
 
   G_AI_PROHIBITED_REVIEW: {
     id: 'G_AI_PROHIBITED_REVIEW',
     type: 'question',
-    label: 'Review-Gate: Wurde der Einsatz gestoppt und eine Eskalation an Legal/Compliance dokumentiert?',
+    regulation: 'EU AI Act',
+    label: 'Review-Gate: Wurde der Einsatz gestoppt und die Eskalation an Legal/Compliance dokumentiert?',
     yes: 'END',
     no: 'W_AI_PROHIBITED_ESCALATION',
-    info: 'Sichert ab, dass verbotene Praktiken nicht „weitergeklickt“ werden können.',
-    examples: 'No-Go, Management-Entscheid, Maßnahmenplan, Aufbewahrung der Entscheidungsdokumentation.',
+    info:
+      'Sichert ab, dass verbotene Praktiken nicht ohne formale Stop-/Eskalationsentscheidung weiterverfolgt werden.',
+    examples:
+      'No-Go-Entscheid, Case-ID, Maßnahmenplan, Ablage der Entscheidungsdokumentation.',
   },
 
   W_AI_HR_REVIEW: {
     id: 'W_AI_HR_REVIEW',
     type: 'leaf',
-    label: 'Warnung/Review: High-Risk Einstufung unsicher → Eskalation & Dokumentation erforderlich.',
+    label: 'Warnung: Hochrisiko-Einstufung unklar → Review und Dokumentation erforderlich.',
     obligations: [],
     next: 'END',
-    info: 'Dieser Knoten fordert formale Klärung (Legal/Compliance/Risk/ISB) vor weiterer Nutzung.',
-    examples: 'Review-Protokoll, Klassifikationsbegründung, ggf. externe Beratung.',
+    info:
+      'Dieser Knoten fordert eine formale Klärung, bevor das Vorhaben weitergeführt wird.',
+    examples:
+      'Review-Protokoll, Klassifikationsbegründung, ggf. externe Beratung.',
   },
 
   W_AI_CONTRADICTION: {
     id: 'W_AI_CONTRADICTION',
     type: 'leaf',
-    label: 'Widerspruch erkannt: Pfad ist inkonsistent → Review/Eskalation erforderlich.',
+    label: 'Widerspruch erkannt → Review/Eskalation erforderlich.',
     obligations: [],
     next: 'END',
-    info: 'Inkonsistente Antworten dürfen nicht zu einer stillen „Herunterstufung“ führen.',
-    examples: 'Pfad prüfen, Entscheidungen re-validieren, Management/Compliance einschalten.',
+    info:
+      'Inkonsistente Antworten sollten nicht zu stillen Annahmen oder impliziten Herabstufungen führen.',
+    examples:
+      'Pfad prüfen, Entscheidungen revalidieren, Governance-Gremium einbinden.',
   },
 
   W_AI_PROHIBITED_ESCALATION: {
     id: 'W_AI_PROHIBITED_ESCALATION',
     type: 'leaf',
-    label: 'Eskalation erforderlich: Verbotene Praxis → Stop + Legal/Compliance Freigabe fehlt.',
+    label: 'Eskalation erforderlich: Verbotene Praxis → Stop/Eskalation noch nicht nachgewiesen.',
     obligations: [],
     next: 'END',
-    info: 'Ohne dokumentierte Eskalation darf kein weiterer Fortschritt erfolgen.',
-    examples: 'Freigabevermerk, Ticket/Case-ID, Entscheidungsgremium.',
+    info:
+      'Ohne dokumentierte Stop- und Eskalationsmaßnahmen darf das Vorhaben nicht fortgesetzt werden.',
+    examples:
+      'Freigabevermerk fehlt, Ticket/Case-ID fehlt, Entscheidungsgremium nicht erfolgt.',
   },
-  // --- DORA Start ---
+
+  // ==============================================
+  // -------------------- DORA --------------------
+  // ==============================================
   D0: {
     id: 'D0',
     type: 'question',
-    label: 'Soll mit dem DORA-Teil gestartet werden?',
+    label: 'DORA-Prüfung starten?',
     yes: 'B1',
     no: 'END',
     info:
-      'Hier wird entschieden, ob zusätzlich zum AI Act eine strukturierte DORA-Analyse durchgeführt werden soll. ' +
-      'Insbesondere Finanzunternehmen müssen die IKT-Risiken und Resilienzanforderungen aus DORA berücksichtigen.',
+      'Hier wird entschieden, ob zusätzlich zum EU AI Act eine strukturierte DORA-Analyse durchgeführt wird.',
     examples: [
-      'Die Bank möchte neben der KI-Klassifikation direkt auch IKT-Risiken und Resilienz bewerten.',
-      'Es liegt bereits eine DORA-Bewertung vor, sodass vorerst „Nein“ gewählt wird.',
+      'Bank prüft direkt IKT-Risiken und Resilienzanforderungen mit.',
+      'Es liegt bereits eine DORA-Bewertung vor.',
     ],
   },
 
-  // --- DORA Baum (Phase 1) ---
   B1: {
     id: 'B1',
     type: 'question',
@@ -373,33 +933,33 @@ export const decisionTree = {
     yes: 'B2',
     no: 'B3',
     info:
-      'Diese Frage klärt, ob das KI-System in Prozessen eingesetzt wird, die für das Institut kritisch oder wichtig sind. ' +
+      'DDiese Frage klärt, ob das KI-System in Prozessen eingesetzt wird, die für das Unternehmen kritisch oder wichtig sind. ' +
       'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden.',
     examples: [
-      'Kritisch: Zahlungsverkehrssteuerung, Kreditvergabe, Markt- oder Liquiditätsrisikosteuerung.',
-      'Nicht-kritisch: KI zur Unterstützung von interner Wissenssuche ohne direkten Einfluss auf Kernprozesse.',
+      'Kritisch: Zahlungsverkehr, Kreditvergabe, Risk-Steuerung.',
+      'Nicht-kritisch: interne Wissenssuche ohne Kernprozesswirkung.',
     ],
   },
 
   B2: {
     id: 'B2',
     type: 'question',
-    label: 'Hat das System direkten Einfluss auf operative/finanzielle Entscheidungen?',
+    label: 'Hat das KI-System direkten Einfluss auf operative oder finanzielle Entscheidungen?',
     yes: 'B2_H',
     no: 'B2_M',
     info:
       'Die Frage differenziert innerhalb der kritischen/wichtigen Funktionen, ob das KI-System selbst direkt ' +
       'Entscheidungen trifft oder „nur“ unterstützt. Direkter Einfluss führt zu strengeren Kontrollanforderungen.',
     examples: [
-      'Direkter Einfluss: KI gibt direkt Kreditentscheidung oder Limitvorschläge vor.',
-      'Indirekt: KI liefert nur Vorschläge, die immer manuell geprüft werden.',
+      'Direkt: KI trifft/steuert Kreditentscheidung oder Limite.',
+      'Indirekt: KI liefert Vorschläge, die manuell geprüft werden.',
     ],
   },
 
   B2_H: {
     id: 'B2_H',
     type: 'leaf',
-    label: 'Hohe Kritikalität → DORA Baseline + verstärkte Kontrollen.',
+    label: 'Hohe Kritikalität → DORA-Baseline + Resilienztests.',
     obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
     info:
@@ -414,7 +974,7 @@ export const decisionTree = {
   B2_M: {
     id: 'B2_M',
     type: 'leaf',
-    label: 'Mittlere Kritikalität → proportionale DORA Baseline.',
+    label: 'Mittlere Kritikalität → proportionale DORA-Baseline.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B4',
     info:
@@ -429,7 +989,7 @@ export const decisionTree = {
   B3: {
     id: 'B3',
     type: 'question',
-    label: 'Wird KI lediglich unterstützend eingesetzt (ohne kritische Wirkung)?',
+    label: 'Wird KI nur unterstützend eingesetzt (ohne kritische Wirkung)?',
     yes: 'B3_N',
     no: 'B3_R',
     info:
@@ -444,7 +1004,7 @@ export const decisionTree = {
   B3_N: {
     id: 'B3_N',
     type: 'leaf',
-    label: 'Nicht-kritische KI-Unterstützung.',
+    label: 'Nicht-kritische KI-Unterstützung → proportionale DORA-Baseline.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B4',
     info:
@@ -459,7 +1019,7 @@ export const decisionTree = {
   B3_R: {
     id: 'B3_R',
     type: 'leaf',
-    label: 'Unklar → konservative Einstufung prüfen & dokumentieren.',
+    label: 'Kritikalität unklar → konservative Einstufung und Dokumentation.',
     obligations: ['DORA_BASE', 'DORA_TLPT'],
     next: 'B4',
     info:
@@ -471,11 +1031,10 @@ export const decisionTree = {
     ],
   },
 
-  // --- DORA Phase 2: Drittanbieter ---
   B4: {
     id: 'B4',
     type: 'question',
-    label: 'Wird das System (ganz/teilweise) von externem IKT-Dienstleister bereitgestellt?',
+    label: 'Wird das System (ganz oder teilweise) von einem externen IKT-Dienstleister bereitgestellt?',
     yes: 'B5',
     no: 'B6',
     info:
@@ -490,7 +1049,7 @@ export const decisionTree = {
   B5: {
     id: 'B5',
     type: 'question',
-    label: 'Ist der Dienstleister potenziell kritischer IKT-Drittanbieter (z. B. Hyperscaler/KI-Plattform)?',
+    label: 'Ist der Dienstleister potenziell ein (kritischer) IKT-Drittanbieter (z. B. Hyperscaler/KI-Plattform)?',
     yes: 'B5_C',
     no: 'B5_N',
     info:
@@ -505,7 +1064,7 @@ export const decisionTree = {
   B5_C: {
     id: 'B5_C',
     type: 'leaf',
-    label: 'Kritischer oder quasi-kritischer IKT-Drittanbieter.',
+    label: 'Pot. kritischer IKT-Drittanbieter → erweiterte Drittanbieterpflichten.',
     obligations: ['DORA_THIRDPARTY_PLUS', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
     info:
@@ -520,7 +1079,7 @@ export const decisionTree = {
   B5_N: {
     id: 'B5_N',
     type: 'leaf',
-    label: 'Nicht-kritischer IKT-Dienstleister (proportional).',
+    label: 'Nicht-kritischer IKT-Drittanbieter → Standardpflichten.',
     obligations: ['DORA_THIRDPARTY_STANDARD', 'DORA_THIRDPARTY_DD'],
     next: 'B7',
     info:
@@ -535,7 +1094,7 @@ export const decisionTree = {
   B6: {
     id: 'B6',
     type: 'leaf',
-    label: 'Kein externer IKT-Dienstleister (volle interne Verantwortung).',
+    label: 'Kein externer IKT-Dienstleister → interne Verantwortung (DORA-Baseline).',
     obligations: ['DORA_BASE'],
     next: 'B7',
     info:
@@ -547,11 +1106,10 @@ export const decisionTree = {
     ],
   },
 
-  // --- DORA Phase 3: Datenfluss ---
   B7: {
     id: 'B7',
     type: 'question',
-    label: 'Werden produktive Kunden-/Transaktionsdaten oder kritische Informationen an externe KI gesendet?',
+    label: 'Werden produktive Kunden-, Transaktions- oder andere sensible Daten an externe KI-Dienste übermittelt?',
     yes: 'B7_S',
     no: 'B7_N',
     info:
@@ -566,7 +1124,7 @@ export const decisionTree = {
   B7_S: {
     id: 'B7_S',
     type: 'leaf',
-    label: 'Sensible Daten → starker Schutz-/Monitoring-Pfad.',
+    label: 'Sensible Daten → Schutzmaßnahmen für externe KI.',
     obligations: ['DORA_DATA_PROTECTION_STRONG'],
     next: 'B8',
     info:
@@ -581,7 +1139,7 @@ export const decisionTree = {
   B7_N: {
     id: 'B7_N',
     type: 'leaf',
-    label: 'Keine/lediglich Testdaten → Standard-Sicherheitsmaßnahmen.',
+    label: 'Keine sensiblen Daten → proportionale Baseline.',
     obligations: ['DORA_BASE_LIGHT'],
     next: 'B8',
     info:
@@ -593,11 +1151,10 @@ export const decisionTree = {
     ],
   },
 
-  // --- DORA Phase 4: Modellveränderung ---
   B8: {
     id: 'B8',
     type: 'question',
-    label: 'Verändert sich das Modell im Betrieb (Online-Learning, Finetuning, regelmäßiges Retraining)?',
+    label: 'Verändert sich das Modell im Betrieb (z. B. Retraining, Finetuning oder Online-Learning)?',
     yes: 'B8_D',
     no: 'B8_S',
     info:
@@ -613,7 +1170,7 @@ export const decisionTree = {
   B8_D: {
     id: 'B8_D',
     type: 'leaf',
-    label: 'Dynamisches Modell → verstärktes Monitoring/Change/Controls.',
+    label: 'Dynamisches Modell → Monitoring/Change + Incident Management.',
     obligations: ['DORA_MONITORING_AI', 'DORA_INCIDENT_MGMT'],
     next: 'END',
     info:
@@ -628,7 +1185,7 @@ export const decisionTree = {
   B8_S: {
     id: 'B8_S',
     type: 'leaf',
-    label: 'Statisches Modell → normale Change-Prozesse (proportional).',
+    label: 'Statisches Modell → proportionale Baseline + Incident Management.',
     obligations: ['DORA_BASE_LIGHT', 'DORA_INCIDENT_MGMT'],
     next: 'END',
     info:
@@ -640,21 +1197,14 @@ export const decisionTree = {
     ],
   },
 
-  // --- Endknoten ---
   END: {
     id: 'END',
     type: 'leaf',
     label: 'Analyse beendet.',
     obligations: [],
-    info:
-      'Der Entscheidungs- und Prüfpfad ist abgeschlossen. Ergebnisse können dokumentiert, exportiert ' +
-      'und für interne Freigabeprozesse (z. B. Governance- oder Risk-Committees) genutzt werden.',
-    examples: [
-      'Export des Pfads und der fehlenden Anforderungen als PDF zur Ablage in der Modell-Dokumentation.',
-      'Übergabe der Ergebnisse an das Modellrisikomanagement oder an das interne Kontrollsystem.',
-    ],
   },
 };
+
 
 /**
  * Ableitung von Locks/Flags aus dem bisherigen Pfad/Antworten.
@@ -715,10 +1265,12 @@ export function getRequirementChain(leafId) {
     const pkg = obligationsCatalog[pkgKey];
     if (!pkg?.items?.length) continue;
 
-    pkg.items.forEach((text, idx) => {
+    pkg.items.forEach((item, idx) => {
+      const isObject = item && typeof item === 'object';
+
       reqs.push({
         id: `${leafId}__req__${pkgKey}__${idx}`,
-        text,
+        question: isObject ? item.question : String(item),
         pkgKey,
         pkgLabel: pkg.label || pkgKey,
         articles: pkg.articles || [],
