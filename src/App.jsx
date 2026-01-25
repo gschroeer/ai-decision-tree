@@ -1,5 +1,6 @@
+
 // src/App.jsx
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { Component, useCallback, useMemo, useState, useEffect } from 'react';
 
 import {
   decisionTree,
@@ -7,6 +8,7 @@ import {
   getRequirementChain,
   getNextInRequirementChain,
   validateNextNode,
+  getCanonicalIdForRequirementInstance,
 } from './decisionTreeModel';
 
 // ---------- Styles ----------
@@ -64,9 +66,10 @@ const uiCSS = `
   text-align:center;
 }
 
-.app-meta{
-  font-size:12px;
-  color:#6b7280;
+.app-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
 .app-actions button{
@@ -75,14 +78,20 @@ const uiCSS = `
   border-radius:999px;
   border:1px solid #d1d5db;
   background:#ffffff;
+  color:#111827;
   cursor:pointer;
 }
-.app-actions button:not(:last-child){
-  margin-right:8px;
-}
+
 .app-actions button:hover{
   background:#f3f4f6;
 }
+
+.app-actions button:disabled{
+  background:#e5e7eb;
+  color:#6b7280;
+  cursor:not-allowed;
+}
+
 
 /* Main-Container unterhalb des Headers */
 .app-body{
@@ -95,7 +104,15 @@ const uiCSS = `
   min-height:0;
 }
 
-/* Sidebar kannst du lassen wie bisher – Stepper/Historie */
+/* Sidebar (wie bisher, nur als Klasse statt inline) */
+.app-sidebar{
+  width:260px;
+  border-right:1px solid #e2e8f0;
+  padding:16px 12px;
+  overflow-y:auto;
+  background:#f8fafc;
+}
+
 /* Main Content */
 .app-main{
   flex:1;
@@ -116,7 +133,10 @@ const uiCSS = `
 .rf-badge{
   display:inline-block; font-size:11px; padding:2px 8px;
   border:1px solid #cbd5e1; border-radius:999px; background:#f8fafc;
+  white-space:nowrap;
+  flex: 0 0 auto;
 }
+
 .rf-tt{ position:relative; display:inline-block; }
 .rf-tt-panel{
   display:none; position:absolute; z-index:9999;
@@ -136,6 +156,103 @@ const uiCSS = `
 }
 `;
 
+// ---------- Error Boundary ----------
+class ErrorBoundary extends Component {
+    constructor(props) {
+      super(props);
+      this.state = { hasError: false, error: null, errorInfo: null };
+    }
+  
+    static getDerivedStateFromError(error) {
+      return { hasError: true, error };
+    }
+  
+    componentDidCatch(error, errorInfo) {
+      // Wichtig: ohne das sieht man Fehler oft nur in der Console
+      this.setState({ errorInfo });
+      // eslint-disable-next-line no-console
+      console.error('UI crashed (caught by ErrorBoundary):', error, errorInfo);
+    }
+  
+    handleReset = () => {
+      this.setState({ hasError: false, error: null, errorInfo: null });
+      this.props.onReset?.();
+    };
+  
+    render() {
+      if (!this.state.hasError) return this.props.children;
+  
+      const message =
+        this.state.error?.message || 'Unbekannter Fehler (keine Fehlermeldung)';
+      const stack =
+        this.state.errorInfo?.componentStack ||
+        this.state.error?.stack ||
+        '';
+  
+      return (
+        <div className="app-root">
+          <div style={{ maxWidth: 920, margin: '80px auto', padding: 24 }}>
+            <div
+              style={{
+                background: '#fff',
+                border: '1px solid #e5e7eb',
+                borderRadius: 16,
+                padding: 20,
+                boxShadow: '0 8px 22px rgba(15,23,42,0.06)',
+              }}
+            >
+              <h2 style={{ margin: 0, fontSize: 20 }}>
+                ⚠️ Etwas ist schiefgelaufen
+              </h2>
+              <p style={{ marginTop: 10, marginBottom: 14, color: '#334155' }}>
+                {message}
+              </p>
+  
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button
+                  className="btn"
+                  onClick={this.handleReset}
+                  type="button"
+                >
+                  Zurücksetzen
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => window.location.reload()}
+                  type="button"
+                >
+                  Seite neu laden
+                </button>
+              </div>
+  
+              {stack ? (
+                <details style={{ marginTop: 14 }}>
+                  <summary style={{ cursor: 'pointer' }}>
+                    Technische Details
+                  </summary>
+                  <pre
+                    style={{
+                      marginTop: 10,
+                      whiteSpace: 'pre-wrap',
+                      background: '#0b1220',
+                      color: '#e2e8f0',
+                      padding: 12,
+                      borderRadius: 12,
+                      overflowX: 'auto',
+                      fontSize: 12,
+                    }}
+                  >
+                    {String(stack)}
+                  </pre>
+                </details>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
 function WelcomeScreen({ onStart }) {
   return (
     <div
@@ -149,7 +266,6 @@ function WelcomeScreen({ onStart }) {
         padding: 24,
       }}
     >
-      <style>{uiCSS}</style>
 
       <div
         style={{
@@ -159,15 +275,26 @@ function WelcomeScreen({ onStart }) {
           borderRadius: 16,
           padding: '28px 32px',
           boxShadow: '0 18px 45px rgba(15,23,42,0.45)',
+          color: '#0f172a',
         }}
       >
         <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: '#0ea5e9', textTransform: 'uppercase', letterSpacing: 0.06 }}>
+          <div
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: '#0ea5e9',
+              textTransform: 'uppercase',
+              letterSpacing: 0.06,
+            }}
+          >
             KI-Governance · Finanzunternehmen
           </div>
+
           <h1 style={{ margin: '6px 0 4px', fontSize: 24 }}>
             Willkommen zum Entscheidungsbaum für die sichere Integration von KI-Systemen
           </h1>
+
           <p style={{ margin: 0, fontSize: 14, color: '#4b5563' }}>
             Dieser Entscheidungsbaum hilft Finanzunternehmen dabei, die regulatorischen Anforderungen des
             EU AI Act und der DORA-Verordnung (Digital Operational Resilience Act) strukturiert zu prüfen
@@ -218,10 +345,32 @@ function WelcomeScreen({ onStart }) {
           Beratung. Für verbindliche Bewertungen sollten Sie Ihre Rechtsabteilung und externe Rechtsberatung einbeziehen.
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-          <div className="rf-meta">
-            Pfad wird während der Nutzung vollständig protokolliert.
+        <div
+          style={{
+            padding: '12px 14px',
+            borderRadius: 10,
+            border: '1px solid #e5e7eb',
+            background: '#f8fafc',
+            fontSize: 13,
+            color: '#334155',
+            marginBottom: 18,
+            lineHeight: 1.4,
+          }}
+        >
+          <div style={{ fontWeight: 700, marginBottom: 4 }}>
+            Dauer: ca. 15–30 Minuten
           </div>
+          <div style={{ fontSize: 12, color: '#475569' }}>
+            (Schnellcheck: ~10–15 Min · Gründlich inkl. Nachweisen: 30+ Min)
+          </div>
+          <div style={{ marginTop: 8, fontSize: 12, color: '#64748b' }}>
+            Die Dauer hängt davon ab, wie viele Pflichtenpakete ausgelöst werden und ob Nachweise direkt verfügbar sind.
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
+          <div className="rf-meta">Der Pfad wird während der Nutzung vollständig protokolliert.</div>
+
           <button
             type="button"
             onClick={onStart}
@@ -246,91 +395,111 @@ function WelcomeScreen({ onStart }) {
 }
 
 function CreatorScreen({ value, onChange, onBack, onConfirm }) {
+  const isValid = value.trim().length > 0;
+
   return (
     <div
+      className="creator-wrapper"
       style={{
-        width: '100vw',
-        height: '100vh',
-        background: '#0f172a',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: "100vw",
+        height: "100vh",
+        background: "#0f172a",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         padding: 24,
       }}
     >
-      <style>{uiCSS}</style>
 
       <div
+        className="creator-card"
         style={{
           maxWidth: 520,
-          width: '100%',
-          background: '#ffffff',
+          width: "100%",
+          background: "#ffffff",
           borderRadius: 16,
-          padding: '24px 28px',
-          boxShadow: '0 18px 45px rgba(15,23,42,0.45)',
+          padding: "24px 28px",
+          boxShadow: "0 18px 45px rgba(15,23,42,0.45)",
         }}
       >
-        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 20 }}>
+        <h2
+          className="creator-title"
+          style={{ marginTop: 0, marginBottom: 8, fontSize: 20, color: "#0f172a" }}
+        >
           Wer führt die Prüfung durch?
         </h2>
-        <p style={{ marginTop: 0, marginBottom: 16, fontSize: 13, color: '#4b5563' }}>
+
+        <p
+          className="creator-text"
+          style={{ marginTop: 0, marginBottom: 16, fontSize: 13, color: "#4b5563" }}
+        >
           Bitte geben Sie den Namen oder das Team an, das den Entscheidungsbaum ausfüllt.
           Diese Information wird im Header und im Export ausgewiesen.
         </p>
 
-        <label style={{ display: 'block', fontSize: 13, marginBottom: 6 }}>
+        <label
+          className="creator-label"
+          style={{ display: "block", fontSize: 13, marginBottom: 6, color: "#0f172a" }}
+        >
           Ersteller (Vorname Nachname)
         </label>
+
         <input
+          className="creator-input"
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           style={{
-            width: '100%',
-            padding: '8px 10px',
+            width: "100%",
+            padding: "8px 10px",
             borderRadius: 8,
-            border: '1px solid #d1d5db',
+            border: "1px solid #d1d5db",
             fontSize: 13,
             marginBottom: 18,
+            background: "#ffffff",
+            color: "#0f172a",
           }}
         />
 
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             gap: 8,
           }}
         >
           <button
+            className="creator-btn creator-btn-back"
             type="button"
             onClick={onBack}
             style={{
-              padding: '6px 12px',
+              padding: "6px 12px",
               borderRadius: 999,
-              border: '1px solid #d1d5db',
-              background: '#ffffff',
+              border: "1px solid #d1d5db",
+              background: "#ffffff",
+              color: "#0f172a",
               fontSize: 12,
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             Zurück
           </button>
 
           <button
+            className="creator-btn creator-btn-primary"
             type="button"
             onClick={onConfirm}
-            disabled={!value.trim()}
+            disabled={!isValid}
             style={{
-              padding: '6px 16px',
+              padding: "6px 16px",
               borderRadius: 999,
-              border: '1px solid #0ea5e9',
-              background: value.trim() ? '#0ea5e9' : '#e5e7eb',
-              color: value.trim() ? '#0f172a' : '#9ca3af',
+              border: "1px solid #0ea5e9",
+              background: isValid ? "#0ea5e9" : "#e5e7eb",
+              color: isValid ? "#0f172a" : "#9ca3af",
               fontSize: 13,
               fontWeight: 600,
-              cursor: value.trim() ? 'pointer' : 'not-allowed',
+              cursor: isValid ? "pointer" : "not-allowed",
             }}
           >
             Weiter zur Prüfung
@@ -346,19 +515,116 @@ const CLUSTER_AI = 'AI Act';
 const CLUSTER_DORA = 'DORA';
 
 function getClusterForNodeId(id) {
-  if (id.includes('__req__')) {
-    const leafId = id.split('__req__')[0];
-    return getClusterForNodeId(leafId);
-  }
-  if (id === 'D0' || id.startsWith('B')) return CLUSTER_DORA;
+  const baseId = id.includes('__req__') ? id.split('__req__')[0] : id;
+  const node = decisionTree[baseId];
+
+  // ✅ Primär: explizit aus dem Modell
+  if (node?.cluster) return node.cluster;
+
+  // ✅ Fallback (robust, ohne ID-Präfixe): aus Pflichtenpaketen ableiten
+  const obligationKeys = Array.isArray(node?.obligations) ? node.obligations : [];
+  const hasDora = obligationKeys.some((k) => obligationsCatalog[k]?.regulation === 'DORA');
+  if (hasDora) return CLUSTER_DORA;
+
   return CLUSTER_AI;
+}
+
+function ArticleLink({ label, url }) {
+  if (!url) return <>{label}</>;
+  return (
+    <a className="rf-link" href={url} target="_blank" rel="noreferrer">
+      {label}
+    </a>
+  );
+}
+
+function ReferenceInline({ reference, referenceUrl }) {
+  if (!reference) return null;
+
+  return (
+    <div style={{ marginTop: 6, fontSize: 12, color: '#4b5563' }}>
+      Rechtsgrundlage:{' '}
+      {referenceUrl ? (
+        <a className="rf-link" href={referenceUrl} target="_blank" rel="noreferrer">
+          {reference}
+        </a>
+      ) : (
+        <span>{reference}</span>
+      )}
+    </div>
+  );
+}
+
+function decodeHtmlEntities(value) {
+  const s = String(value ?? '');
+  if (!s.includes('&')) return s;
+  if (typeof document === 'undefined') return s;
+
+  const el = document.createElement('textarea');
+  el.innerHTML = s;
+  return el.value;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (c) => {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    return map[c] ?? c;
+  });
+}
+
+function normalizePdfText(value) {
+  return decodeHtmlEntities(value).replace(/\u00A0/g, ' ');
+}
+
+const HINTS_STORAGE_KEY = 'rfShowHints';
+
+function getStoredBool(key, fallback) {
+  try {
+    const v = window.localStorage.getItem(key);
+    if (v == null) return fallback;
+    return v === '1' || v === 'true';
+  } catch {
+    return fallback;
+  }
+}
+
+function setStoredBool(key, value) {
+  try {
+    window.localStorage.setItem(key, value ? '1' : '0');
+  } catch {
+    // ignore
+  }
 }
 
 // ---------- Node Components ----------
 function QuestionNode({ data }) {
-  const { label, onYes, onNo, disabled, answer, step, cluster, info, examples } = data;
+  const { 
+    label, 
+    onYes, 
+    onNo, 
+    yesLabel,
+    noLabel,
+    disabled, 
+    answer, 
+    step, 
+    cluster, 
+    info, 
+    examples,
+    checkpointText,
+    reference,
+    referenceUrl    
+  } = data;
 
-  const [showHints, setShowHints] = useState(false);
+  const YES = yesLabel ?? 'Ja';
+  const NO = noLabel ?? 'Nein';
+
+  const [showHints, setShowHints] = useState(() => getStoredBool(HINTS_STORAGE_KEY, true));
 
   const border =
     answer === 'yes'
@@ -373,8 +639,16 @@ function QuestionNode({ data }) {
     (typeof info === 'string' && info.trim().length > 0) ||
     (Array.isArray(examples) && examples.length > 0);
 
+  const nodeClassName = [
+    'rf-node',
+    'rf-node--question',
+    cluster === CLUSTER_DORA ? 'rf-node--dora' : '',
+    answer ? `rf-node--${answer}` : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <div
+      className={nodeClassName}
       style={{
         position: 'relative',
         padding: '16px 20px',
@@ -388,13 +662,30 @@ function QuestionNode({ data }) {
       }}
     >
       <div className="step-badge">{step}</div>
+
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
         <div style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 15 }}>{label}</div>
         <span className="rf-badge">{cluster}</span>
       </div>
 
+      <ReferenceInline reference={reference} referenceUrl={referenceUrl} />
+
+      {answer && (
+        <div style={{ marginTop: 6, fontSize: 12, color: '#111827' }}>
+          <span style={{ fontWeight: 600 }}>Antwort:</span>{' '}
+          {answer === 'yes' ? YES : NO}
+        </div>
+      )}
+
+      {checkpointText && (
+        <div style={{ marginTop: 2, marginBottom: 10 }}>
+          <div style={{ fontSize: 12, lineHeight: 1.35, color: '#111827' }}>{checkpointText}</div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 10 }}>
         <button
+          className="rf-btn rf-btn--no"
           onClick={onNo}
           disabled={disabled}
           style={{
@@ -402,13 +693,16 @@ function QuestionNode({ data }) {
             borderRadius: 6,
             border: '1px solid #999',
             background: disabled ? '#f1f5f9' : '#f5f5f5',
+            color: '#111827',
             cursor: disabled ? 'not-allowed' : 'pointer',
             fontSize: 13,
           }}
         >
-          Nein
+          {NO}
         </button>
+
         <button
+          className="rf-btn rf-btn--yes"
           onClick={onYes}
           disabled={disabled}
           style={{
@@ -416,38 +710,50 @@ function QuestionNode({ data }) {
             borderRadius: 6,
             border: '1px solid #16a34a',
             background: disabled ? '#e5f9ec' : '#e6fff0',
+            color: '#111827',
             cursor: disabled ? 'not-allowed' : 'pointer',
             fontSize: 13,
           }}
         >
-          Ja
+          {YES}
         </button>
       </div>
 
       {hasHints && (
         <div style={{ marginTop: 14 }}>
           <button
+            className="rf-hints-toggle rf-btn rf-btn--info"
             type="button"
-            onClick={() => setShowHints((v) => !v)}
+            onClick={() =>
+              setShowHints((v) => {
+                const next = !v;
+                setStoredBool(HINTS_STORAGE_KEY, next);
+                return next;
+              })
+            }
             style={{
               padding: '4px 10px',
               borderRadius: 6,
               border: '1px solid #cbd5e1',
               background: '#f8fafc',
+              color: '#111827',
               fontSize: 11,
               cursor: 'pointer',
             }}
           >
             {showHints ? 'Hinweise & Beispiele ausblenden' : 'Hinweise & Beispiele anzeigen'}
           </button>
+
           {showHints && (
             <div
+              className="rf-hints-panel"
               style={{
                 marginTop: 8,
                 padding: 10,
                 borderRadius: 8,
                 border: '1px dashed #cbd5e1',
                 background: '#f9fafb',
+                color: '#111827',
                 fontSize: 12,
               }}
             >
@@ -483,6 +789,9 @@ function LeafNode({ data }) {
     checkStarted,
     step,
     cluster,
+    checkpointText,
+    reference,
+    referenceUrl
   } = data;
 
   const packs = useMemo(
@@ -495,10 +804,17 @@ function LeafNode({ data }) {
     [obligationKeys]
   );
 
-  const btnNextLabel = nextId === 'D0' ? 'Zum DORA-Teil' : nextId === 'END' ? 'Beenden' : 'Weiter';
+  const btnNextLabel = nextId === 'D0' ? 'Zum DORA-Teil' : nextId === 'ENDE' ? 'Beenden' : 'Weiter';
+
+  const rootClass = [
+    'rf-node',
+    'rf-node--leaf',
+    cluster === CLUSTER_DORA ? 'is-dora' : 'is-ai',
+  ].join(' ');
 
   return (
     <div
+      className={rootClass}
       style={{
         position: 'relative',
         padding: '16px 20px',
@@ -508,14 +824,40 @@ function LeafNode({ data }) {
         minWidth: 420,
         maxWidth: 640,
         boxShadow: '0 2px 10px rgba(0,0,0,0.12)',
+        color: '#111827',
       }}
     >
       <div className="step-badge">{step}</div>
 
+      {obligationKeys.includes('AI_VERBOTENE_PRAKTIKEN') && (
+        <div
+          style={{
+            marginBottom: 10,
+            padding: 10,
+            borderRadius: 10,
+            border: '1px solid #ef4444',
+            background: '#fef2f2',
+          }}
+        >
+          <div style={{ fontWeight: 800, marginBottom: 4 }}>⛔ Verbotene Praxis</div>
+          <div style={{ fontSize: 12, lineHeight: 1.35 }}>
+            Diese Konstellation ist nach EU AI Act grundsätzlich unzulässig. Nutzung stoppen und Eskalation auslösen.
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
-        <div style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 15 }}>{label}</div>
+        <div style={{ fontWeight: 'bold', fontSize: 15 }}>{label}</div>
         <span className="rf-badge">{cluster}</span>
       </div>
+
+      <ReferenceInline reference={reference} referenceUrl={referenceUrl} />
+
+      {checkpointText && (
+        <div style={{ marginTop: 2, marginBottom: 10 }}>
+          <div style={{ fontSize: 12, lineHeight: 1.35, color: '#111827' }}>{checkpointText}</div>
+        </div>
+      )}
 
       {packs.length > 0 && (
         <>
@@ -527,7 +869,13 @@ function LeafNode({ data }) {
                 <div className="rf-tt-panel">
                   <div style={{ fontWeight: 700, marginBottom: 6 }}>Rechtsgrundlagen</div>
                   <ul style={{ margin: 0, paddingLeft: 18 }} className="rf-meta">
-                    {p.articles.length ? p.articles.map((a) => <li key={a}>{a}</li>) : <li>–</li>}
+                    {p.articles.length ? (
+                      p.articles.map((a, idx) => (
+                        <li key={`${a}-${idx}`}>{a}</li>
+                      ))
+                    ) : (
+                      <li>–</li>
+                    )}
                   </ul>
                 </div>
               </span>
@@ -539,6 +887,7 @@ function LeafNode({ data }) {
       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 14 }}>
         {packs.length > 0 && (
           <button
+            className="rf-btn rf-btn--secondary"
             onClick={onStartCheck}
             disabled={checkStarted}
             style={{
@@ -546,6 +895,7 @@ function LeafNode({ data }) {
               borderRadius: 6,
               border: '1px solid #94a3b8',
               background: checkStarted ? '#eef2f7' : '#f8fafc',
+              color: '#111827',
               fontSize: 12,
               cursor: checkStarted ? 'not-allowed' : 'pointer',
             }}
@@ -554,8 +904,9 @@ function LeafNode({ data }) {
           </button>
         )}
 
-        {nextId && (
+        {nextId && packs.length === 0 && (      
           <button
+            className="rf-btn rf-btn--primary"
             onClick={onContinue}
             disabled={continueDisabled}
             style={{
@@ -563,6 +914,7 @@ function LeafNode({ data }) {
               borderRadius: 6,
               border: '1px solid #06b6d4',
               background: continueDisabled ? '#eefbfd' : '#ecfeff',
+              color: '#111827',
               fontSize: 12,
               cursor: continueDisabled ? 'not-allowed' : 'pointer',
             }}
@@ -576,9 +928,9 @@ function LeafNode({ data }) {
 }
 
 function ReqQuestionNode({ data }) {
-  const { question, pkgLabel, articles = [], onYes, onNo, disabled, answer, step, cluster, info, examples } = data;
+  const { question, onYes, onNo, disabled, answer, step, cluster, info, examples, reference, referenceUrl } = data;
 
-  const [showHints, setShowHints] = useState(false);
+  const [showHints, setShowHints] = useState(() => getStoredBool(HINTS_STORAGE_KEY, true));
 
   const border =
     answer === 'yes'
@@ -596,12 +948,22 @@ function ReqQuestionNode({ data }) {
           ? '#eff6ff'
           : '#ffffff';
 
-    const hasHints =
+  const hasHints =
     (typeof info === 'string' && info.trim().length > 0) ||
     (Array.isArray(examples) && examples.length > 0);
 
+  const rootClass = [
+    'rf-node',
+    'rf-node--req-question',
+    cluster === CLUSTER_DORA ? 'is-dora' : 'is-ai',
+    answer === 'yes' ? 'is-yes' : '',
+    answer === 'no' ? 'is-no' : '',
+    disabled ? 'is-disabled' : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <div
+      className={rootClass}
       style={{
         position: 'relative',
         padding: '16px 20px',
@@ -621,13 +983,11 @@ function ReqQuestionNode({ data }) {
         <span className="rf-badge">{cluster}</span>
       </div>
 
-      <div className="rf-meta" style={{ marginBottom: 4 }}>
-        {pkgLabel}
-        {articles?.length ? ` • ${articles.join(', ')}` : ''}
-      </div>
+      <ReferenceInline reference={reference} referenceUrl={referenceUrl} />
 
       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 8 }}>
         <button
+          className="rf-btn rf-btn--no"
           onClick={onNo}
           disabled={disabled}
           style={{
@@ -635,6 +995,7 @@ function ReqQuestionNode({ data }) {
             borderRadius: 6,
             border: '1px solid #999',
             background: disabled ? '#f1f5f9' : '#f5f5f5',
+            color: '#111827',
             cursor: disabled ? 'not-allowed' : 'pointer',
             fontSize: 12,
           }}
@@ -642,6 +1003,7 @@ function ReqQuestionNode({ data }) {
           Nein
         </button>
         <button
+          className="rf-btn rf-btn--yes"
           onClick={onYes}
           disabled={disabled}
           style={{
@@ -649,6 +1011,7 @@ function ReqQuestionNode({ data }) {
             borderRadius: 6,
             border: '1px solid #16a34a',
             background: disabled ? '#e5f9ec' : '#e6fff0',
+            color: '#111827',
             cursor: disabled ? 'not-allowed' : 'pointer',
             fontSize: 12,
           }}
@@ -660,6 +1023,7 @@ function ReqQuestionNode({ data }) {
       {hasHints && (
         <div style={{ marginTop: 10 }}>
           <button
+            className="rf-btn rf-btn--hints"
             type="button"
             onClick={() => setShowHints((v) => !v)}
             style={{
@@ -667,14 +1031,17 @@ function ReqQuestionNode({ data }) {
               borderRadius: 6,
               border: '1px solid #cbd5e1',
               background: '#f8fafc',
+              color: '#111827',
               fontSize: 11,
               cursor: 'pointer',
             }}
           >
             {showHints ? 'Hinweise & Beispiele ausblenden' : 'Hinweise & Beispiele anzeigen'}
           </button>
+
           {showHints && (
             <div
+              className="rf-hints-panel"
               style={{
                 marginTop: 8,
                 padding: 10,
@@ -705,13 +1072,129 @@ function ReqQuestionNode({ data }) {
   );
 }
 
+function normalizeArticleLabel(value) {
+  return String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[–—]/g, '-') // normalize dash variants
+    .replace(/\s+/g, ' ');
+}
+
+function extractFirstArticleNumber(label) {
+  const s = String(label ?? '');
+  const m = s.match(/Art\.\s*(\d+)/i) || s.match(/Artikel\s*(\d+)/i);
+  return m ? Number.parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+}
+
+function extractArticleNumberFromUrl(url) {
+  const s = String(url ?? '');
+  const m =
+    s.match(/artikel-(\d+)-/i) ||
+    s.match(/artikel-(\d+)\b/i) ||
+    s.match(/art(?:ikel)?[\/_-](\d+)\b/i);
+  return m ? Number.parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+}
+
+function pickBetterUrl({ currentUrl, candidateUrl, articleLabel }) {
+  if (!candidateUrl) return currentUrl ?? null;
+  if (!currentUrl) return candidateUrl;
+
+  const a = extractArticleNumberFromUrl(currentUrl);
+  const b = extractArticleNumberFromUrl(candidateUrl);
+
+  if (Number.isFinite(a) && Number.isFinite(b) && a !== b) {
+    return a < b ? currentUrl : candidateUrl;
+  }
+
+  // Fallback: prefer the URL that matches the first article number from the label (e.g. "Art. 11–12" -> 11)
+  const first = extractFirstArticleNumber(articleLabel);
+  if (Number.isFinite(first)) {
+    if (a === first) return currentUrl;
+    if (b === first) return candidateUrl;
+  }
+
+  return currentUrl;
+}
+
+function groupMissingByRegulationAndFirstArticleOnce(missing = []) {
+  const byReg = new Map(); // regulation -> Map(articleKey -> { key, article, url, sortKey, items })
+  const seen = new Set(); // canonicalId (preferred) -> dedup
+
+  for (const m of missing) {
+    if (!m) continue;
+
+    const dedupKey = m.canonicalId ?? m.id ?? `${m.todo ?? ''}__${m.pkgKey ?? ''}`;
+    if (seen.has(dedupKey)) continue;
+    seen.add(dedupKey);
+
+    const regulation = m.regulation ?? 'Unbekannte Verordnung';
+    const articleLabel =
+      (m.reference && String(m.reference).trim()) ||
+      ((Array.isArray(m.articles) && m.articles.length ? m.articles[0] : '') || '').trim() ||
+      'Ohne Artikel/Referenz';
+
+    const articleUrl = m.referenceUrl ?? null;
+
+    // IMPORTANT: group by the human label (normalized), not by URL/referenceId.
+    // Otherwise the same label (e.g. "Art. 11–12") can split into multiple groups.
+    const articleKey = normalizeArticleLabel(articleLabel);
+
+    if (!byReg.has(regulation)) byReg.set(regulation, new Map());
+    const byArticle = byReg.get(regulation);
+
+    if (!byArticle.has(articleKey)) {
+      byArticle.set(articleKey, {
+        key: articleKey,
+        article: articleLabel,
+        url: articleUrl,
+        sortKey: extractFirstArticleNumber(articleLabel),
+        items: [],
+      });
+    } else {
+      const existing = byArticle.get(articleKey);
+      existing.url = pickBetterUrl({
+        currentUrl: existing.url,
+        candidateUrl: articleUrl,
+        articleLabel: existing.article,
+      });
+      existing.sortKey = Math.min(existing.sortKey, extractFirstArticleNumber(articleLabel));
+    }
+
+    byArticle.get(articleKey).items.push(m);
+  }
+
+  return Array.from(byReg.entries())
+    .sort(([a], [b]) => String(a).localeCompare(String(b)))
+    .map(([regulation, byArticle]) => ({
+      regulation,
+      articles: Array.from(byArticle.values())
+        .sort((a, b) => {
+          if (a.sortKey !== b.sortKey) return a.sortKey - b.sortKey;
+          return String(a.article).localeCompare(String(b.article));
+        })
+        .map((a) => ({ key: a.key, article: a.article, url: a.url, items: a.items })),
+    }));
+}
+
 function ReqSummaryNode({ data }) {
   const { missing = [], onContinue, continueDisabled, nextId, step, cluster } = data;
   const hasMissing = missing.length > 0;
 
-  const disabled = continueDisabled;
+  const grouped = useMemo(
+    () => groupMissingByRegulationAndFirstArticleOnce(missing),
+    [missing]
+  );
+
+  const rootClass = [
+    'rf-node',
+    'rf-node--summary',
+    cluster === CLUSTER_DORA ? 'is-dora' : 'is-ai',
+    hasMissing ? 'is-missing' : 'is-ok',
+  ].join(' ');
+
   return (
     <div
+      className={rootClass}
       style={{
         position: 'relative',
         padding: '16px 20px',
@@ -733,16 +1216,34 @@ function ReqSummaryNode({ data }) {
       </div>
 
       {hasMissing ? (
-        <ul style={{ margin: 0, paddingLeft: 18 }}>
-          {missing.map((m) => (
-            <li key={m.id}>
-              {m.question}{' '}
-              <span className="rf-meta">
-                ({m.pkgLabel}{m.articles?.length ? ` • ${m.articles.join(', ')}` : ''})
-              </span>
-            </li>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {grouped.map((reg) => (
+            <div key={reg.regulation}>
+              <div style={{ fontWeight: 800, fontSize: 13, marginBottom: 6 }}>
+                {reg.regulation}
+              </div>
+
+              {reg.articles.map((a) => (
+                <div key={`${reg.regulation}__${a.key}`} style={{ marginTop: 8 }}>
+                  <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 4 }}>
+                    <ArticleLink label={a.article} url={a.url} />
+                  </div>
+
+                  <ul style={{ margin: 0, paddingLeft: 18 }}>
+                    {a.items.map((m) => (
+                      <li key={`${m.pkgKey}__${m.id}__${a.article}`}>
+                        {m.todo}{' '}
+                        <span className="rf-meta">
+                          ({m.pkgLabel})
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <div className="rf-meta">Sie können mit der Integration fortfahren.</div>
       )}
@@ -750,18 +1251,20 @@ function ReqSummaryNode({ data }) {
       {nextId && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12 }}>
           <button
+            className="rf-btn rf-btn--primary"
             onClick={onContinue}
-            disabled={disabled}
+            disabled={continueDisabled}
             style={{
               padding: '6px 12px',
               borderRadius: 6,
               border: '1px solid #06b6d4',
-              background: disabled ? '#eefbfd' : '#ecfeff',
-              cursor: disabled ? 'not-allowed' : 'pointer',
+              background: continueDisabled ? '#eefbfd' : '#ecfeff',
+              color: '#111827',
+              cursor: continueDisabled ? 'not-allowed' : 'pointer',
               fontSize: 12,
             }}
           >
-            {nextId === 'D0' ? 'Zum DORA-Teil' : nextId === 'END' ? 'Beenden' : 'Weiter'}
+            {nextId === 'D0' ? 'Zum DORA-Teil' : nextId === 'ENDE' ? 'Beenden' : 'Weiter'}
           </button>
         </div>
       )}
@@ -769,410 +1272,619 @@ function ReqSummaryNode({ data }) {
   );
 }
 
-
 // Konsistenz- & Plausibilitätschecks
-// - High-Risk wird NUR über obligations erkannt (wie von dir gewünscht)
-// - gibt eine Liste an Violations zurück, die du entweder blockierst oder zu Review umleitest
 
-function validatePathConsistency({ decisionTree, obligationsCatalog, answers, pathIds }) {
+function validatePathConsistency({ answers, pathIds, activePath }) {
   const violations = [];
 
-  const isLeaf = (id) => decisionTree[id]?.type === 'leaf';
-  const nodeObligations = (id) => (decisionTree[id]?.obligations || []).filter(Boolean);
+  const cleanPathIds = (Array.isArray(pathIds)
+    ? pathIds.filter(Boolean)
+    : (activePath || []).map((n) => n.id).filter(Boolean)
+  ).filter((id) => !String(id).includes('__req__'));
 
-  const leafIdsInPath = pathIds.filter((id) => !id.includes('__req__') && isLeaf(id));
+  const leafIdsInPath = cleanPathIds.filter((id) => decisionTree[id]?.type === 'leaf');
 
-  // ---- Fact: "AI High-Risk gelockt" (nur über obligations)
-  // Du kannst hier später robust über articles 9–15/26–27 filtern.
-  const HIGH_RISK_KEYS = new Set(['AI_HR_PROVIDER_OR_DEPLOYER']); // <- nur obligations, kein Hardcode von Knoten-IDs
-  const highRiskLocked = leafIdsInPath.some((leafId) =>
-    nodeObligations(leafId).some((k) => HIGH_RISK_KEYS.has(k))
+  const nodeLabel = (id) => decisionTree[id]?.label || id;
+  const answerLabel = (a) => (a === 'yes' ? 'Ja' : a === 'no' ? 'Nein' : a ?? '-');
+
+  const hasObligation = (nodeId, obligationKey) =>
+    (decisionTree[nodeId]?.obligations || []).includes(obligationKey);
+
+  const hrLeafIds = leafIdsInPath.filter((id) =>
+    (decisionTree[id]?.obligations || []).some(
+      (o) => o === 'KI_HR_ANBIETER' || o === 'KI_HR_BETREIBER' || o === 'KI_HR_BETREIBER_FIN'
+    )
   );
 
-  // ---- Fact: "Prohibited" (nur über obligations)
-  const prohibitedLocked = leafIdsInPath.some((leafId) =>
-    nodeObligations(leafId).includes('AI_PROHIBITED')
-  );
+  const prohibitedLeafIds = leafIdsInPath.filter((id) => hasObligation(id, 'KI_VERBOTENE_PRAKTIKEN'));
 
-  // ---- Rule 1: Wenn Prohibited erreicht wurde, darf nicht weiter "normal" gearbeitet werden
-  // (soll in deinem Baum ohnehin über Gate/Review passieren)
+  const conflictEntry = (nodeId, extra = {}) => ({
+    nodeId,
+    label: nodeLabel(nodeId),
+    answer: answerLabel(answers?.[nodeId]),
+    ...extra,
+  });
+
+  const addViolation = (v) => violations.push(v);
+
+  // ---- Rule 1: A1 = "Nein" aber später wurden EU-AI-Act-Schritte beantwortet
+  if (answers?.A1 === 'no') {
+    const laterAnswered = Object.keys(answers || {})
+      .filter((id) => id !== 'A1')
+      .filter((id) => answers[id] === 'yes' || answers[id] === 'no')
+      .filter((id) => id.startsWith('A') || id.startsWith('W_') || id.startsWith('G_'));
+
+    if (laterAnswered.length > 0) {
+      addViolation({
+        code: 'A1_NO_BUT_LATER_ANSWERED',
+        message:
+          'Du hast bei „KI-System?“ (A1) „Nein“ gewählt, aber später weitere EU-AI-Act-Schritte beantwortet. Das ist widersprüchlich.',
+        conflicts: [
+          conflictEntry('A1', { note: 'Definition: kein KI-System' }),
+          ...laterAnswered.slice(0, 4).map((id) => conflictEntry(id, { note: 'Später beantworteter Schritt' })),
+        ],
+        suggestedNodeId: 'W_KI_WIDERSPRUCH',
+        primaryActionNodeId: 'A1',
+        recommendations: [
+          'Springe zu A1 zurück und prüfe die Einstufung.',
+          'Wenn A1 wirklich „Nein“ ist: der Flow sollte auf A0/ENDE enden – späteres Beantworten ist dann nicht sinnvoll.',
+        ],
+      });
+    }
+  }
+
+  // ---- Rule 2: Kein Down-Staging von Hochrisiko (Lock)
+  const highRiskLocked = hrLeafIds.length > 0;
+
+  if (highRiskLocked) {
+    const downstageCandidates = ['A3_ANBIETER', 'A3_BETREIBER'];
+    const attemptedDownstage = downstageCandidates.filter((id) => answers?.[id] === 'no');
+
+    if (attemptedDownstage.length > 0) {
+      addViolation({
+        code: 'HOCHRISIKO_HERUNTERSTUFUNG',
+        message:
+          'Du hast bereits einen Hochrisiko-Pfad erreicht, versuchst aber später auf „Nicht-Hochrisiko“ zu wechseln. Das ist im Wizard gesperrt.',
+        conflicts: [
+          ...hrLeafIds.slice(0, 2).map((id) =>
+            conflictEntry(id, { note: 'Erreichtes Ergebnis: Hochrisiko (Lock aktiv)' })
+          ),
+          ...attemptedDownstage.map((id) => conflictEntry(id, { note: 'Antwort führt zu Down-Staging' })),
+        ],
+        suggestedNodeId: 'W_KI_WIDERSPRUCH',
+        primaryActionNodeId: attemptedDownstage[0] || hrLeafIds[0],
+        recommendations: [
+          'Springe zum markierten Schritt zurück und korrigiere die Antwort oder ergänze die Begründung.',
+          'Wenn unklar: konservativ einstufen (Hochrisiko bejahen) und die Pflichten anwenden.',
+        ],
+      });
+    }
+  }
+
+  // ---- Rule 3: Hochrisiko-Pfad darf nicht später NON-HR-Pfade enthalten
+  const NON_HR_PATH_IDS = new Set([
+    'A3_NICHT_HOCHRISIKO_PRUEFUNG',
+    'A4_TRANSPARENZ_ANWENDBAR',
+    'A4_NICHT_HOCHRISIKO_MIT_TRANSPARENZ',
+    'A4_NICHT_HOCHRISIKO_NUR_MINIMAL',
+    'G_AI_NICHT_HOCHRISIKO_PLAUSIBILITAET',
+  ]);
+
+  if (highRiskLocked) {
+    const firstNonHr = cleanPathIds.find((id) => NON_HR_PATH_IDS.has(id));
+    if (firstNonHr) {
+      addViolation({
+        code: 'HOCHRISIKO_PFAD_WIDERSPRUCH',
+        message:
+          'Ein Hochrisiko-Ergebnis ist erreicht, aber der Pfad enthält gleichzeitig Non-High-Risk-Transparenz-/Governance-Schritte. Das ist ein Widerspruch.',
+        conflicts: [
+          ...hrLeafIds.slice(0, 2).map((id) =>
+            conflictEntry(id, { note: 'Erreichtes Ergebnis: Hochrisiko (Lock aktiv)' })
+          ),
+          conflictEntry(firstNonHr, { note: 'Non-High-Risk-Pfad-Schritt im gleichen Flow' }),
+        ],
+        suggestedNodeId: 'W_KI_WIDERSPRUCH',
+        primaryActionNodeId: firstNonHr,
+        recommendations: [
+          'Springe zum ersten Non-High-Risk-Schritt zurück und prüfe, ob du vorher falsch klassifiziert hast.',
+          'Dokumentiere die Einstufung nachvollziehbar (Use-Case, Annex-III-Abgleich, Kontext).',
+        ],
+      });
+    }
+  }
+
+  // ---- Rule 4: Verbotene Praktik darf nicht weitergeführt werden
+  const prohibitedLocked = prohibitedLeafIds.length > 0;
+
   if (prohibitedLocked) {
-    // Falls danach weitere reguläre Fragen beantwortet wurden, ist das ein Widerspruch.
-    const afterProhibitedAnswered = Object.keys(answers).some((id) => {
-      if (id.includes('__req__')) return false;
-      if (id === 'A2') return false; // A2 ist die Quelle
-      // grobe Heuristik: weitere AI/DORA Questions nach Prohibited
-      const def = decisionTree[id];
-      return def?.type === 'question';
-    });
+    const prohibitedLeafId = prohibitedLeafIds[0];
+    const idxProhibited = cleanPathIds.indexOf(prohibitedLeafId);
+    const laterNodes = cleanPathIds.slice(Math.max(0, idxProhibited + 1));
 
-    if (afterProhibitedAnswered) {
-      violations.push({
+    const answeredLaterAfterProhibited = laterNodes.filter(
+      (id) => answers?.[id] === 'yes' || answers?.[id] === 'no'
+    );
+
+    if (answeredLaterAfterProhibited.length > 0) {
+      addViolation({
         code: 'PROHIBITED_CONTINUED',
         message:
-          'Verbotene Praxis wurde erreicht, aber der Pfad wurde ohne Review/Eskalation fortgesetzt.',
-        suggestedNodeId: 'W_AI_PROHIBITED_ESCALATION', // falls vorhanden
+          'Du hast eine „Verbotene Praxis“ erreicht, beantwortest aber danach weitere Schritte. Der Wizard sollte hier stoppen.',
+        conflicts: [
+          conflictEntry(prohibitedLeafId, { note: 'Erreichtes Ergebnis: Verbotene Praxis' }),
+          ...answeredLaterAfterProhibited.slice(0, 3).map((id) =>
+            conflictEntry(id, { note: 'Schritt nach verbotenem Ergebnis' })
+          ),
+        ],
+        suggestedNodeId: 'W_KI_WIDERSPRUCH',
+        primaryActionNodeId: prohibitedLeafId,
+        recommendations: [
+          'Springe zum verbotenen Ergebnis zurück und stoppe/eskaliere wie beschrieben.',
+          'Wenn du im Review zu dem Schluss kommst, dass es keine verbotene Praxis ist: gehe zum Trigger-Schritt zurück und passe die Antwort an.',
+        ],
       });
     }
   }
 
-  // ---- Rule 2: High-Risk darf nicht "heruntergestuft" werden
-  // Konkret in deinem Baum: A3 = Hochrisiko-Frage. Wenn High-Risk obligations bereits im Pfad sind,
-  // darf A3 nicht mit "no" beantwortet werden bzw. darf nicht in A3_NON_HR landen.
-  if (highRiskLocked) {
-    if (answers?.A3 === 'no') {
-      violations.push({
-        code: 'HIGH_RISK_DEESCALATION',
-        message:
-          'High-Risk Pflichtenpaket wurde bereits erreicht, später wurde High-Risk verneint (Herunterstufung).',
-        suggestedNodeId: 'W_AI_CONTRADICTION', // falls vorhanden
-      });
-    }
-
-    if (pathIds.includes('A3_NON_HR') || pathIds.includes('G_AI_NON_HR_PLAUSIBILITY')) {
-      violations.push({
-        code: 'HIGH_RISK_PATH_CONTRADICTION',
-        message:
-          'High-Risk Pflichtenpaket wurde erreicht, aber der Pfad läuft in den Non-High-Risk-Teil.',
-        suggestedNodeId: 'W_AI_CONTRADICTION',
-      });
-    }
-  }
-
-  // ---- Rule 3: KI-System verneint → keine AI-Act Klassifikationsfragen später
-  if (answers?.A1 === 'no') {
-    const aiActLaterAnswered = ['A2', 'A3'].some((qid) => answers[qid] != null);
-    if (aiActLaterAnswered) {
-      violations.push({
-        code: 'NO_AI_BUT_AI_ACT_CONTINUED',
-        message:
-          'Es wurde verneint, dass ein KI-System vorliegt (A1=no), aber AI-Act-Klassifikationsfragen wurden dennoch beantwortet.',
-        suggestedNodeId: 'W_AI_CONTRADICTION',
-      });
-    }
-  }
-
-  // ---- Rule 4 (optional): DORA Start verneint → keine DORA-Fragen danach
+  // ---- Rule 5 (optional): DORA Start verneint → keine DORA-Fragen danach
   if (answers?.D0 === 'no') {
     const doraQuestionAnswered = Object.keys(answers).some((id) => {
       if (!/^B\d+/.test(id)) return false;
       return answers[id] != null;
     });
+
     if (doraQuestionAnswered) {
-      violations.push({
-        code: 'DORA_SKIPPED_BUT_CONTINUED',
-        message:
-          'DORA-Teil wurde abgelehnt (D0=no), aber danach wurden DORA-Fragen beantwortet.',
-        suggestedNodeId: 'END',
+      addViolation({
+        code: 'DORA_ABGELEHNT_ABER_FORTGESETZT',
+        message: 'DORA-Teil wurde abgelehnt (D0=Nein), aber danach wurden DORA-Fragen beantwortet.',
+        conflicts: [
+          conflictEntry('D0', { note: 'DORA Start' }),
+          ...Object.keys(answers)
+            .filter((id) => /^B\d+/.test(id) && answers[id] != null)
+            .slice(0, 4)
+            .map((id) => conflictEntry(id, { note: 'DORA-Frage beantwortet' })),
+        ],
+        suggestedNodeId: 'D0',
+        primaryActionNodeId: 'D0',
+        recommendations: [
+          'Springe zu D0 zurück und entscheide, ob DORA wirklich nicht einschlägig ist.',
+          'Wenn DORA nicht einschlägig ist: entferne/ignoriere nachgelagerte DORA-Schritte und dokumentiere die Abgrenzung.',
+        ],
       });
     }
   }
 
-  return { violations, facts: { highRiskLocked, prohibitedLocked } };
+  return { violations };
 }
 
-
 // ---------- Wizard ----------
-function Wizard({ createdBy, assessmentId }) {
+function Wizard({ createdBy }) {
   const [path, setPath] = useState([{ id: 'A1' }]);
   const [answers, setAnswers] = useState({});
-  const exportIncludePkgs = true;
+
   const [isExporting, setIsExporting] = useState(false);
+
+  // Pakete im Export mitsenden/anzeigen (kannst du später auch als Toggle in die UI hängen)
+  const exportIncludePkgs = true;
+
+
+  // Timeline-Status
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [activePathLength, setActivePathLength] = useState(1);
+
   const [updatedAt, setUpdatedAt] = useState(() => new Date());
+  const [assessmentVersion, setAssessmentVersion] = useState('v1.0');
 
-    // Neue Assessment-Version (z. B. „v1.0“)
-    const [assessmentVersion, setAssessmentVersion] = useState('v1.0');
-
-    // Beim Start Version aus localStorage holen (falls vorhanden)
-    useEffect(() => {
-      const stored = window.localStorage.getItem('assessmentVersion');
-      if (stored) {
-        setAssessmentVersion(stored);
-      }
-    }, []);
+  const updatedAtLabel = useMemo(
+      () => updatedAt.toLocaleString('de-DE'),
+      [updatedAt]
+    );
   
-    // Helper zum Hochzählen: v1.0 -> v2.0 -> v3.0, etc.
-    const bumpVersion = useCallback((current) => {
-      const str = current || 'v1.0';
-      const m = /^v(\d+)(?:\.(\d+))?$/.exec(str);
-      if (!m) return 'v1.0';
-      const major = parseInt(m[1] || '1', 10) + 1;
-      return `v${major}.0`;
-    }, []);
+  const [consistencyViolations, setConsistencyViolations] = useState([]);
+  const [conflictHelpOpen, setConflictHelpOpen] = useState(false);
 
-    const resetAssessmentVersion = useCallback(() => {
-      const v = 'v1.0';
-      setAssessmentVersion(v);
-      window.localStorage.setItem('assessmentVersion', v);
-    }, []);
+  const getAnswerText = (nodeId, value) => {
+    if (!value) return '';
+  
+    // Requirement-IDs: bleiben Ja/Nein
+    if (nodeId.includes('__req__')) {
+      return value === 'yes' ? 'Ja' : 'Nein';
+    }
+  
+    // Normale Decision-Nodes: nutze yesLabel/noLabel aus dem decisionTreeModel
+    const def = decisionTree[nodeId];
+    const YES = def?.yesLabel ?? 'Ja';
+    const NO = def?.noLabel ?? 'Nein';
+    return value === 'yes' ? YES : NO;
+  };  
 
-  // Gespeicherter Endpunkt (Pfad + Antworten), zu dem man zurückspringen kann
-  const [savedState, setSavedState] = useState(null);
 
-  const currentStepIndex = path.length - 1;
+  useEffect(() => {
+    const stored = window.localStorage.getItem('assessmentVersion');
+    if (stored) setAssessmentVersion(stored);
+  }, []);
+
+  const resetAssessmentVersion = useCallback(() => {
+    setAssessmentVersion('v1.0');
+    window.localStorage.setItem('assessmentVersion', 'v1.0');
+  }, []);
+
   const currentId = path[currentStepIndex]?.id ?? 'A1';
+
+  const reqAnswerByCanonicalId = useMemo(() => {
+    const m = new Map();
+
+    for (const [id, a] of Object.entries(answers)) {
+      if (!id.includes('__req__') || id.includes('__req__summary')) continue;
+      if (a !== 'yes' && a !== 'no') continue;
+
+      const canonicalId = getCanonicalIdForRequirementInstance(id) ?? id.split('__req__')[1];
+      const prev = m.get(canonicalId);
+
+      if (!prev) m.set(canonicalId, a);
+      else if (prev !== a) m.set(canonicalId, 'no'); // Konflikt -> als "nicht erfüllt" behandeln
+    }
+
+    return m;
+  }, [answers]);
 
   const descriptor = useMemo(() => {
     if (currentId.includes('__req__summary')) {
       const leafId = currentId.split('__req__')[0];
       const { reqs } = getRequirementChain(leafId);
-      const missing = reqs.filter((r) => answers[r.id] !== 'yes');
-      const cluster = getClusterForNodeId(leafId);
-      const nextId = decisionTree[leafId]?.next;
       return {
         kind: 'summary',
         id: currentId,
         leafId,
-        missing,
-        nextId,
-        cluster,
+        missing: reqs.filter((r) => reqAnswerByCanonicalId.get(r.canonicalId) !== 'yes'),
+        nextId: decisionTree[leafId]?.next,
+        cluster: getClusterForNodeId(leafId),
       };
     }
 
     if (currentId.includes('__req__')) {
       const [leafId] = currentId.split('__req__');
       const { reqs } = getRequirementChain(leafId);
-      const req = reqs.find((r) => r.id === currentId);
-      if (!req) {
-        return { kind: 'unknown', id: currentId };
-      }
-      const cluster = getClusterForNodeId(leafId);
+      const req = reqs.find(r => r.id === currentId);
+      if (!req) return { kind: 'unknown', id: currentId };
+
       return {
         kind: 'req',
         id: currentId,
         leafId,
-        question: req?.question ?? '',
+        question: req.question,
         pkgLabel: req.pkgLabel,
         articles: req.articles ?? [],
-        cluster,
+        cluster: getClusterForNodeId(leafId),
         info: req.info,
         examples: req.examples,
+        reference: req.reference,
+        referenceId: req.referenceId,
+        referenceUrl: req.referenceUrl,
       };
     }
 
     const def = decisionTree[currentId];
-    if (!def) {
-      return { kind: 'unknown', id: currentId };
-    }
-    const cluster = getClusterForNodeId(currentId);
+    if (!def) return { kind: 'unknown', id: currentId };
+
     if (def.type === 'question') {
       return {
         kind: 'question',
         id: currentId,
         label: def.label,
-        cluster,
+        cluster: getClusterForNodeId(currentId),
+        yesLabel: def.yesLabel,
+        noLabel: def.noLabel,
         info: def.info,
         examples: def.examples,
+        checkpointText: def.checkpointText,
+        reference: def.reference,
+        referenceId: def.referenceId,
+        referenceUrl: def.referenceUrl,
       };
     }
+
     return {
       kind: 'leaf',
       id: currentId,
       label: def.label,
       obligationKeys: def.obligations ?? [],
       nextId: def.next,
-      cluster,
+      cluster: getClusterForNodeId(currentId),
+      reference: def.reference,
+      referenceId: def.referenceId,
+      referenceUrl: def.referenceUrl,
     };
   }, [currentId, answers]);
 
-  // Timeline: zu früherem Schritt springen,
-  // ABER alten Endpunkt (Pfad + Antworten) als savedState merken,
-  // damit man später wieder dahin zurück kann.
-  const jumpToStep = useCallback(
-    (index) => {
-      setPath((prevPath) => {
-        const newPath = prevPath.slice(0, index + 1);
 
-        setAnswers((prevAns) => {
-          // Nur einmal speichern: erster "Sprung zurück"
-          if (!savedState) {
-            setSavedState({ path: prevPath, answers: prevAns });
-          }
+  // Timeline-Navigation
+  const jumpToStep = useCallback((index) => {
+    setConsistencyViolations([]);
+    setCurrentStepIndex(index);
+    setActivePathLength(index + 1);
+  }, []);  
 
-          const allowed = new Set(newPath.map((s) => s.id));
-          const filtered = {};
-          for (const [k, v] of Object.entries(prevAns)) {
-            if (allowed.has(k)) filtered[k] = v;
-          }
-          return filtered;
-        });
+  // Springe zu einem Knoten anhand seiner ID (für Konflikt-UI)
+const jumpToNodeId = useCallback(
+  (nodeId) => {
+    const idx = path.findIndex((n) => n.id === nodeId);
+    if (idx >= 0) jumpToStep(idx);
+  },
+  [path, jumpToStep]
+);
 
-        return newPath;
-      });
-    },
-    [savedState]
-  );
-
-  // Zur gespeicherten Endposition zurückspringen
-  const restoreSavedPath = useCallback(() => {
-    if (!savedState) return;
-    setPath(savedState.path);
-    setAnswers(savedState.answers);
-    setSavedState(null);
-  }, [savedState]);
-
-  const handleReset = useCallback(() => {
-    setPath([{ id: 'A1' }]);
-    setAnswers({});
-    setSavedState(null);
-    setUpdatedAt(new Date());
-  }, []);
+  function pruneAnswersAfterBranchChange({ nextAnswers, keepIds, clearRequirements }) {
+    const pruned = { ...nextAnswers };
+  
+    for (const key of Object.keys(pruned)) {
+      if (clearRequirements && key.includes('__req__')) {
+        delete pruned[key];
+        continue;
+      }
+      if (!keepIds.has(key)) delete pruned[key];
+    }
+  
+    return pruned;
+  }
 
   const answerNode = useCallback(
     (id, answer) => {
-      if (answers[id]) return;
+      const basePath = path.slice(0, activePathLength);
+      const baseIds = basePath.map((s) => s.id);
+      const keepIds = new Set(baseIds);
   
-      // Ab hier wird ein neuer Zweig entschieden → gespeicherten Endpunkt verwerfen
-      setSavedState(null);
+      const isRequirement = id.includes('__req__');
+      const prevAnswer = answers[id];
   
-      const pathIds = path.map((s) => s.id);
+      // Wenn man *auf derselben Frage* neu klickt, wollen wir trotzdem weiterlaufen können.
+      // (Kein early return mehr.)
   
-      // Requirement-Node (req-chain)
-      if (id.includes('__req__')) {
-        const { nextReqId, summaryId } = getNextInRequirementChain(id);
-        const nextId = nextReqId ?? summaryId;
+      // ---------------- Requirements (DORA/AI Act Items) ----------------
+      if (isRequirement) {
+        let { nextReqId, summaryId } = getNextInRequirementChain(id);
+        let nextId = nextReqId ?? summaryId;
         if (!nextId) return;
   
-        const nextAnswers = { ...answers, [id]: answer };
-        const nextPathIds = [...pathIds, nextId];
+        const nextAnswersRaw = { ...answers, [id]: answer };
+  
+        // Skip bereits beantwortete (globale) Requirements
+        const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
+        const currentCanonical = getCanonicalIdForRequirementInstance(id);
+        if (currentCanonical) answeredCanonicalIds.add(currentCanonical);
+  
+        while (nextId && nextId.includes('__req__') && !nextId.includes('__req__summary')) {
+          const a = nextAnswersRaw[nextId];
+  
+          const canonicalId = getCanonicalIdForRequirementInstance(nextId);
+          const alreadyAnswered =
+            (a === 'yes' || a === 'no') ||
+            (canonicalId && answeredCanonicalIds.has(canonicalId));
+  
+          if (!alreadyAnswered) break;
+  
+          const step = getNextInRequirementChain(nextId);
+          summaryId = step.summaryId;
+          nextId = step.nextReqId ?? summaryId;
+        }
+  
+        const nextPathIds = [...baseIds, nextId];
   
         const { violations } = validatePathConsistency({
           decisionTree,
           obligationsCatalog,
-          answers: nextAnswers,
+          answers: nextAnswersRaw,
           pathIds: nextPathIds,
         });
   
         if (violations?.length) {
-          alert(
-            'Plausibilitätsprüfung fehlgeschlagen:\n\n' +
-              violations.map((v) => '• ' + v.message).join('\n')
-          );
-          return; 
+          setConsistencyViolations(violations);
+          return;
         }
   
-        setAnswers(nextAnswers);
-        setPath((p) => {
-          if (p[p.length - 1]?.id === nextId) return p;
-          return [...p, { id: nextId }];
-        });
+        setConsistencyViolations([]);
+        setAnswers(nextAnswersRaw);
+        setPath([...basePath, { id: nextId }]);
+        setCurrentStepIndex(basePath.length);
+        setActivePathLength(basePath.length + 1);
         setUpdatedAt(new Date());
         return;
       }
-      // Normaler Question-Node
-      const def = decisionTree[id];
-      if (!def || def.type !== 'question') return;
   
-      const rawNextId = answer === 'yes' ? def.yes : def.no;
+      // ---------------- Decision Tree Question Nodes ----------------
+      const def = decisionTree[id];
+      const rawNextId = answer === 'yes' ? def?.yes : def?.no;
       if (!rawNextId) return;
   
-      const nextAnswers = { ...answers, [id]: answer };
-      const nextPathIds = [...pathIds, rawNextId];
+      let nextAnswersRaw = { ...answers, [id]: answer };
+  
+      // WICHTIG: Wenn eine frühere Entscheidung geändert wurde, ist alles danach ungültig:
+      // - entferne alle Antworten außerhalb des "keep" Prefix
+      // - und lösche zusätzlich Requirement-Answers (weil Pflichten/Leaves sich ändern können)
+      const isChangingDecision = prevAnswer != null && prevAnswer !== answer;
+      if (isChangingDecision) {
+        nextAnswersRaw = pruneAnswersAfterBranchChange({
+          nextAnswers: nextAnswersRaw,
+          keepIds,
+          clearRequirements: true,
+        });
+      }
+  
+      // zentrale Regellogik aus dem Modell anwenden (Locks / Review-Gates)
+      const { nextId } = validateNextNode({
+        currentId: id,
+        answer,
+        nextId: rawNextId,
+        answers: nextAnswersRaw,
+        pathIds: [...baseIds, rawNextId],
+      });
+  
+      const nextPathIds = [...baseIds, nextId];
   
       const { violations } = validatePathConsistency({
         decisionTree,
         obligationsCatalog,
-        answers: nextAnswers,
+        answers: nextAnswersRaw,
         pathIds: nextPathIds,
       });
   
       if (violations?.length) {
-        alert(
-          'Plausibilitätsprüfung fehlgeschlagen:\n\n' +
-            violations.map((v) => '• ' + v.message).join('\n')
-        );
-        return; 
+        setConsistencyViolations(violations);
+        return;
       }
   
-      setAnswers(nextAnswers);
-      setPath((p) => {
-        if (p[p.length - 1]?.id === rawNextId) return p;
-        return [...p, { id: rawNextId }];
-      });
+      setConsistencyViolations([]);
+      setAnswers(nextAnswersRaw);
+      setPath([...basePath, { id: nextId }]);
+      setCurrentStepIndex(basePath.length);
+      setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
     },
-    [answers, path, decisionTree, obligationsCatalog]
+    [answers, path, activePathLength, decisionTree, obligationsCatalog, reqAnswerByCanonicalId]
   );
-  
 
-  const continueFromLeaf = useCallback((leafId) => {
-      const def = decisionTree[leafId];
-      const nextId = def?.next;
+  const continueFromLeaf = useCallback(
+    (leafId) => {
+      let nextId = decisionTree[leafId]?.next;
       if (!nextId) return;
-  
-      // Konsistenzprüfung: nächster Schritt wird als "geplant" validiert
-      const nextPathIds = [...path.map((s) => s.id), nextId];
-  
+
+      const basePath = path.slice(0, activePathLength);
+      const baseIds = basePath.map((s) => s.id);
+
+      nextId = validateNextNode({
+        currentId: leafId,
+        answer: undefined, 
+        nextId,
+        answers,
+        pathIds: [...baseIds, nextId],
+      }).nextId;
+
+      const nextPathIds = [...baseIds, nextId];
       const { violations } = validatePathConsistency({
         decisionTree,
         obligationsCatalog,
         answers,
         pathIds: nextPathIds,
       });
-  
+
       if (violations?.length) {
-        alert(
-          'Der nächste Schritt ist aufgrund eines Konsistenzkonflikts nicht möglich:\n\n' +
-            violations.map((v) => '• ' + v.message).join('\n')
-        );
+        setConsistencyViolations(violations);
         return;
       }
-  
-      setSavedState(null);
-      setPath((p) => {
-        if (p[p.length - 1]?.id === nextId) return p;
-        return [...p, { id: nextId }];
+
+      setConsistencyViolations([]);
+      setPath([...basePath, { id: nextId }]);
+      setCurrentStepIndex(basePath.length);
+      setActivePathLength(basePath.length + 1);
+      setUpdatedAt(new Date());
+    },[answers, path, activePathLength]
+  );
+
+  const startCheck = useCallback(
+    (leafId) => {
+      const { reqs, summaryId } = getRequirementChain(leafId);
+      if (!reqs?.length) return;
+
+      // canonicalIds, die bereits irgendwo beantwortet wurden
+      const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
+
+      // Erste offene Requirement-Instanz finden (per canonicalId dedupliziert)
+      const firstOpen = reqs.find((r) => {
+        const instId = r.id ?? r.instanceId;
+        if (!instId) return false;
+
+        const cId =
+          r.canonicalId ??
+          getCanonicalIdForRequirementInstance(instId) ??
+          instId.split('__req__')[1];
+
+        return !answeredCanonicalIds.has(cId);
       });
+
+      const nextId =
+        (firstOpen?.id ?? firstOpen?.instanceId) ??
+        summaryId ??
+        (reqs[0].id ?? reqs[0].instanceId);
+
+      if (!nextId) return;
+
+      const basePath = path.slice(0, activePathLength);
+      const baseIds = basePath.map((s) => s.id);
+
+      const { violations } = validatePathConsistency({
+        decisionTree,
+        obligationsCatalog,
+        answers,
+        pathIds: [...baseIds, nextId],
+      });
+
+      if (violations?.length) {
+        setConsistencyViolations(violations);
+        return;
+      }
+
+      setConsistencyViolations([]);
+      setPath([...basePath, { id: nextId }]);
+      setCurrentStepIndex(basePath.length);
+      setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
     },
-    [answers, path, decisionTree, obligationsCatalog]
+    [
+      path,
+      activePathLength,
+      answers,
+      reqAnswerByCanonicalId,
+      decisionTree,
+      obligationsCatalog,
+      setConsistencyViolations,
+    ]
   );
-  
 
-  const startCheck = useCallback((leafId) => {
-    const { reqs } = getRequirementChain(leafId);
-    if (!reqs.length) return;
-    const firstId = reqs[0].id;
-    setSavedState(null);
-    setPath((p) => {
-      if (p.some((s) => s.id === firstId)) return p;
-      return [...p, { id: firstId }];
-    });
+  
+  const handleReset = useCallback(() => {
+    setPath([{ id: 'A1' }]);
+    setAnswers({});
+    setCurrentStepIndex(0);
+    setActivePathLength(1);
     setUpdatedAt(new Date());
   }, []);
-
-  const continueFromSummary = useCallback((leafId) => {
-      const def = decisionTree[leafId];
-      const nextId = def?.next;
+  
+  const continueFromSummary = useCallback(
+    (leafId) => { 
+      let nextId = decisionTree[leafId]?.next;
       if (!nextId) return;
-  
-      const nextPathIds = [...path.map((s) => s.id), nextId];
-  
+
+      const basePath = path.slice(0, activePathLength);
+      const baseIds = basePath.map((s) => s.id);
+
+      nextId = validateNextNode({
+        currentId: leafId,
+        answer: undefined,
+        nextId,
+        answers,
+        pathIds: [...baseIds, nextId],
+      }).nextId;
+
+      const nextPathIds = [...baseIds, nextId];
       const { violations } = validatePathConsistency({
         decisionTree,
         obligationsCatalog,
         answers,
         pathIds: nextPathIds,
       });
-  
+
       if (violations?.length) {
-        alert(
-          'Der nächste Schritt ist aufgrund eines Konsistenzkonflikts nicht möglich:\n\n' +
-            violations.map((v) => '• ' + v.message).join('\n')
-        );
+        setConsistencyViolations(violations);
         return;
       }
-  
-      setSavedState(null);
-      setPath((p) => {
-        if (p[p.length - 1]?.id === nextId) return p;
-        return [...p, { id: nextId }];
-      });
+
+      setConsistencyViolations([]);
+      setPath([...basePath, { id: nextId }]);
+      setCurrentStepIndex(basePath.length);
+      setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
-    },
-    [answers, path, decisionTree, obligationsCatalog]
+    },[answers, path, activePathLength]
   );
-  
 
   const buildExportPayload = useCallback((versionForExport) => {
     const pathPayload = path.map((step) => {
@@ -1196,11 +1908,14 @@ function Wizard({ createdBy, assessmentId }) {
         kind = def?.type ?? 'node';
       }
 
+      const rawAnswer = answers[id] ?? null;
+
       return {
         id,
         label,
         kind,
-        answer: answers[id] ?? null,
+        answerRaw: rawAnswer,
+        answer: rawAnswer ? getAnswerText(id, rawAnswer) : null,
       };
     });
 
@@ -1215,120 +1930,156 @@ function Wizard({ createdBy, assessmentId }) {
     for (const leafId of leavesInPath) {
       const { reqs } = getRequirementChain(leafId);
       if (!reqs.length) continue;
-      const missingReqs = reqs.filter((r) => answers[r.id] !== 'yes');
+      const missingReqs = reqs.filter((r) => reqAnswerByCanonicalId.get(r.canonicalId) !== 'yes');
       if (!missingReqs.length) continue;
       missing[leafId] = missingReqs.map((r) => ({
         id: r.id,
+        canonicalId: r.canonicalId,
         question: r.question ?? '',
+        todo: r.todo ?? '', 
         pkgKey: r.pkgKey,
         pkgLabel: r.pkgLabel,
+        regulation: r.regulation,
         articles: r.articles ?? [],
+        reference: r.reference ?? null,
+        referenceId: r.referenceId ?? null,
+        referenceUrl: r.referenceUrl ?? null,
       }));
     }
 
-  const packagesByLeaf = {};
-  for (const leafId of leavesInPath) {
-    const def = decisionTree[leafId];
-    if (!def?.obligations?.length) continue;
+    const packagesByLeaf = {};
+      if (exportIncludePkgs) {
+        for (const leafId of leavesInPath) {
+          const def = decisionTree[leafId];
+          if (!def?.obligations?.length) continue;
 
-  packagesByLeaf[leafId] = def.obligations.map((k) => ({
-    key: k,
-    label: obligationsCatalog[k]?.label ?? k,
-    articles: obligationsCatalog[k]?.articles ?? [],
-  }));
-}
-    
+          packagesByLeaf[leafId] = def.obligations.map((k) => ({
+            key: k,
+            label: obligationsCatalog[k]?.label ?? k,
+            articles: obligationsCatalog[k]?.articles ?? [],
+          }));
+        }
+      }
+
     return {
       assessmentId: versionForExport,
       createdBy,
       lastUpdated: updatedAt.toISOString(),
       path: pathPayload,
       missing,
-      packagesByLeaf,
+      packagesByLeaf: exportIncludePkgs ? packagesByLeaf : null,
     };
-  }, [path, answers, exportIncludePkgs, createdBy, updatedAt]);
+  }, [path, answers, createdBy, updatedAt, exportIncludePkgs]);
 
+  const bumpVersion = useCallback((current) => {
+    const m = /^v(\d+)/.exec(current || 'v1.0');
+    const major = m ? parseInt(m[1], 10) + 1 : 1;
+    return `v${major}.0`;
+  }, []);
+  
+  
   const handleExportPDF = useCallback(async () => {
     if (isExporting) return;
-  
-    setIsExporting(true);
-  
-    try {
-      //Nächste Assessment-Version erzeugen und speichern
-      const nextVersion = bumpVersion(assessmentVersion);
-      setAssessmentVersion(nextVersion);
-      window.localStorage.setItem('assessmentVersion', nextVersion);
 
-      const payload = buildExportPayload(nextVersion); 
-  
+    setIsExporting(true);
+
+    try {
+      const versionForExport = assessmentVersion;
+      const payload = buildExportPayload(versionForExport);
+
       const fallbackPrint = () => {
         const win = window.open('', '_blank');
         if (!win) return;
-  
-        const esc = (s) =>
-          String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  
-        const missingHtml = Object.entries(payload.missing || {})
-          .map(([leafId, reqs]) => {
-            const leafLabel = decisionTree[leafId]?.label ?? leafId;
-            return `
-              <h3>Fehlende Anforderungen – ${esc(leafLabel)}</h3>
-              <table style="width:100%; border-collapse:collapse; margin-top:8px;">
-                <thead>
-                  <tr>
-                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left;">
-                      Fehlende Anforderung
-                    </th>
-                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
-                      Durchgeführt durch
-                    </th>
-                    <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
-                      Geprüft von
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${reqs
+
+        const esc = (s) => escapeHtml(normalizePdfText(s));
+
+        const flatMissing = Object.entries(payload.missing || {}).flatMap(([leafId, reqs]) => {
+          const leafLabel = decisionTree[leafId]?.label ?? leafId;
+          return (reqs || []).map((r) => ({ ...r, leafId, leafLabel }));
+        });
+        const groupedMissing = groupMissingByRegulationAndFirstArticleOnce(flatMissing);
+
+        const hasMissing = Object.values(payload.missing || {}).some(
+          (reqs) => Array.isArray(reqs) && reqs.length > 0
+        );
+
+        const missingHtml = hasMissing
+          ? groupedMissing
+              .map(
+                (reg) => `
+                  <h3>${esc(reg.regulation)}</h3>
+                  ${reg.articles
                     .map(
-                      (r) => `
-                      <tr>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">
-                          ${esc(r.question ?? '')}
-                          <br/>
-                          <small style="color:#64748b;">
-                            ${esc(r.pkgLabel)}${r.articles?.length ? ' • ' + esc(r.articles.join(', ')) : ''}
-                          </small>
-                        </td>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
-                        <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
-                      </tr>`
+                      (a) => `
+                      <h4 style="margin:10px 0 6px 0;">${
+                        a.url
+                          ? '<a href="' +
+                            esc(a.url) +
+                            '" target="_blank" rel="noreferrer">' +
+                            esc(a.article) +
+                            '</a>'
+                          : esc(a.article)
+                      }</h4>
+                        <table style="width:100%; border-collapse:collapse; margin-top:8px;">
+                          <thead>
+                            <tr>
+                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left;">
+                                Fehlende Anforderung
+                              </th>
+                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
+                                Durchgeführt durch
+                              </th>
+                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
+                                Kontrolliert durch
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${a.items
+                              .map((r) => {
+                                const meta = [r.pkgLabel, r.leafLabel].filter(Boolean).join(' • ');
+                                return `
+                                  <tr>
+                                    <td style="border:1px solid #e5e7eb; padding:6px;">
+                                      ${esc(r.todo ?? '')}
+                                      ${meta ? `<br/><small style="color:#64748b;">${esc(meta)}</small>` : ''}
+                                    </td>
+                                    <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
+                                    <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
+                                  </tr>
+                                `;
+                              })
+                              .join('')}
+                          </tbody>
+                        </table>
+                      `
                     )
                     .join('')}
-                </tbody>
-              </table>
-            `;
-          })
-          .join('');
-  
-        const pkgsHtml = payload.packagesByLeaf
-          ? Object.entries(payload.packagesByLeaf)
-              .map(([leafId, pkgs]) => {
-                const leafLabel = decisionTree[leafId]?.label ?? leafId;
-                return `
-                  <h3>Pakete – ${esc(leafLabel)}</h3>
-                  <ul>${pkgs
-                    .map(
-                      (p) =>
-                        `<li>${esc(p.label)}${
-                          p.articles?.length ? ` <small>(${esc(p.articles.join(', '))})</small>` : ''
-                        }</li>`
-                    )
-                    .join('')}</ul>
-                `;
-              })
+                `
+              )
               .join('')
           : '';
-  
+
+        const pkgsHtml =
+          hasMissing && payload.packagesByLeaf
+            ? Object.entries(payload.packagesByLeaf)
+                .map(([leafId, pkgs]) => {
+                  const leafLabel = decisionTree[leafId]?.label ?? leafId;
+                  return `
+                    <h3>Pakete – ${esc(leafLabel)}</h3>
+                    <ul>${pkgs
+                      .map(
+                        (p) =>
+                          `<li>${esc(p.label)}${
+                            p.articles?.length ? ` <small>(${esc(p.articles.join(', '))})</small>` : ''
+                          }</li>`
+                      )
+                      .join('')}</ul>
+                  `;
+                })
+                .join('')
+            : '';
+
         win.document.write(`
           <html><head><title>Decision Tree Export</title>
             <meta charset="utf-8"/>
@@ -1339,32 +2090,37 @@ function Wizard({ createdBy, assessmentId }) {
               @media print { button { display:none; } }
             </style>
           </head><body>
-            <h1>AI Act & DORA – Entscheidungsbaum</h1>
-            <div class="meta"> Assessment-ID: ${esc(payload.assessmentId)} • Ersteller: ${esc(payload.createdBy || 'Unbekannt')} • Bearbeitungszeitpunkt: ${esc(new Date(payload.lastUpdated).toLocaleString('de-DE'))}</div>
+            <h1>AI Act &amp; DORA – Entscheidungsbaum</h1>
+            <div class="meta">
+              Assessment-ID: ${esc(payload.assessmentId)}
+              • Ersteller: ${esc(payload.createdBy || 'Unbekannt')}
+              • Bearbeitungszeitpunkt: ${esc(new Date(payload.lastUpdated).toLocaleString('de-DE'))}
+            </div>
+
             <h2>Pfad</h2>
             <ol>
               ${payload.path
                 .map(
                   (p) =>
                     `<li>${esc(p.label)}${
-                      p.answer ? ` <small>(${p.answer === 'yes' ? 'Ja' : 'Nein'})</small>` : ''
+                      p.answer ? ` <small>(${esc(p.answer)})</small>` : ''
                     }</li>`
                 )
                 .join('')}
             </ol>
-            ${
-              missingHtml
-                ? `<h2>Fehlende Anforderungen</h2>${missingHtml}`
-                : `<h2>Fehlende Anforderungen</h2><p><small>Keine fehlenden Anforderungen erfasst.</small></p>`
-            }
+
+            ${missingHtml ? `<h2>Fehlende Anforderungen</h2>${missingHtml}` : ''}
+
             ${pkgsHtml ? `<h2>Pflichtenpakete</h2>${pkgsHtml}` : ''}
+
             <button onclick="window.print()">Als PDF drucken…</button>
           </body></html>
         `);
+
         win.document.close();
         win.focus();
       };
-  
+
       let jsPDF;
       try {
         const m = await import('jspdf');
@@ -1372,23 +2128,33 @@ function Wizard({ createdBy, assessmentId }) {
       } catch {
         jsPDF = null;
       }
-  
+      
       if (!jsPDF) {
         fallbackPrint();
+
+        const nextVersion = bumpVersion(assessmentVersion);
+        setAssessmentVersion(nextVersion);
+        window.localStorage.setItem('assessmentVersion', nextVersion);
+
         return;
       }
-  
+      
       const doc = new jsPDF({ unit: 'pt', format: 'a4' });
       const margin = 36;
-      const width = doc.internal.pageSize.getWidth() - margin * 2;
+      const pageW = doc.internal.pageSize.getWidth();
+      const pageH = doc.internal.pageSize.getHeight();
+      const width = pageW - margin * 2;
       let y = margin;
-  
+      
       const addLine = (s, size = 11, bold = false) => {
+        const txt = normalizePdfText(s);
+      
         doc.setFont('helvetica', bold ? 'bold' : 'normal');
         doc.setFontSize(size);
-        const lines = doc.splitTextToSize(String(s), width);
+      
+        const lines = doc.splitTextToSize(String(txt), width);
         for (const line of lines) {
-          if (y > doc.internal.pageSize.getHeight() - margin) {
+          if (y > pageH - margin) {
             doc.addPage();
             y = margin;
           }
@@ -1396,60 +2162,180 @@ function Wizard({ createdBy, assessmentId }) {
           y += size + 4;
         }
       };
-  
+
+      const addLineLink = (label, url, size = 11, bold = false) => {
+        const txt = normalizePdfText(label);
+
+        doc.setFont('helvetica', bold ? 'bold' : 'normal');
+        doc.setFontSize(size);
+
+        const lines = doc.splitTextToSize(String(txt), width);
+        for (const line of lines) {
+          if (y > pageH - margin) {
+            doc.addPage();
+            y = margin;
+          }
+
+          if (url) {
+            if (typeof doc.textWithLink === 'function') {
+              doc.textWithLink(line, margin, y, { url });
+            } else {
+              doc.text(line, margin, y);
+              try {
+                doc.link(margin, y - size, doc.getTextWidth(line), size + 4, { url });
+              } catch (_) {}
+            }
+          } else {
+            doc.text(line, margin, y);
+          }
+
+          y += size + 4;
+        }
+      };
+      
+      // ---- table helpers (Fehlende Anforderungen) ----
+      const tableX = margin;
+      const tableW = width;
+      
+      // Column widths (similar to what you had visually with | separators)
+      const colW = [
+        Math.floor(tableW * 0.56), // Fehlende Anforderung
+        Math.floor(tableW * 0.22), // Durchgeführt durch
+        tableW - Math.floor(tableW * 0.56) - Math.floor(tableW * 0.22), // Geprüft von
+      ];
+      
+      const cellPad = 6;
+      
+      const ensureSpace = (neededH) => {
+        if (y + neededH <= pageH - margin) return false;
+        doc.addPage();
+        y = margin;
+        return true;
+      };
+      
+      const drawRowBoxes = (rowY, rowH) => {
+        let x = tableX;
+        for (const w of colW) {
+          doc.rect(x, rowY, w, rowH);
+          x += w;
+        }
+      };
+      
+      const drawTableHeader = () => {
+        const fontSize = 10;
+        const headerH = fontSize + cellPad * 2;
+      
+        ensureSpace(headerH);
+      
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(fontSize);
+      
+        drawRowBoxes(y, headerH);
+      
+        const headers = ['Fehlende Anforderung', 'Durchgeführt durch', 'Geprüft von'];
+        let x = tableX;
+        for (let i = 0; i < headers.length; i += 1) {
+          doc.text(headers[i], x + cellPad, y + cellPad + fontSize);
+          x += colW[i];
+        }
+      
+        y += headerH;
+      };
+      
+      const drawRequirementRow = (textLeft) => {
+        const fontSize = 10;
+        const lineH = fontSize + 3;
+      
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(fontSize);
+      
+        const leftText = normalizePdfText(textLeft ?? '');
+        const wrapped = doc.splitTextToSize(leftText, colW[0] - cellPad * 2);
+        const linesCount = Math.max(1, wrapped.length);
+        const rowH = cellPad * 2 + linesCount * lineH;
+      
+        const broke = ensureSpace(rowH);
+        if (broke) drawTableHeader();
+      
+        drawRowBoxes(y, rowH);
+      
+        doc.text(wrapped, tableX + cellPad, y + cellPad + fontSize);
+      
+        // Col 2 and 3 intentionally left blank for manual fill-in/sign-off
+        y += rowH;
+      };
+      
+      // ---- document content ----
       addLine('AI Act & DORA – Entscheidungsbaum', 16, true);
-      addLine(`Assessment-ID: ${(payload.assessmentId)} • Ersteller: ${(payload.createdBy || 'Unbekannt')} • Bearbeitungszeitpunkt: ${(new Date(payload.lastUpdated).toLocaleString('de-DE'))}`, 10, false);
+      addLine(
+        `Assessment-ID: ${payload.assessmentId} • Ersteller: ${payload.createdBy || 'Unbekannt'} • Bearbeitungszeitpunkt: ${new Date(
+          payload.lastUpdated
+        ).toLocaleString('de-DE')}`,
+        10,
+        false
+      );
       y += 6;
-  
+      
       addLine('Pfad', 13, true);
       payload.path.forEach((p, idx) =>
         addLine(
-          `${idx + 1}. ${p.label}${p.answer ? ` (${p.answer === 'yes' ? 'Ja' : 'Nein'})` : ''}`,
+          `${idx + 1}. ${p.label}${p.answer ? ` (${p.answer})` : ''}`,
           11,
           false
         )
       );
       y += 8;
-  
-      addLine('Fehlende Anforderungen', 13, true);
-      addLine('Anforderung | Durchgeführt durch | Geprüft von', 10, true);
-      addLine('------------------------------------------------------------', 10, false);
-      const missingEntries = Object.entries(payload.missing || {});
-      if (!missingEntries.length) {
-        addLine('Keine fehlenden Anforderungen erfasst.', 11, false);
-      } else {
-        for (const [leafId, reqs] of missingEntries) {
-          addLine(`Leaf: ${decisionTree[leafId]?.label ?? leafId}`, 11, true);
-          reqs.forEach((r) =>
-            addLine(`${r.question ?? ''} | ____________ | ____________`, 10, false));
-          y += 6;
+      
+      const flatMissing = Object.entries(payload.missing || {}).flatMap(([leafId, reqs]) => {
+        const leafLabel = decisionTree[leafId]?.label ?? leafId;
+        return (reqs || []).map((r) => ({ ...r, leafId, leafLabel }));
+      });
+      const groupedMissing = groupMissingByRegulationAndFirstArticleOnce(flatMissing);
+      const hasMissing = flatMissing.length > 0;
+
+      if (hasMissing) {
+        addLine('Fehlende Anforderungen', 13, true);
+        y += 4;
+
+        for (const reg of groupedMissing) {
+          addLine(String(reg.regulation), 12, true);
+          y += 4;
+
+          for (const a of reg.articles) {
+            addLineLink(String(a.article), a.url, 11, true);
+            drawTableHeader();
+
+            for (const r of a.items) {
+              const meta = [r.pkgLabel, r.leafLabel].filter(Boolean).join(' • ');
+              drawRequirementRow(`${r.todo ?? ''}${meta ? ` (${meta})` : ''}`);
+            }
+          }
+          y += 8;
         }
       }
-  
-      if (payload.packagesByLeaf) {
+      
+      if (hasMissing && payload.packagesByLeaf) {
         y += 6;
         addLine('Pflichtenpakete', 13, true);
         for (const [leafId, pkgs] of Object.entries(payload.packagesByLeaf)) {
           addLine(`Leaf: ${decisionTree[leafId]?.label ?? leafId}`, 11, true);
           pkgs.forEach((p) =>
-            addLine(
-              `• ${p.label}${p.articles?.length ? ` (${p.articles.join(', ')})` : ''}`,
-              10,
-              false
-            )
+            addLine(`• ${p.label}${p.articles?.length ? ` (${p.articles.join(', ')})` : ''}`, 10, false)
           );
           y += 6;
         }
       }
-  
-      doc.save(`Export_AI_Assessment_${payload.assessmentId}.pdf`);
-    } catch (err) {
-      console.error('Export failed:', err);
-      alert(`Export fehlgeschlagen: ${err?.message ?? err}`);
+
+      doc.save(`decision-tree-export_${payload.assessmentId}.pdf`);
+
+      const nextVersion = bumpVersion(assessmentVersion);
+      setAssessmentVersion(nextVersion);
+      window.localStorage.setItem('assessmentVersion', nextVersion);
+
     } finally {
-      setIsExporting(false); 
+      setIsExporting(false);
     }
-  }, [isExporting, assessmentVersion, bumpVersion, buildExportPayload]);
+  }, [isExporting, bumpVersion, assessmentVersion, buildExportPayload, decisionTree, setAssessmentVersion, setIsExporting]);
 
   // Center-Card je nach Descriptor
   let centerCard = null;
@@ -1465,11 +2351,16 @@ function Wizard({ createdBy, assessmentId }) {
           step: stepNumber,
           cluster,
           answer: answers[currentId],
-          disabled: !!answers[currentId],
+          disabled: false,
           onYes: () => answerNode(currentId, 'yes'),
           onNo: () => answerNode(currentId, 'no'),
+          yesLabel: descriptor.yesLabel,
+          noLabel: descriptor.noLabel,
           info: descriptor.info,
           examples: descriptor.examples,
+          checkpointText: descriptor.checkpointText,
+          reference: descriptor.reference,
+          referenceUrl: descriptor.referenceUrl,
         }}
       />
     );
@@ -1486,6 +2377,9 @@ function Wizard({ createdBy, assessmentId }) {
           continueDisabled: !descriptor.nextId,
           onStartCheck: () => startCheck(currentId),
           checkStarted: path.some((s) => s.id.startsWith(`${currentId}__req__`)),
+          checkpointText: descriptor.checkpointText,
+          reference: descriptor.reference,
+          referenceUrl: descriptor.referenceUrl,
         }}
       />
     );
@@ -1499,11 +2393,13 @@ function Wizard({ createdBy, assessmentId }) {
           step: stepNumber,
           cluster,
           answer: answers[currentId],
-          disabled: !!answers[currentId],
+          disabled: false,
           onYes: () => answerNode(currentId, 'yes'),
           onNo: () => answerNode(currentId, 'no'),
           info: descriptor.info,
           examples: descriptor.examples,
+          reference: descriptor.reference,
+          referenceUrl: descriptor.referenceUrl,
         }}
       />
     );
@@ -1542,165 +2438,60 @@ function Wizard({ createdBy, assessmentId }) {
 
   return (
     <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'relative',
-        overflow: 'hidden',
-        background: '#f3f4f6',
-      }}
+    className="app-root"
     >
-      <style>{uiCSS}</style>
   
-      {/* 🔷 HEADER (neu) */}
-      <header
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 24px',
-          background: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
-          boxShadow: '0 2px 6px rgba(15,23,42,0.04)',
-          zIndex: 1000,
-        }}
-      >
-        {/* Links: Model Nr. */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span
-            style={{
-              padding: '2px 8px',
-              borderRadius: 999,
-              border: '1px solid #d1d5db',
-              background: '#e5e7eb',
-              fontSize: 11,
-              fontWeight: 500,
-            }}
-          >
-            Assessment-ID: {assessmentVersion}
-          </span>
+      {/* 🔷 HEADER */}
+      <header className="app-header">
+        <div className="app-header-left">
+          <span className="app-model-badge">Assessment-ID: {assessmentVersion}</span>
           <span className="rf-meta">Ersteller: {createdBy || 'Unbekannt'}</span>
         </div>
-  
-        {/* Mitte: App-Name */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-          <div
-            style={{
-              fontSize: 18,
-              fontWeight: 600,
-              color: '#111827',
-              textAlign: 'center',
-            }}
-          >
-            Entscheidungsbaum zur sicheren Integration von KI
-          </div>
+
+        <div className="app-header-center">
+          <div className="app-title">Entscheidungsbaum zur sicheren Integration von KI</div>
         </div>
-  
-        {/* Rechts: Bearbeitungszeitpunkt + Actions */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          <span className="rf-meta">
-            {new Date().toLocaleString('de-DE')}
-          </span>
-  
-          {savedState && (
-            <button
-              onClick={restoreSavedPath}
-              title="Zur zuletzt erreichten Endposition zurückkehren"
-              style={{
-                fontSize: 12,
-                padding: '6px 12px',
-                borderRadius: 999,
-                border: '1px solid #d1d5db',
-                background: '#ffffff',
-                cursor: 'pointer',
-              }}
-            >
-              Zurück zum Endpunkt
-            </button>
-          )}
-  
+
+        <div className="app-header-right app-actions">
+          <span className="rf-meta">Letzte Änderung: {updatedAtLabel}</span>
+
           <button
+            type="button"
             onClick={handleExportPDF}
             disabled={isExporting}
             title="PDF-Zusammenfassung exportieren"
-            style={{
-              fontSize: 12,
-              padding: '6px 12px',
-              borderRadius: 999,
-              border: '1px solid #d1d5db',
-              background: isExporting ? '#e5e7eb' : '#ffffff',
-              cursor: isExporting ? 'not-allowed' : 'pointer',
-            }}
           >
             {isExporting ? 'Exportiert…' : 'PDF Export'}
           </button>
 
           <button
+            type="button"
             onClick={resetAssessmentVersion}
             title="Setzt die Assessment-ID (Revision) auf v1.0 zurück"
-            style={{
-              fontSize: 12,
-              padding: '6px 12px',
-              borderRadius: 999,
-              border: '1px solid #d1d5db',
-              background: '#ffffff',
-              cursor: 'pointer',
-            }}
           >
             Version auf v1.0
           </button>
 
-          <button
-            onClick={handleReset}
-            title="Pfad zurücksetzen"
-            style={{
-              fontSize: 12,
-              padding: '6px 12px',
-              borderRadius: 999,
-              border: '1px solid #d1d5db',
-              background: '#ffffff',
-              cursor: 'pointer',
-            }}
-          >
+          <button type="button" onClick={handleReset} title="Pfad zurücksetzen">
             Pfad zurücksetzen
           </button>
         </div>
       </header>
+
   
       {/* 🟦 Hauptlayout (Sidebar + Main) */}
       <div
-        style={{
-          display: 'flex',
-          height: '100%',
-          paddingTop: 64, // Platz für Header
-        }}
+        className="app-body"
       >
-        {/* Links: Pfad / Historie (unverändert) */}
-        <div
-          style={{
-            width: 260,
-            borderRight: '1px solid #e2e8f0',
-            padding: '16px 12px',
-            overflowY: 'auto',
-            background: '#f8fafc',
-          }}
-        >
+        {/* Links: Pfad / Historie */}
+        <aside className="app-sidebar">
           <div style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 13 }}>Pfad / Historie</div>
+  
           <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
             {path.map((step, idx) => {
               const id = step.id;
               let label = id;
+  
               if (id.includes('__req__summary')) {
                 const leafId = id.split('__req__')[0];
                 label = `Summary – ${decisionTree[leafId]?.label ?? leafId}`;
@@ -1732,63 +2523,286 @@ function Wizard({ createdBy, assessmentId }) {
                   <div style={{ fontWeight: isActive ? 600 : 500, marginBottom: 2 }}>
                     {idx + 1}. {label}
                   </div>
+  
                   {answers[id] && (
                     <div className="rf-meta">
-                      Antwort: {answers[id] === 'yes' ? 'Ja' : 'Nein'}
+                      Antwort: {getAnswerText(id, answers[id])}
                     </div>
                   )}
                 </li>
               );
             })}
           </ol>
-        </div>
+        </aside>
   
-        {/* Mitte: Decision Card (zentriert, etwas breiter) */}
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'center',
-            padding: 24,
-            overflow: 'auto',
-            background: '#f3f4f6',
-          }}
-        >
-          <div style={{ width: '100%', maxWidth: 960 }}>
-            <div className="rf-meta" style={{ marginBottom: 12 }}>
-            </div>
+        {/* Mitte: Decision Card */}
+        <main className="app-main">
+        <div className="app-main-inner" style={{ width: '100%', maxWidth: 960 }}>
+            <div className="rf-meta" style={{ marginBottom: 12 }} />
+
+            {consistencyViolations.length > 0 && (
+              <>
+                <div
+                  style={{
+                    marginBottom: 12,
+                    padding: 12,
+                    borderRadius: 12,
+                    border: '1px solid #fca5a5',
+                    background: '#fef2f2',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+                    <div>
+                      <div style={{ fontWeight: 700, marginBottom: 4 }}>Widerspruch erkannt</div>
+                      <div style={{ fontSize: 13, opacity: 0.85 }}>
+                        Der Wizard blockiert den nächsten Schritt, bis der Konflikt aufgelöst ist.
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+                      <button
+                        type="button"
+                        onClick={() => setConflictHelpOpen(true)}
+                        style={{
+                          padding: '6px 10px',
+                          borderRadius: 10,
+                          border: '1px solid #e5e7eb',
+                          background: 'white',
+                          cursor: 'pointer',
+                          fontSize: 12,
+                        }}
+                      >
+                        Review-Hilfe
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setConsistencyViolations([])}
+                        style={{
+                          padding: '6px 10px',
+                          borderRadius: 10,
+                          border: '1px solid #e5e7eb',
+                          background: 'white',
+                          cursor: 'pointer',
+                          fontSize: 12,
+                        }}
+                      >
+                        Schließen
+                      </button>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: 12, display: 'grid', gap: 10 }}>
+                    {consistencyViolations.map((v, idx) => (
+                      <div
+                        key={`${v.code}-${idx}`}
+                        style={{
+                          background: 'white',
+                          border: '1px solid #fee2e2',
+                          borderRadius: 12,
+                          padding: 12,
+                        }}
+                      >
+                        <div style={{ fontWeight: 600 }}>{v.message}</div>
+
+                        {Array.isArray(v.conflicts) && v.conflicts.length > 0 && (
+                          <div style={{ marginTop: 8 }}>
+                            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 6 }}>
+                              Konflikt erzeugt durch
+                            </div>
+                            <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12, display: 'grid', gap: 4 }}>
+                              {v.conflicts.map((c, cIdx) => {
+                                const canJump = path.some((n) => n.id === c.nodeId);
+                                return (
+                                  <li key={`${c.nodeId}-${cIdx}`}>
+                                    <button
+                                      type="button"
+                                      disabled={!canJump}
+                                      onClick={() => canJump && jumpToNodeId(c.nodeId)}
+                                      style={{
+                                        marginRight: 8,
+                                        padding: 0,
+                                        border: 'none',
+                                        background: 'transparent',
+                                        color: canJump ? '#2563eb' : '#6b7280',
+                                        textDecoration: canJump ? 'underline' : 'none',
+                                        cursor: canJump ? 'pointer' : 'not-allowed',
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                      }}
+                                    >
+                                      {c.nodeId}
+                                    </button>
+                                    <span style={{ opacity: 0.85 }}>{c.label}</span>
+                                    {c.answer && c.answer !== '-' && (
+                                      <span style={{ marginLeft: 8, opacity: 0.9 }}>
+                                        · Antwort: <b>{c.answer}</b>
+                                      </span>
+                                    )}
+                                    {c.note && <span style={{ marginLeft: 8, opacity: 0.75 }}>· {c.note}</span>}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        )}
+
+                        {Array.isArray(v.recommendations) && v.recommendations.length > 0 && (
+                          <div style={{ marginTop: 10, fontSize: 12 }}>
+                            <div style={{ fontWeight: 600, marginBottom: 6 }}>Empfehlung</div>
+                            <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 4 }}>
+                              {v.recommendations.map((r, i) => (
+                                <li key={i}>{r}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {v.primaryActionNodeId && path.some((n) => n.id === v.primaryActionNodeId) && (
+                          <div style={{ marginTop: 10 }}>
+                            <button
+                              type="button"
+                              onClick={() => jumpToNodeId(v.primaryActionNodeId)}
+                              style={{
+                                padding: '6px 10px',
+                                borderRadius: 10,
+                                border: '1px solid #e5e7eb',
+                                background: 'white',
+                                cursor: 'pointer',
+                                fontSize: 12,
+                                fontWeight: 600,
+                              }}
+                            >
+                              Zum Review-Schritt
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {conflictHelpOpen && (
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    style={{
+                      position: 'fixed',
+                      inset: 0,
+                      background: 'rgba(0,0,0,0.45)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 16,
+                      zIndex: 9999,
+                    }}
+                    onClick={() => setConflictHelpOpen(false)}
+                  >
+                    <div
+                      style={{
+                        width: 'min(860px, 100%)',
+                        maxHeight: '85vh',
+                        overflow: 'auto',
+                        borderRadius: 14,
+                        background: 'white',
+                        border: '1px solid #e5e7eb',
+                        padding: 16,
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+                        <div>
+                          <div style={{ fontWeight: 800, fontSize: 16 }}>
+                            {decisionTree.W_KI_WIDERSPRUCH?.label || 'Widerspruch – Review-Hilfe'}
+                          </div>
+                          {decisionTree.W_KI_WIDERSPRUCH?.info && (
+                            <div style={{ marginTop: 8, fontSize: 13, opacity: 0.9 }}>
+                              {decisionTree.W_KI_WIDERSPRUCH.info}
+                            </div>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setConflictHelpOpen(false)}
+                          style={{
+                            padding: '6px 10px',
+                            borderRadius: 10,
+                            border: '1px solid #e5e7eb',
+                            background: 'white',
+                            cursor: 'pointer',
+                            fontSize: 12,
+                            height: 'fit-content',
+                          }}
+                        >
+                          Schließen
+                        </button>
+                      </div>
+
+                      {decisionTree.W_KI_WIDERSPRUCH?.examples && (
+                        <div style={{ marginTop: 12 }}>
+                          <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 6 }}>Vorgehen</div>
+                          {Array.isArray(decisionTree.W_KI_WIDERSPRUCH.examples) ? (
+                            <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 6, fontSize: 13 }}>
+                              {decisionTree.W_KI_WIDERSPRUCH.examples.map((ex, i) => (
+                                <li key={i}>{ex}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div style={{ fontSize: 13, opacity: 0.9 }}>{decisionTree.W_KI_WIDERSPRUCH.examples}</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
             {centerCard}
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
-}
+}  
 
 export default function App() {
-  const [view, setView] = useState('welcome'); // 'welcome' | 'creator' | 'wizard'
+  const [view, setView] = useState('welcome'); 
   const [creator, setCreator] = useState('');
 
-  if (view === 'welcome') {
-    return <WelcomeScreen onStart={() => setView('creator')} />;
-  }
+  const resetApp = useCallback(() => {
+    setCreator('');
+    setView('welcome');
+  }, []);
 
-  if (view === 'creator') {
-    return (
+  let content = null;
+
+  if (view === 'welcome') {
+    content = <WelcomeScreen onStart={() => setView('creator')} />;
+  } else if (view === 'creator') {
+    content = (
       <CreatorScreen
         value={creator}
         onChange={setCreator}
         onBack={() => setView('welcome')}
         onConfirm={() => {
-          if (creator.trim()) {
-            setView('wizard');
-          }
+          if (creator.trim()) setView('wizard');
         }}
       />
     );
+  } else {
+    content = (
+      <ErrorBoundary onReset={resetApp}>
+        <Wizard createdBy={creator || 'Unbekannt'} />
+      </ErrorBoundary>
+    );
   }
 
-  return <Wizard createdBy={creator || 'Unbekannt'} />;
+  return (
+    <>
+      <style>{uiCSS}</style>
+      {content}
+    </>
+  );
 }
+
 
