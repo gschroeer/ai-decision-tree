@@ -1,7 +1,12 @@
 
-// src/App.jsx
 import { Component, useCallback, useMemo, useState, useEffect } from 'react';
 
+// Modell-/Regellogik (Entscheidungsbaum + Katalog + Helper):
+// - decisionTree: Fragen-/Leaf-Knoten inkl. next-Verweisen und ausgelösten Pflichtenpaketen
+// - obligationsCatalog: Pflichtenpakete mit konkreten Requirement-Items (Fragen, ToDos, Evidence)
+// - getRequirementChain / getNextInRequirementChain: baut pro Leaf eine sequenzielle Requirement-Prüfung auf
+// - validateNextNode: zentrale Gate-/Lock-Logik (Review, Konsistenz, Sonderpfade)
+// - getCanonicalIdForRequirementInstance: Deduplizierung von Requirements über mehrere Leaves hinweg
 import {
   decisionTree,
   obligationsCatalog,
@@ -11,7 +16,11 @@ import {
   getCanonicalIdForRequirementInstance,
 } from './decisionTreeModel';
 
-// ---------- Styles ----------
+import { exportAssessmentPdf } from './pdfExport';
+
+// UI-Styles werden als String gebündelt und im App-Root via <style>{uiCSS}</style> injiziert
+// Vorteil für die Masterarbeit: reproduzierbare Darstellung ohne Build- oder CSS-Tooling-Abhängigkeiten
+
 const uiCSS = `
 .app-root{
   width:100vw;
@@ -156,103 +165,108 @@ const uiCSS = `
 }
 `;
 
-// ---------- Error Boundary ----------
+/**
+ * Fängt Render-/Lifecycle-Fehler im Wizard ab und zeigt eine kontrollierte Fehlermeldung inkl. Stack
+ * Damit bleibt das Tool in der Bewertungssituation nutzbar und Fehler sind für Reviewer nachvollziehbar
+ */
 class ErrorBoundary extends Component {
-    constructor(props) {
-      super(props);
-      this.state = { hasError: false, error: null, errorInfo: null };
-    }
-  
-    static getDerivedStateFromError(error) {
-      return { hasError: true, error };
-    }
-  
-    componentDidCatch(error, errorInfo) {
-      // Wichtig: ohne das sieht man Fehler oft nur in der Console
-      this.setState({ errorInfo });
-      // eslint-disable-next-line no-console
-      console.error('UI crashed (caught by ErrorBoundary):', error, errorInfo);
-    }
-  
-    handleReset = () => {
-      this.setState({ hasError: false, error: null, errorInfo: null });
-      this.props.onReset?.();
-    };
-  
-    render() {
-      if (!this.state.hasError) return this.props.children;
-  
-      const message =
-        this.state.error?.message || 'Unbekannter Fehler (keine Fehlermeldung)';
-      const stack =
-        this.state.errorInfo?.componentStack ||
-        this.state.error?.stack ||
-        '';
-  
-      return (
-        <div className="app-root">
-          <div style={{ maxWidth: 920, margin: '80px auto', padding: 24 }}>
-            <div
-              style={{
-                background: '#fff',
-                border: '1px solid #e5e7eb',
-                borderRadius: 16,
-                padding: 20,
-                boxShadow: '0 8px 22px rgba(15,23,42,0.06)',
-              }}
-            >
-              <h2 style={{ margin: 0, fontSize: 20 }}>
-                ⚠️ Etwas ist schiefgelaufen
-              </h2>
-              <p style={{ marginTop: 10, marginBottom: 14, color: '#334155' }}>
-                {message}
-              </p>
-  
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button
-                  className="btn"
-                  onClick={this.handleReset}
-                  type="button"
-                >
-                  Zurücksetzen
-                </button>
-                <button
-                  className="btn btn-ghost"
-                  onClick={() => window.location.reload()}
-                  type="button"
-                >
-                  Seite neu laden
-                </button>
-              </div>
-  
-              {stack ? (
-                <details style={{ marginTop: 14 }}>
-                  <summary style={{ cursor: 'pointer' }}>
-                    Technische Details
-                  </summary>
-                  <pre
-                    style={{
-                      marginTop: 10,
-                      whiteSpace: 'pre-wrap',
-                      background: '#0b1220',
-                      color: '#e2e8f0',
-                      padding: 12,
-                      borderRadius: 12,
-                      overflowX: 'auto',
-                      fontSize: 12,
-                    }}
-                  >
-                    {String(stack)}
-                  </pre>
-                </details>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      );
-    }
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    this.setState({ errorInfo });
+    console.error('UI crashed (caught by ErrorBoundary):', error, errorInfo);
+  }
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: null, errorInfo: null });
+    this.props.onReset?.();
+  };
+
+  render() {
+    if (!this.state.hasError) return this.props.children;
+
+    const message =
+      this.state.error?.message || 'Unbekannter Fehler (keine Fehlermeldung)';
+    const stack =
+      this.state.errorInfo?.componentStack ||
+      this.state.error?.stack ||
+      '';
+
+    return (
+      <div className="app-root">
+        <div style={{ maxWidth: 920, margin: '80px auto', padding: 24 }}>
+          <div
+            style={{
+              background: '#fff',
+              border: '1px solid #e5e7eb',
+              borderRadius: 16,
+              padding: 20,
+              boxShadow: '0 8px 22px rgba(15,23,42,0.06)',
+            }}
+          >
+            <h2 style={{ margin: 0, fontSize: 20 }}>
+              ⚠️ Etwas ist schiefgelaufen
+            </h2>
+            <p style={{ marginTop: 10, marginBottom: 14, color: '#334155' }}>
+              {message}
+            </p>
+
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button
+                className="btn"
+                onClick={this.handleReset}
+                type="button"
+              >
+                Zurücksetzen
+              </button>
+              <button
+                className="btn btn-ghost"
+                onClick={() => window.location.reload()}
+                type="button"
+              >
+                Seite neu laden
+              </button>
+            </div>
+
+            {stack ? (
+              <details style={{ marginTop: 14 }}>
+                <summary style={{ cursor: 'pointer' }}>
+                  Technische Details
+                </summary>
+                <pre
+                  style={{
+                    marginTop: 10,
+                    whiteSpace: 'pre-wrap',
+                    background: '#0b1220',
+                    color: '#e2e8f0',
+                    padding: 12,
+                    borderRadius: 12,
+                    overflowX: 'auto',
+                    fontSize: 12,
+                  }}
+                >
+                  {String(stack)}
+                </pre>
+              </details>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+/**
+ * Startbildschirm: Kontext + Einstieg in den Wizard-Flow
+ * Verantwortlich nur für UI und Übergang via onStart
+ */
 function WelcomeScreen({ onStart }) {
   return (
     <div
@@ -394,6 +408,10 @@ function WelcomeScreen({ onStart }) {
   );
 }
 
+/**
+ * Erfasst den "Ersteller" (Name/Team) als Metadatum für Header und Export
+ * Validierung ist bewusst minimal (nicht-leerer String), um den Flow nicht zu blockieren
+ */
 function CreatorScreen({ value, onChange, onBack, onConfirm }) {
   const isValid = value.trim().length > 0;
 
@@ -510,7 +528,8 @@ function CreatorScreen({ value, onChange, onBack, onConfirm }) {
   );
 }
 
-// ---------- Cluster / Layout ----------
+// Cluster dienen der visuellen Trennung zwischen EU AI Act und DORA
+// Die Zuordnung erfolgt primär über node.cluster; als Fallback werden ausgelöste Pflichtenpakete ausgewertet
 const CLUSTER_AI = 'AI Act';
 const CLUSTER_DORA = 'DORA';
 
@@ -518,10 +537,8 @@ function getClusterForNodeId(id) {
   const baseId = id.includes('__req__') ? id.split('__req__')[0] : id;
   const node = decisionTree[baseId];
 
-  // ✅ Primär: explizit aus dem Modell
   if (node?.cluster) return node.cluster;
 
-  // ✅ Fallback (robust, ohne ID-Präfixe): aus Pflichtenpaketen ableiten
   const obligationKeys = Array.isArray(node?.obligations) ? node.obligations : [];
   const hasDora = obligationKeys.some((k) => obligationsCatalog[k]?.regulation === 'DORA');
   if (hasDora) return CLUSTER_DORA;
@@ -598,27 +615,18 @@ function setStoredBool(key, value) {
   try {
     window.localStorage.setItem(key, value ? '1' : '0');
   } catch {
-    // ignore
   }
 }
 
-// ---------- Node Components ----------
+/**
+ * Darstellung der jeweils "aktuellen" Einheit im Wizard:
+ * - QuestionNode: Frage (Ja/Nein) mit Hinweisen/Beispielen
+ * - LeafNode: Ergebnis-Knoten; zeigt ausgelöste Pflichtenpakete und startet den Requirement-Check
+ * - ReqQuestionNode: einzelne Requirement-Frage aus einem Pflichtenpaket (Erfüllung Ja/Nein)
+ * - ReqSummaryNode: Zusammenfassung offener Requirements pro Leaf inkl. "Weiter"-Navigation
+ */
 function QuestionNode({ data }) {
-  const { 
-    label, 
-    onYes, 
-    onNo, 
-    yesLabel,
-    noLabel,
-    disabled, 
-    answer, 
-    step, 
-    cluster, 
-    info, 
-    examples,
-    checkpointText,
-    reference,
-    referenceUrl    
+  const {label, onYes, onNo, yesLabel, noLabel, disabled, answer, step, cluster, info, examples, checkpointText, reference, referenceUrl    
   } = data;
 
   const YES = yesLabel ?? 'Ja';
@@ -839,7 +847,7 @@ function LeafNode({ data }) {
             background: '#fef2f2',
           }}
         >
-          <div style={{ fontWeight: 800, marginBottom: 4 }}>⛔ Verbotene Praxis</div>
+          <div style={{ fontWeight: 800, marginBottom: 4 }}>Verbotene Praxis</div>
           <div style={{ fontSize: 12, lineHeight: 1.35 }}>
             Diese Konstellation ist nach EU AI Act grundsätzlich unzulässig. Nutzung stoppen und Eskalation auslösen.
           </div>
@@ -1076,7 +1084,7 @@ function normalizeArticleLabel(value) {
   return String(value ?? '')
     .trim()
     .toLowerCase()
-    .replace(/[–—]/g, '-') // normalize dash variants
+    .replace(/[–—]/g, '-') 
     .replace(/\s+/g, ' ');
 }
 
@@ -1106,7 +1114,6 @@ function pickBetterUrl({ currentUrl, candidateUrl, articleLabel }) {
     return a < b ? currentUrl : candidateUrl;
   }
 
-  // Fallback: prefer the URL that matches the first article number from the label (e.g. "Art. 11–12" -> 11)
   const first = extractFirstArticleNumber(articleLabel);
   if (Number.isFinite(first)) {
     if (a === first) return currentUrl;
@@ -1117,8 +1124,8 @@ function pickBetterUrl({ currentUrl, candidateUrl, articleLabel }) {
 }
 
 function groupMissingByRegulationAndFirstArticleOnce(missing = []) {
-  const byReg = new Map(); // regulation -> Map(articleKey -> { key, article, url, sortKey, items })
-  const seen = new Set(); // canonicalId (preferred) -> dedup
+  const byReg = new Map(); 
+  const seen = new Set(); 
 
   for (const m of missing) {
     if (!m) continue;
@@ -1135,8 +1142,6 @@ function groupMissingByRegulationAndFirstArticleOnce(missing = []) {
 
     const articleUrl = m.referenceUrl ?? null;
 
-    // IMPORTANT: group by the human label (normalized), not by URL/referenceId.
-    // Otherwise the same label (e.g. "Art. 11–12") can split into multiple groups.
     const articleKey = normalizeArticleLabel(articleLabel);
 
     if (!byReg.has(regulation)) byReg.set(regulation, new Map());
@@ -1163,8 +1168,20 @@ function groupMissingByRegulationAndFirstArticleOnce(missing = []) {
     byArticle.get(articleKey).items.push(m);
   }
 
+  const regulationRank = (reg) => {
+    const s = String(reg ?? '').toLowerCase();
+    if (s.includes('ai act')) return 0; 
+    if (s.includes('dora')) return 1;
+    return 2;
+  };
+
   return Array.from(byReg.entries())
-    .sort(([a], [b]) => String(a).localeCompare(String(b)))
+    .sort(([a], [b]) => {
+      const ra = regulationRank(a);
+      const rb = regulationRank(b);
+      if (ra !== rb) return ra - rb;
+      return String(a).localeCompare(String(b), 'de');
+    })
     .map(([regulation, byArticle]) => ({
       regulation,
       articles: Array.from(byArticle.values())
@@ -1272,8 +1289,13 @@ function ReqSummaryNode({ data }) {
   );
 }
 
-// Konsistenz- & Plausibilitätschecks
-
+/**
+ * Domänenspezifische Konsistenzprüfung über den gesamten bisherigen Pfad
+ * Ziel: Der Nutzer soll keine widersprüchlichen Klassifikationen "durchklicken" können
+ *
+ * Ergebnis: Liste von Violations (Code, Message, Konfliktstellen, Empfehlungen)
+ * Diese wird im Wizard als Blocker angezeigt (Review-Hilfe / Rücksprung)
+ */
 function validatePathConsistency({ answers, pathIds, activePath }) {
   const violations = [];
 
@@ -1307,7 +1329,6 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
 
   const addViolation = (v) => violations.push(v);
 
-  // ---- Rule 1: A1 = "Nein" aber später wurden EU-AI-Act-Schritte beantwortet
   if (answers?.A1 === 'no') {
     const laterAnswered = Object.keys(answers || {})
       .filter((id) => id !== 'A1')
@@ -1333,7 +1354,6 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
     }
   }
 
-  // ---- Rule 2: Kein Down-Staging von Hochrisiko (Lock)
   const highRiskLocked = hrLeafIds.length > 0;
 
   if (highRiskLocked) {
@@ -1361,7 +1381,6 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
     }
   }
 
-  // ---- Rule 3: Hochrisiko-Pfad darf nicht später NON-HR-Pfade enthalten
   const NON_HR_PATH_IDS = new Set([
     'A3_NICHT_HOCHRISIKO_PRUEFUNG',
     'A4_TRANSPARENZ_ANWENDBAR',
@@ -1393,7 +1412,6 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
     }
   }
 
-  // ---- Rule 4: Verbotene Praktik darf nicht weitergeführt werden
   const prohibitedLocked = prohibitedLeafIds.length > 0;
 
   if (prohibitedLocked) {
@@ -1426,7 +1444,6 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
     }
   }
 
-  // ---- Rule 5 (optional): DORA Start verneint → keine DORA-Fragen danach
   if (answers?.D0 === 'no') {
     const doraQuestionAnswered = Object.keys(answers).some((id) => {
       if (!/^B\d+/.test(id)) return false;
@@ -1457,18 +1474,30 @@ function validatePathConsistency({ answers, pathIds, activePath }) {
   return { violations };
 }
 
-// ---------- Wizard ----------
+/**
+
+ * Navigation, Zustandsführung, Ableitung regulatorischer Pflichten und Erzeugung der Exportdaten.
+ *
+ * - path: sequenzielle Liste der besuchten Step-IDs
+ * - answers: Map für Decision-Nodes und Requirements
+ * - currentStepIndex / activePathLength: Timeline-Navigation (Zurückspringen ohne sofortiges Löschen)
+ * - reqAnswerByCanonicalId: Deduplizierte Sicht auf Requirement-Antworten (canonicalId als Schlüssel),
+ *   um identische Anforderungen aus mehreren Pflichtenpaketen nicht mehrfach prüfen zu müssen
+ *
+ * Navigationsprinzip:
+ * - Decision-Nodes wählen über yes/no den nächsten Node und laufen ggf. durch validateNextNode()
+ * - Leaf-Nodes können den Requirement-Check starten oder "weiter" gehen
+ * - Requirement-Nodes werden sequenziell abgearbeitet; bereits beantwortete canonicalIds werden übersprungen;
+ *   am Ende steht ein __req__summary-Step, der offene Requirements aggregiert und die Fortsetzung erlaubt
+ */
 function Wizard({ createdBy }) {
   const [path, setPath] = useState([{ id: 'A1' }]);
   const [answers, setAnswers] = useState({});
 
   const [isExporting, setIsExporting] = useState(false);
 
-  // Pakete im Export mitsenden/anzeigen (kannst du später auch als Toggle in die UI hängen)
   const exportIncludePkgs = true;
 
-
-  // Timeline-Status
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [activePathLength, setActivePathLength] = useState(1);
 
@@ -1486,12 +1515,10 @@ function Wizard({ createdBy }) {
   const getAnswerText = (nodeId, value) => {
     if (!value) return '';
   
-    // Requirement-IDs: bleiben Ja/Nein
     if (nodeId.includes('__req__')) {
       return value === 'yes' ? 'Ja' : 'Nein';
     }
   
-    // Normale Decision-Nodes: nutze yesLabel/noLabel aus dem decisionTreeModel
     const def = decisionTree[nodeId];
     const YES = def?.yesLabel ?? 'Ja';
     const NO = def?.noLabel ?? 'Nein';
@@ -1511,6 +1538,9 @@ function Wizard({ createdBy }) {
 
   const currentId = path[currentStepIndex]?.id ?? 'A1';
 
+// Deduplizierung von Requirement-Antworten:
+// Mehrere Leaves können identische Requirements auslösen, canonicalId bildet diese zusammen
+// Konfliktfall (unterschiedliche Antworten für gleiche canonicalId) wird konservativ als "no" behandelt
   const reqAnswerByCanonicalId = useMemo(() => {
     const m = new Map();
 
@@ -1522,12 +1552,14 @@ function Wizard({ createdBy }) {
       const prev = m.get(canonicalId);
 
       if (!prev) m.set(canonicalId, a);
-      else if (prev !== a) m.set(canonicalId, 'no'); // Konflikt -> als "nicht erfüllt" behandeln
+      else if (prev !== a) m.set(canonicalId, 'no'); 
     }
 
     return m;
   }, [answers]);
 
+  // Descriptor beschreibt den aktuell zu rendernden Schritt
+  // und kapselt die aus dem Modell abgeleiteten UI-Daten
   const descriptor = useMemo(() => {
     if (currentId.includes('__req__summary')) {
       const leafId = currentId.split('__req__')[0];
@@ -1591,6 +1623,7 @@ function Wizard({ createdBy }) {
       obligationKeys: def.obligations ?? [],
       nextId: def.next,
       cluster: getClusterForNodeId(currentId),
+      checkpointText: def.checkpointText,
       reference: def.reference,
       referenceId: def.referenceId,
       referenceUrl: def.referenceUrl,
@@ -1598,21 +1631,21 @@ function Wizard({ createdBy }) {
   }, [currentId, answers]);
 
 
-  // Timeline-Navigation
+  // Historiennavigation: Zurückspringen ist erlaubt, aber mit aktiver "Prefix"-Logik
+  // Bei Sprüngen wird eine evtl. angezeigte Konsistenzverletzung zurückgesetzt
   const jumpToStep = useCallback((index) => {
     setConsistencyViolations([]);
     setCurrentStepIndex(index);
     setActivePathLength(index + 1);
   }, []);  
 
-  // Springe zu einem Knoten anhand seiner ID (für Konflikt-UI)
-const jumpToNodeId = useCallback(
-  (nodeId) => {
-    const idx = path.findIndex((n) => n.id === nodeId);
-    if (idx >= 0) jumpToStep(idx);
-  },
-  [path, jumpToStep]
-);
+  const jumpToNodeId = useCallback(
+    (nodeId) => {
+      const idx = path.findIndex((n) => n.id === nodeId);
+      if (idx >= 0) jumpToStep(idx);
+    },
+    [path, jumpToStep]
+  );
 
   function pruneAnswersAfterBranchChange({ nextAnswers, keepIds, clearRequirements }) {
     const pruned = { ...nextAnswers };
@@ -1628,6 +1661,16 @@ const jumpToNodeId = useCallback(
     return pruned;
   }
 
+/**
+ * Persistiert eine Antwort  und berechnet den nächsten Schritt
+ *
+ * Zwei Pfade:
+ * 1) Requirement-Instanzen (__req__...): lineare Abarbeitung der Requirement-Chain; bereits erfüllte canonicalIds werden übersprungen
+ * 2) Decision-Tree-Nodes: Next-ID ergibt sich aus yes/no; validateNextNode() kann den Fluss in Review-/Gate-Knoten umleiten
+ *
+ * In beiden Fällen wird vor dem Fortschreiben des Pfads validatePathConsistency() ausgeführt,
+ * um widersprüchliche Klassifikationen zu blockieren.
+ */
   const answerNode = useCallback(
     (id, answer) => {
       const basePath = path.slice(0, activePathLength);
@@ -1637,18 +1680,13 @@ const jumpToNodeId = useCallback(
       const isRequirement = id.includes('__req__');
       const prevAnswer = answers[id];
   
-      // Wenn man *auf derselben Frage* neu klickt, wollen wir trotzdem weiterlaufen können.
-      // (Kein early return mehr.)
-  
-      // ---------------- Requirements (DORA/AI Act Items) ----------------
       if (isRequirement) {
         let { nextReqId, summaryId } = getNextInRequirementChain(id);
         let nextId = nextReqId ?? summaryId;
         if (!nextId) return;
   
         const nextAnswersRaw = { ...answers, [id]: answer };
-  
-        // Skip bereits beantwortete (globale) Requirements
+
         const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
         const currentCanonical = getCanonicalIdForRequirementInstance(id);
         if (currentCanonical) answeredCanonicalIds.add(currentCanonical);
@@ -1691,7 +1729,7 @@ const jumpToNodeId = useCallback(
         return;
       }
   
-      // ---------------- Decision Tree Question Nodes ----------------
+      // Question Nodes
       const def = decisionTree[id];
       const rawNextId = answer === 'yes' ? def?.yes : def?.no;
       if (!rawNextId) return;
@@ -1710,7 +1748,6 @@ const jumpToNodeId = useCallback(
         });
       }
   
-      // zentrale Regellogik aus dem Modell anwenden (Locks / Review-Gates)
       const { nextId } = validateNextNode({
         currentId: id,
         answer,
@@ -1743,6 +1780,9 @@ const jumpToNodeId = useCallback(
     [answers, path, activePathLength, decisionTree, obligationsCatalog, reqAnswerByCanonicalId]
   );
 
+  // Navigation aus Leaf-Knoten:
+  // - continueFromLeaf: setzt den Fluss im decisionTree über def.next fort (inkl. validateNextNode + Konsistenzcheck)
+  // - startCheck: wechselt vom Leaf in die Requirement-Chain des/der ausgelösten Pflichtenpakete
   const continueFromLeaf = useCallback(
     (leafId) => {
       let nextId = decisionTree[leafId]?.next;
@@ -1785,10 +1825,8 @@ const jumpToNodeId = useCallback(
       const { reqs, summaryId } = getRequirementChain(leafId);
       if (!reqs?.length) return;
 
-      // canonicalIds, die bereits irgendwo beantwortet wurden
       const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
 
-      // Erste offene Requirement-Instanz finden (per canonicalId dedupliziert)
       const firstOpen = reqs.find((r) => {
         const instId = r.id ?? r.instanceId;
         if (!instId) return false;
@@ -1840,7 +1878,7 @@ const jumpToNodeId = useCallback(
     ]
   );
 
-  
+  // Globaler Reset des Assessments: Pfad und Antworten werden auf den Startzustand zurückgesetzt
   const handleReset = useCallback(() => {
     setPath([{ id: 'A1' }]);
     setAnswers({});
@@ -1886,6 +1924,12 @@ const jumpToNodeId = useCallback(
     },[answers, path, activePathLength]
   );
 
+  /**
+   * Verdichtet den internen Wizard-State zu einem exportierbaren, stabilen Datenmodell:
+   * - path: Schrittfolge inkl. Labels und Antworten
+   * - missing: pro Leaf die offenen Requirements (abgeleitet aus reqAnswerByCanonicalId)
+   * - packagesByLeaf: optionale Auflistung ausgelöster Pflichtenpakete
+   */
   const buildExportPayload = useCallback((versionForExport) => {
     const pathPayload = path.map((step) => {
       const id = step.id;
@@ -1976,8 +2020,12 @@ const jumpToNodeId = useCallback(
     const major = m ? parseInt(m[1], 10) + 1 : 1;
     return `v${major}.0`;
   }, []);
-  
-  
+
+  /**
+   * UI-Trigger für den PDF-Export
+   * - Bereitet Tabellen-/Listenstrukturen für die PDF-Layoutlogik auf (Pfad, gruppierte fehlende Anforderungen, Pakete)
+   * - Erhöht nach erfolgreichem Export die Assessment-Version (Revision) und persistiert diese in localStorage
+   */
   const handleExportPDF = useCallback(async () => {
     if (isExporting) return;
 
@@ -1987,361 +2035,69 @@ const jumpToNodeId = useCallback(
       const versionForExport = assessmentVersion;
       const payload = buildExportPayload(versionForExport);
 
-      const fallbackPrint = () => {
-        const win = window.open('', '_blank');
-        if (!win) return;
+      // (1) Pfad: 3 Spalten -> Schritt | Frage | Antwort
+      // Schritt-Spalte: nur Zahl, stabil aus Reihenfolge der Liste
+      const pathRows = (payload.path || []).map((p, idx) => [
+        String(idx + 1),
+        p?.label ?? '',
+        p?.answer ?? '',
+      ]);
 
-        const esc = (s) => escapeHtml(normalizePdfText(s));
-
-        const flatMissing = Object.entries(payload.missing || {}).flatMap(([leafId, reqs]) => {
-          const leafLabel = decisionTree[leafId]?.label ?? leafId;
-          return (reqs || []).map((r) => ({ ...r, leafId, leafLabel }));
-        });
-        const groupedMissing = groupMissingByRegulationAndFirstArticleOnce(flatMissing);
-
-        const hasMissing = Object.values(payload.missing || {}).some(
-          (reqs) => Array.isArray(reqs) && reqs.length > 0
-        );
-
-        const missingHtml = hasMissing
-          ? groupedMissing
-              .map(
-                (reg) => `
-                  <h3>${esc(reg.regulation)}</h3>
-                  ${reg.articles
-                    .map(
-                      (a) => `
-                      <h4 style="margin:10px 0 6px 0;">${
-                        a.url
-                          ? '<a href="' +
-                            esc(a.url) +
-                            '" target="_blank" rel="noreferrer">' +
-                            esc(a.article) +
-                            '</a>'
-                          : esc(a.article)
-                      }</h4>
-                        <table style="width:100%; border-collapse:collapse; margin-top:8px;">
-                          <thead>
-                            <tr>
-                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left;">
-                                Fehlende Anforderung
-                              </th>
-                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
-                                Durchgeführt durch
-                              </th>
-                              <th style="border:1px solid #cbd5e1; padding:6px; text-align:left; width:25%;">
-                                Kontrolliert durch
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            ${a.items
-                              .map((r) => {
-                                const meta = [r.pkgLabel, r.leafLabel].filter(Boolean).join(' • ');
-                                return `
-                                  <tr>
-                                    <td style="border:1px solid #e5e7eb; padding:6px;">
-                                      ${esc(r.todo ?? '')}
-                                      ${meta ? `<br/><small style="color:#64748b;">${esc(meta)}</small>` : ''}
-                                    </td>
-                                    <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
-                                    <td style="border:1px solid #e5e7eb; padding:6px;">&nbsp;</td>
-                                  </tr>
-                                `;
-                              })
-                              .join('')}
-                          </tbody>
-                        </table>
-                      `
-                    )
-                    .join('')}
-                `
-              )
-              .join('')
-          : '';
-
-        const pkgsHtml =
-          hasMissing && payload.packagesByLeaf
-            ? Object.entries(payload.packagesByLeaf)
-                .map(([leafId, pkgs]) => {
-                  const leafLabel = decisionTree[leafId]?.label ?? leafId;
-                  return `
-                    <h3>Pakete – ${esc(leafLabel)}</h3>
-                    <ul>${pkgs
-                      .map(
-                        (p) =>
-                          `<li>${esc(p.label)}${
-                            p.articles?.length ? ` <small>(${esc(p.articles.join(', '))})</small>` : ''
-                          }</li>`
-                      )
-                      .join('')}</ul>
-                  `;
-                })
-                .join('')
-            : '';
-
-        win.document.write(`
-          <html><head><title>Decision Tree Export</title>
-            <meta charset="utf-8"/>
-            <style>
-              body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding:24px; }
-              h1{ margin:0 0 6px 0; } .meta{ color:#64748b; font-size:12px; margin-bottom:18px; }
-              ol{ padding-left:18px; } small{ color:#64748b; }
-              @media print { button { display:none; } }
-            </style>
-          </head><body>
-            <h1>AI Act &amp; DORA – Entscheidungsbaum</h1>
-            <div class="meta">
-              Assessment-ID: ${esc(payload.assessmentId)}
-              • Ersteller: ${esc(payload.createdBy || 'Unbekannt')}
-              • Bearbeitungszeitpunkt: ${esc(new Date(payload.lastUpdated).toLocaleString('de-DE'))}
-            </div>
-
-            <h2>Pfad</h2>
-            <ol>
-              ${payload.path
-                .map(
-                  (p) =>
-                    `<li>${esc(p.label)}${
-                      p.answer ? ` <small>(${esc(p.answer)})</small>` : ''
-                    }</li>`
-                )
-                .join('')}
-            </ol>
-
-            ${missingHtml ? `<h2>Fehlende Anforderungen</h2>${missingHtml}` : ''}
-
-            ${pkgsHtml ? `<h2>Pflichtenpakete</h2>${pkgsHtml}` : ''}
-
-            <button onclick="window.print()">Als PDF drucken…</button>
-          </body></html>
-        `);
-
-        win.document.close();
-        win.focus();
-      };
-
-      let jsPDF;
-      try {
-        const m = await import('jspdf');
-        jsPDF = m.jsPDF;
-      } catch {
-        jsPDF = null;
-      }
-      
-      if (!jsPDF) {
-        fallbackPrint();
-
-        const nextVersion = bumpVersion(assessmentVersion);
-        setAssessmentVersion(nextVersion);
-        window.localStorage.setItem('assessmentVersion', nextVersion);
-
-        return;
-      }
-      
-      const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-      const margin = 36;
-      const pageW = doc.internal.pageSize.getWidth();
-      const pageH = doc.internal.pageSize.getHeight();
-      const width = pageW - margin * 2;
-      let y = margin;
-      
-      const addLine = (s, size = 11, bold = false) => {
-        const txt = normalizePdfText(s);
-      
-        doc.setFont('helvetica', bold ? 'bold' : 'normal');
-        doc.setFontSize(size);
-      
-        const lines = doc.splitTextToSize(String(txt), width);
-        for (const line of lines) {
-          if (y > pageH - margin) {
-            doc.addPage();
-            y = margin;
-          }
-          doc.text(line, margin, y);
-          y += size + 4;
-        }
-      };
-
-      const addLineLink = (label, url, size = 11, bold = false) => {
-        const txt = normalizePdfText(label);
-
-        doc.setFont('helvetica', bold ? 'bold' : 'normal');
-        doc.setFontSize(size);
-
-        const lines = doc.splitTextToSize(String(txt), width);
-        for (const line of lines) {
-          if (y > pageH - margin) {
-            doc.addPage();
-            y = margin;
-          }
-
-          if (url) {
-            if (typeof doc.textWithLink === 'function') {
-              doc.textWithLink(line, margin, y, { url });
-            } else {
-              doc.text(line, margin, y);
-              try {
-                doc.link(margin, y - size, doc.getTextWidth(line), size + 4, { url });
-              } catch (_) {}
-            }
-          } else {
-            doc.text(line, margin, y);
-          }
-
-          y += size + 4;
-        }
-      };
-      
-      // ---- table helpers (Fehlende Anforderungen) ----
-      const tableX = margin;
-      const tableW = width;
-      
-      // Column widths (similar to what you had visually with | separators)
-      const colW = [
-        Math.floor(tableW * 0.56), // Fehlende Anforderung
-        Math.floor(tableW * 0.22), // Durchgeführt durch
-        tableW - Math.floor(tableW * 0.56) - Math.floor(tableW * 0.22), // Geprüft von
-      ];
-      
-      const cellPad = 6;
-      
-      const ensureSpace = (neededH) => {
-        if (y + neededH <= pageH - margin) return false;
-        doc.addPage();
-        y = margin;
-        return true;
-      };
-      
-      const drawRowBoxes = (rowY, rowH) => {
-        let x = tableX;
-        for (const w of colW) {
-          doc.rect(x, rowY, w, rowH);
-          x += w;
-        }
-      };
-      
-      const drawTableHeader = () => {
-        const fontSize = 10;
-        const headerH = fontSize + cellPad * 2;
-      
-        ensureSpace(headerH);
-      
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(fontSize);
-      
-        drawRowBoxes(y, headerH);
-      
-        const headers = ['Fehlende Anforderung', 'Durchgeführt durch', 'Geprüft von'];
-        let x = tableX;
-        for (let i = 0; i < headers.length; i += 1) {
-          doc.text(headers[i], x + cellPad, y + cellPad + fontSize);
-          x += colW[i];
-        }
-      
-        y += headerH;
-      };
-      
-      const drawRequirementRow = (textLeft) => {
-        const fontSize = 10;
-        const lineH = fontSize + 3;
-      
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(fontSize);
-      
-        const leftText = normalizePdfText(textLeft ?? '');
-        const wrapped = doc.splitTextToSize(leftText, colW[0] - cellPad * 2);
-        const linesCount = Math.max(1, wrapped.length);
-        const rowH = cellPad * 2 + linesCount * lineH;
-      
-        const broke = ensureSpace(rowH);
-        if (broke) drawTableHeader();
-      
-        drawRowBoxes(y, rowH);
-      
-        doc.text(wrapped, tableX + cellPad, y + cellPad + fontSize);
-      
-        // Col 2 and 3 intentionally left blank for manual fill-in/sign-off
-        y += rowH;
-      };
-      
-      // ---- document content ----
-      addLine('AI Act & DORA – Entscheidungsbaum', 16, true);
-      addLine(
-        `Assessment-ID: ${payload.assessmentId} • Ersteller: ${payload.createdBy || 'Unbekannt'} • Bearbeitungszeitpunkt: ${new Date(
-          payload.lastUpdated
-        ).toLocaleString('de-DE')}`,
-        10,
-        false
-      );
-      y += 6;
-      
-      addLine('Pfad', 13, true);
-      payload.path.forEach((p, idx) =>
-        addLine(
-          `${idx + 1}. ${p.label}${p.answer ? ` (${p.answer})` : ''}`,
-          11,
-          false
-        )
-      );
-      y += 8;
-      
       const flatMissing = Object.entries(payload.missing || {}).flatMap(([leafId, reqs]) => {
         const leafLabel = decisionTree[leafId]?.label ?? leafId;
         return (reqs || []).map((r) => ({ ...r, leafId, leafLabel }));
       });
+
       const groupedMissing = groupMissingByRegulationAndFirstArticleOnce(flatMissing);
-      const hasMissing = flatMissing.length > 0;
 
-      if (hasMissing) {
-        addLine('Fehlende Anforderungen', 13, true);
-        y += 4;
-
-        for (const reg of groupedMissing) {
-          addLine(String(reg.regulation), 12, true);
-          y += 4;
-
-          for (const a of reg.articles) {
-            addLineLink(String(a.article), a.url, 11, true);
-            drawTableHeader();
-
-            for (const r of a.items) {
-              const meta = [r.pkgLabel, r.leafLabel].filter(Boolean).join(' • ');
-              drawRequirementRow(`${r.todo ?? ''}${meta ? ` (${meta})` : ''}`);
-            }
-          }
-          y += 8;
-        }
-      }
+      const hasMissing = Object.values(payload.missing || {}).some(
+        (reqs) => Array.isArray(reqs) && reqs.length > 0
+      );
       
-      if (hasMissing && payload.packagesByLeaf) {
-        y += 6;
-        addLine('Pflichtenpakete', 13, true);
-        for (const [leafId, pkgs] of Object.entries(payload.packagesByLeaf)) {
-          addLine(`Leaf: ${decisionTree[leafId]?.label ?? leafId}`, 11, true);
-          pkgs.forEach((p) =>
-            addLine(`• ${p.label}${p.articles?.length ? ` (${p.articles.join(', ')})` : ''}`, 10, false)
-          );
-          y += 6;
-        }
-      }
+      //(3) Pflichtenpakete: nicht als Tabelle, sondern als Bullet-Liste (Gruppen nach Leaf)
+      const packageGroups =
+        hasMissing && payload.packagesByLeaf
+          ? Object.entries(payload.packagesByLeaf)
+              .map(([leafId, pkgs]) => {
+                const leafLabel = decisionTree[leafId]?.label ?? leafId;
+                const packages = (pkgs || [])
+                  .map((p) => p?.label ?? p?.key ?? '')
+                  .filter(Boolean);
+                return { leafId, leafLabel, packages };
+              })
+              .filter((g) => g.packages.length > 0)
+          : [];
 
-      doc.save(`decision-tree-export_${payload.assessmentId}.pdf`);
+      await exportAssessmentPdf({
+        title: 'AI Act & DORA – Entscheidungsbaum',
+        payload,
+        pathRows,
+        packageGroups,
+        groupedMissing,
+      });
 
       const nextVersion = bumpVersion(assessmentVersion);
       setAssessmentVersion(nextVersion);
       window.localStorage.setItem('assessmentVersion', nextVersion);
-
     } finally {
       setIsExporting(false);
     }
-  }, [isExporting, bumpVersion, assessmentVersion, buildExportPayload, decisionTree, setAssessmentVersion, setIsExporting]);
+  }, [
+    isExporting,
+    bumpVersion,
+    assessmentVersion,
+    buildExportPayload,
+    decisionTree,
+    setAssessmentVersion,
+    setIsExporting,
+  ]);
 
-  // Center-Card je nach Descriptor
+
+  // Auswahl der zentralen Karte im Hauptbereich:
+  // Der Descriptor entscheidet, welche Node-Komponente gerendert wird und welche Handler gebunden werden
   let centerCard = null;
   const stepNumber = currentStepIndex + 1;
   const cluster = descriptor.cluster ?? getClusterForNodeId(currentId);
-  const totalSteps = path.length;
 
   if (descriptor.kind === 'question') {
     centerCard = (
@@ -2436,12 +2192,16 @@ const jumpToNodeId = useCallback(
     );
   }
 
+  // Rendering-Layout:
+  // - Header: Metadaten + Export-Trigger + Reset 
+  // - Sidebar: klickbare Historie (Pfad) zur Navigation
+  // - Main: aktuelle Frage/Leaf/Requirement/Summary (centerCard)
+  // - Konsistenzverletzungen werden als Blocker-Panel im Main angezeigt (inkl. Review-Hilfe)
   return (
     <div
     className="app-root"
     >
   
-      {/* 🔷 HEADER */}
       <header className="app-header">
         <div className="app-header-left">
           <span className="app-model-badge">Assessment-ID: {assessmentVersion}</span>
@@ -2478,12 +2238,10 @@ const jumpToNodeId = useCallback(
         </div>
       </header>
 
-  
-      {/* 🟦 Hauptlayout (Sidebar + Main) */}
       <div
         className="app-body"
       >
-        {/* Links: Pfad / Historie */}
+
         <aside className="app-sidebar">
           <div style={{ fontWeight: 'bold', marginBottom: 8, fontSize: 13 }}>Pfad / Historie</div>
   
@@ -2535,7 +2293,6 @@ const jumpToNodeId = useCallback(
           </ol>
         </aside>
   
-        {/* Mitte: Decision Card */}
         <main className="app-main">
         <div className="app-main-inner" style={{ width: '100%', maxWidth: 960 }}>
             <div className="rf-meta" style={{ marginBottom: 12 }} />
@@ -2765,6 +2522,12 @@ const jumpToNodeId = useCallback(
   );
 }  
 
+/**
+ * Minimaler View-Router für die drei App-Phasen:
+ * - welcome: Intro
+ * - creator: Ersteller erfassen
+ * - wizard: eigentlicher Entscheidungsbaum (mit ErrorBoundary als Schutzschicht)
+ */
 export default function App() {
   const [view, setView] = useState('welcome'); 
   const [creator, setCreator] = useState('');
