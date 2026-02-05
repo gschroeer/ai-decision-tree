@@ -3,7 +3,7 @@ import { Component, useCallback, useMemo, useState, useEffect } from 'react';
 
 // Modell-/Regellogik (Entscheidungsbaum + Katalog + Helper):
 // - decisionTree: Fragen-/Leaf-Knoten inkl. next-Verweisen und ausgelösten Pflichtenpaketen
-// - obligationsCatalog: Pflichtenpakete mit konkreten Requirement-Items (Fragen, ToDos, Evidence)
+// - obligationsCatalog: Pflichtenpakete mit konkreten Requirement-Items (Fragen, ToDos)
 // - getRequirementChain / getNextInRequirementChain: baut pro Leaf eine sequenzielle Requirement-Prüfung auf
 // - validateNextNode: zentrale Gate-/Lock-Logik (Review, Konsistenz, Sonderpfade)
 // - getCanonicalIdForRequirementInstance: Deduplizierung von Requirements über mehrere Leaves hinweg
@@ -1591,7 +1591,6 @@ function Wizard({ createdBy }) {
         info: req.info,
         examples: req.examples,
         reference: req.reference,
-        referenceId: req.referenceId,
         referenceUrl: req.referenceUrl,
       };
     }
@@ -1611,7 +1610,6 @@ function Wizard({ createdBy }) {
         examples: def.examples,
         checkpointText: def.checkpointText,
         reference: def.reference,
-        referenceId: def.referenceId,
         referenceUrl: def.referenceUrl,
       };
     }
@@ -1625,7 +1623,6 @@ function Wizard({ createdBy }) {
       cluster: getClusterForNodeId(currentId),
       checkpointText: def.checkpointText,
       reference: def.reference,
-      referenceId: def.referenceId,
       referenceUrl: def.referenceUrl,
     };
   }, [currentId, answers]);
@@ -1635,9 +1632,24 @@ function Wizard({ createdBy }) {
   // Bei Sprüngen wird eine evtl. angezeigte Konsistenzverletzung zurückgesetzt
   const jumpToStep = useCallback((index) => {
     setConsistencyViolations([]);
+  
+    const nextActiveLen = index + 1;
+  
+    setPath((prev) => prev.slice(0, nextActiveLen));
+  
+    setAnswers((prevAnswers) => {
+      const prefixIds = new Set(path.slice(0, nextActiveLen).map((s) => s.id));
+      return pruneAnswersAfterBranchChange({
+        nextAnswers: prevAnswers,
+        keepIds: prefixIds,
+        clearRequirements: false, 
+      });
+    });
+  
     setCurrentStepIndex(index);
-    setActivePathLength(index + 1);
-  }, []);  
+    setActivePathLength(nextActiveLen);
+    setUpdatedAt(new Date());
+  }, [path, pruneAnswersAfterBranchChange]);
 
   const jumpToNodeId = useCallback(
     (nodeId) => {
@@ -1924,6 +1936,26 @@ function Wizard({ createdBy }) {
     },[answers, path, activePathLength]
   );
 
+  function buildReqAnswerByCanonicalIdForLeaves({ answers, leavesInPath, getCanonicalIdForRequirementInstance }) {
+    const m = new Map();
+  
+    for (const [id, a] of Object.entries(answers || {})) {
+      if (!id.includes('__req__') || id.includes('__req__summary')) continue;
+      if (a !== 'yes' && a !== 'no') continue;
+  
+      const leafId = id.split('__req__')[0];
+      if (!leavesInPath.has(leafId)) continue;
+  
+      const canonicalId = getCanonicalIdForRequirementInstance(id) ?? id.split('__req__')[1];
+      const prev = m.get(canonicalId);
+  
+      if (!prev) m.set(canonicalId, a);
+      else if (prev !== a) m.set(canonicalId, 'no');
+    }
+  
+    return m;
+  }
+
   /**
    * Verdichtet den internen Wizard-State zu einem exportierbaren, stabilen Datenmodell:
    * - path: Schrittfolge inkl. Labels und Antworten
@@ -1931,6 +1963,8 @@ function Wizard({ createdBy }) {
    * - packagesByLeaf: optionale Auflistung ausgelöster Pflichtenpakete
    */
   const buildExportPayload = useCallback((versionForExport) => {
+    const exportPath = path.slice(0, activePathLength);
+
     const pathPayload = path.map((step) => {
       const id = step.id;
       let label = id;
@@ -1970,6 +2004,12 @@ function Wizard({ createdBy }) {
         .filter((id) => decisionTree[id]?.type === 'leaf')
     );
 
+    const reqAnswerByCanonicalIdForExport = buildReqAnswerByCanonicalIdForLeaves({
+      answers,
+      leavesInPath,
+      getCanonicalIdForRequirementInstance,
+    });
+
     const missing = {};
     for (const leafId of leavesInPath) {
       const { reqs } = getRequirementChain(leafId);
@@ -1986,7 +2026,6 @@ function Wizard({ createdBy }) {
         regulation: r.regulation,
         articles: r.articles ?? [],
         reference: r.reference ?? null,
-        referenceId: r.referenceId ?? null,
         referenceUrl: r.referenceUrl ?? null,
       }));
     }
@@ -2013,7 +2052,7 @@ function Wizard({ createdBy }) {
       missing,
       packagesByLeaf: exportIncludePkgs ? packagesByLeaf : null,
     };
-  }, [path, answers, createdBy, updatedAt, exportIncludePkgs]);
+  }, [path, activePathLength, answers, createdBy, updatedAt, exportIncludePkgs, getCanonicalIdForRequirementInstance]);
 
   const bumpVersion = useCallback((current) => {
     const m = /^v(\d+)/.exec(current || 'v1.0');

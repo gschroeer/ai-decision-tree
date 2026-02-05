@@ -17,7 +17,7 @@ export async function exportAssessmentPdf({
   const pageHeight = doc.internal.pageSize.getHeight();
   const contentWidth = pageWidth - marginX * 2;
 
-  const fileName = `DecisionTree_Assessment-${safeFilePart(payload?.assessmentId || 'export')}.pdf`;
+  const fileName = `Entscheidungsbaum_Prüfung-${safeFilePart(payload?.assessmentId || 'export')}.pdf`;
 
   const headStylesNeutral = {
     fontStyle: 'bold',

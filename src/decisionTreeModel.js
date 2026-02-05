@@ -1,63 +1,66 @@
 // Link-Lookups für Rechtsgrundlagen
 export const EU_AI_ACT_LINKS = {
-  ART_3: 'https://ai-act-law.eu/de/artikel/3/',
-  ART_4: 'https://ai-act-law.eu/de/artikel/4/',
-  ART_5: 'https://ai-act-law.eu/de/artikel/5/',
-  ART_6: 'https://ai-act-law.eu/de/artikel/6/',
-  ART_9: 'https://ai-act-law.eu/de/artikel/9/',
-  ART_10: 'https://ai-act-law.eu/de/artikel/10/',
-  ART_11: 'https://ai-act-law.eu/de/artikel/11/',
-  ART_12: 'https://ai-act-law.eu/de/artikel/12/',
-  ART_13: 'https://ai-act-law.eu/de/artikel/13/',
-  ART_14: 'https://ai-act-law.eu/de/artikel/14/',
-  ART_15: 'https://ai-act-law.eu/de/artikel/15/',
-  ART_16: 'https://ai-act-law.eu/de/artikel/16/',
-  ART_26: 'https://ai-act-law.eu/de/artikel/26/',
-  ART_27: 'https://ai-act-law.eu/de/artikel/27/',
-  ART_43: 'https://ai-act-law.eu/de/artikel/43/',
-  ART_48: 'https://ai-act-law.eu/de/artikel/48/',
-  ART_49: 'https://ai-act-law.eu/de/artikel/49/',
-  ART_50: 'https://ai-act-law.eu/de/artikel/50/',
-  ART_51: 'https://ai-act-law.eu/de/artikel/51/',
-  ART_52: 'https://ai-act-law.eu/de/artikel/52/',
-  ART_55: 'https://ai-act-law.eu/de/artikel/55/',
-  ART_60: 'https://ai-act-law.eu/de/artikel/60/',
-  ART_72: 'https://ai-act-law.eu/de/artikel/72/',
-  ART_73: 'https://ai-act-law.eu/de/artikel/73/',
-  ANHANG_III: 'https://ai-act-law.eu/de/anhang/3/',
-  ANHANG_4: 'https://ai-act-law.eu/de/anhang/4/',
+  ART_3:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_3',
+  ART_4:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_4',
+  ART_5:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_5',
+  ART_6:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_6',
+  ART_9:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_9',
+  ART_10: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_10',
+  ART_11: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_11',
+  ART_12: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_12',
+  ART_13: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_13',
+  ART_14: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_14',
+  ART_15: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_15',
+  ART_16: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_16',
+  ART_26: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_26',
+  ART_27: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_27',
+  ART_43: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_43',
+  ART_48: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_48',
+  ART_49: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_49',
+  ART_50: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_50',
+  ART_51: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_51',
+  ART_52: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_52',
+  ART_55: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_55',
+  ART_60: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_60',
+  ART_72: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_72',
+  ART_73: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_73',
+  ANHANG_III: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#anx_III',
+  ANHANG_4:   'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#anx_IV',
 };
 
 export const DORA_LINKS = {
-  ART_5: 'https://digitale-operationale-resilienz.de/artikel-5-dora/',
-  ART_6: 'https://digitale-operationale-resilienz.de/artikel-6-dora/',
-  ART_8: 'https://digitale-operationale-resilienz.de/artikel-8-dora/',
-  ART_9: 'https://digitale-operationale-resilienz.de/artikel-9-dora/',
-  ART_11: 'https://digitale-operationale-resilienz.de/artikel-11-dora/',
-  ART_12: 'https://digitale-operationale-resilienz.de/artikel-12-dora/',
-  ART_13: 'https://digitale-operationale-resilienz.de/artikel-13-dora/',
-  ART_14: 'https://digitale-operationale-resilienz.de/artikel-14-dora/',
-  ART_16: 'https://digitale-operationale-resilienz.de/artikel-16-dora/',
-  ART_17: 'https://digitale-operationale-resilienz.de/artikel-17-dora/',
-  ART_18: 'https://digitale-operationale-resilienz.de/artikel-18-dora/',
-  ART_19: 'https://digitale-operationale-resilienz.de/artikel-19-dora/',
-  ART_20: 'https://digitale-operationale-resilienz.de/artikel-20-dora/',
-  ART_23: 'https://digitale-operationale-resilienz.de/artikel-23-dora/',
-  ART_24: 'https://digitale-operationale-resilienz.de/artikel-24-dora/',
-  ART_25: 'https://digitale-operationale-resilienz.de/artikel-25-dora/',
-  ART_26: 'https://digitale-operationale-resilienz.de/artikel-26-dora/',
-  ART_27: 'https://digitale-operationale-resilienz.de/artikel-27-dora/',
-  ART_28: 'https://digitale-operationale-resilienz.de/artikel-28-dora/',
-  ART_29: 'https://digitale-operationale-resilienz.de/artikel-29-dora/',
-  ART_30: 'https://digitale-operationale-resilienz.de/artikel-30-dora/',
-  ART_31: 'https://digitale-operationale-resilienz.de/artikel-31-dora/',
-  }
+  ART_2:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_2',
+  ART_3:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_3',
+  ART_5:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_5',
+  ART_6:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_6',
+  ART_8:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_8',
+  ART_9:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_9',
+  ART_11: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_11',
+  ART_12: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_12',
+  ART_13: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_13',
+  ART_14: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_14',
+  ART_16: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_16',
+  ART_17: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_17',
+  ART_18: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_18',
+  ART_19: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_19',
+  ART_20: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_20',
+  ART_23: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_23',
+  ART_24: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_24',
+  ART_25: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_25',
+  ART_26: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_26',
+  ART_27: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_27',
+  ART_28: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_28',
+  ART_29: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_29',
+  ART_30: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_30',
+  ART_31: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_31',
+};
+
 
 export const obligationsCatalog = {
 /**
  * Struktur eines Pflichtenpakets:
  * - label/regulation/articles: Metadaten für nachvollziehbare Referenzierung im Export/Review
- * - items: Liste konkreter Requirements; jedes Item enthält i. d. R. (id, question, reference, evidence)
+ * - items: Liste konkreter Requirements; jedes Item enthält i. d. R. (id, question, reference)
  * Hinweis: items werden später linearisiert (Requirement-Chain) und als Ja/Nein abgefragt
  */
 
@@ -73,9 +76,7 @@ export const obligationsCatalog = {
           'Ist die Einstufung „kein KI-System“ dokumentiert und begründet?',
         todo: 'Einstufung „kein KI-System“ dokumentieren und nachvollziehbar begründen (Geltungsbereich, Systembeschreibung, Abgrenzung).',
         reference: 'EU AI Act (2024), Art. 3',
-        referenceId: 'ART_3',
         referenceUrl: EU_AI_ACT_LINKS.ART_3,
-        evidence: 'Nachweis: Klassifikationsnotiz, Systembeschreibung, formale Freigabe',
         info:
           'Die Begründung sollte nachvollziehbar erklären, warum die Definition nach Art. 3 EU AI Act nicht erfüllt ist.',
         examples: [
@@ -90,7 +91,6 @@ export const obligationsCatalog = {
           'Sind trotz Nicht-Anwendbarkeit des EU AI Act interne Governance- und Freigabekontrollen für das System definiert?',
         todo: 'Interne Governance- und Freigabekontrollen für das System festlegen und dokumentieren.',
         reference: 'EU AI Act (2024) – Governance-Basis (intern)',
-        evidence: 'Nachweis: Freigabeprozess, RACI, Richtlinie/Checkliste',
         info:
           'Auch wenn der EU AI Act nicht anwendbar ist, reduzieren Basis-Kontrollen Risiken.',
         examples: [
@@ -112,9 +112,7 @@ export const obligationsCatalog = {
           'Wurde die Nutzung bzw. (geplante) Inbetriebnahme des Systems gestoppt und als Maßnahme dokumentiert?',
         todo: 'Nutzung/Inbetriebnahme des Systems stoppen und den Stopp als Maßnahme nachvollziehbar dokumentieren.',
         reference: 'EU AI Act (2024), Art. 5',
-        referenceId: 'ART_5',
         referenceUrl: EU_AI_ACT_LINKS.ART_5,
-        evidence: 'Nachweis: Stopp-Entscheidung, Ticket/Änderung, Betriebsfreigabe entzogen',
         info:
           'Der Stopp sollte technisch und organisatorisch wirksam sein (z. B. Feature deaktiviert, Zugriff gesperrt, Rücksetzung/Deaktivierung im Betrieb).',
         examples: [
@@ -128,9 +126,7 @@ export const obligationsCatalog = {
           'Wurde eine formale Eskalation an Compliance/Risikomanagement durchgeführt und dokumentiert?',
         todo: 'Formale Eskalation an Compliance/Risikomanagement durchführen und als Fallakte dokumentieren.',
         reference: 'EU AI Act (2024), Art. 5',
-        referenceId: 'ART_5',
         referenceUrl: EU_AI_ACT_LINKS.ART_5,
-        evidence: 'Nachweis: Eskalationsmail/Fall-ID, Review-Protokoll, Entscheidungsgremium',
         info:
           'Die Eskalation sollte eine eindeutige Fallakte haben (Fall-ID) und die Entscheidungskompetenz muss klar geregelt sein.',
         examples: [
@@ -144,9 +140,7 @@ export const obligationsCatalog = {
           'Liegt eine dokumentierte Entscheidung vor, ob das Vorhaben abgebrochen oder regelkonform neu zugeschnitten wird?',
         todo: 'Dokumentierte Entscheidung herbeiführen und festhalten: Vorhaben abbrechen oder regelkonform neu zuschneiden.',
         reference: 'EU AI Act (2024), Art. 5',
-        referenceId: 'ART_5',
         referenceUrl: EU_AI_ACT_LINKS.ART_5,
-        evidence: 'Nachweis: Managemententscheidung, Maßnahmenplan',
         info:
           'Wenn „neu zuschneiden“: klarer neuer Geltungsbereich, aktualisierte Anforderungen, erneute Einstufung und formale Freigabe.',
         examples: [
@@ -170,10 +164,7 @@ export const obligationsCatalog = {
         todo:
         'Rollen (Anbieter/Betreiber) und Verantwortlichkeiten eindeutig definieren und im Dokumentationspaket nachvollziehbar festhalten.',
         reference: 'EU AI Act (2024), Art. 16 ff.',
-        referenceId: 'ART_16',
         referenceUrl: EU_AI_ACT_LINKS.ART_16,
-        evidence:
-          'Nachweis: Rollenbeschreibung, RACI, Vertrag/Leistungsbeschreibung (falls extern), Verantwortlichkeitsmatrix',
         info:
           'Ziel ist eine auditfeste, eindeutige Rollen- und Pflichtenzuordnung (auch bei SaaS-Konstellationen).',
         examples: [
@@ -196,10 +187,7 @@ export const obligationsCatalog = {
         todo:
           'Trainingsplan für KI-relevante Rollen erstellen/aktualisieren.',
         reference: 'EU AI Act (2024), Art. 4',
-        referenceId: 'ART_4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
-        evidence:
-          'Nachweis: Trainingsplan, Verantwortlichkeiten, Freigabe/Review',
         info:
           'Der Plan sollte rollenbasiert sein und Mindestumfang definieren.',
         examples: [
@@ -214,10 +202,7 @@ export const obligationsCatalog = {
         todo:
           'Rollen-/Skill-Matrix definieren.',
         reference: 'EU AI Act (2024), Art. 4',
-        referenceId: 'ART_4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
-        evidence:
-          'Nachweis: Rollenmatrix/Skill-Matrix, Gap-Analyse, Maßnahmenplan, Management-Freigabe',
         examples: [
           'Dev: Datenqualität, Bias, Tests, Überwachung; Compliance: Pflichtenpakete/Review-Gates.',
         ],
@@ -229,10 +214,7 @@ export const obligationsCatalog = {
         todo:
           'Teilnahme-Logs einführen/auswerten.',
         reference: 'EU AI Act (2024), Art. 4',
-        referenceId: 'ART_4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
-        evidence:
-          'Nachweis: Teilnahmelisten, Reporting je Rolle/Team, Maßnahmen bei Nicht-Teilnahme',
         examples: [
           'LMS-Export + monatlicher Report an Team Leads; Eskalation bei Pflichttrainings.'
         ],
@@ -244,10 +226,7 @@ export const obligationsCatalog = {
         todo:
           'Wissenscheck einführen.',
         reference: 'EU AI Act (2024), Art. 4',
-        referenceId: 'ART_4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
-        evidence:
-          'Nachweis: Quiz, Mindestscore-Regel, Ergebnisse, Wiederholungsnachweise',
         examples: [
           'Kurzquiz nach Training; Mindestscore 80%; Wiederholung binnen 2 Wochen.'
         ],
@@ -259,10 +238,7 @@ export const obligationsCatalog = {
         todo:
           'Auffrischungszyklus festlegen und Inhalte bei wesentlichen Änderungen/Incidents aktualisieren.',
         reference: 'EU AI Act (2024), Art. 4',
-        referenceId: 'ART_4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
-        evidence:
-          'Nachweis: Jahresplan, Versionshistorie der Inhalte, Review-Protokolle',
       },
     ],
   },
@@ -279,10 +255,7 @@ export const obligationsCatalog = {
         todo:
           'GPAI-Nutzung dokumentieren.',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceId: 'ART_51',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
-        evidence:
-          'Nachweis: Modellkarte, Lizenz-/Nutzungsbedingungen, Architekturdiagramm',
         examples: [
           'Modellregistrierung: Anbieter, Modell-ID, Region, SLA, Datenverarbeitungsbedingungen.'
         ],
@@ -294,10 +267,7 @@ export const obligationsCatalog = {
         todo:
           'Modellkarte vom Anbieter einholen und intern ablegen; Lücken dokumentieren und mitigieren.',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceId: 'ART_52',
         referenceUrl: EU_AI_ACT_LINKS.ART_52,
-        evidence:
-          'Nachweis: Modellkarte, Anbieter-Attest, interne Bewertung',
       },
       {
         id: 'GPAI_SCR_TRAINING_COMPUTE',
@@ -306,10 +276,7 @@ export const obligationsCatalog = {
         todo:
           'Training-Indikatoren dokumentieren (falls verfügbar); ansonsten Info + Ersatzindikatoren begründen.',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceId: 'ART_51',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
-        evidence:
-          'Nachweis: Anbieter-Angaben, interne Notiz zu Verfügbarkeit, Ersatzindikatoren, Risikoabschätzung',
         info:
           'Wenn der Anbieter keine Zahlen liefert: dokumentierte Anfrage + Ersatzindikatoren.',
       },
@@ -320,10 +287,7 @@ export const obligationsCatalog = {
         todo:
           'Einstufungs-Notiz erstellen (GPAI + systemisches Risiko), inkl. Begründung, Review/Freigabe.',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceId: 'ART_52',
         referenceUrl: EU_AI_ACT_LINKS.ART_52,
-        evidence:
-          'Nachweis: Notiz, Versionierung, Review-Log',
       },
       {
         id: 'GPAI_SCR_LIEFERKETTE_TRANSPARENZ',
@@ -332,10 +296,7 @@ export const obligationsCatalog = {
         todo:
           'Lieferkette dokumentieren (Subanbieter, Hosting, Subprozessoren, Artefakt-Verantwortung, etc.).',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceId: 'ART_51',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
-        evidence:
-          'Nachweis: Subprozessorliste, Verträge/DPAs, RACI',
       },
     ],
   },
@@ -352,10 +313,7 @@ export const obligationsCatalog = {
         todo:
           'Modellbewertungen durchführen und dokumentieren (Scope, Findings, etc.).',
         reference: 'EU AI Act (2024), Art. 55',
-        referenceId: 'ART_55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
-        evidence:
-          'Nachweis: Findings, Re-Test Nachweise',
         examples: [
           'Prompt-Injection, Data Exfiltration, Jailbreaks, Policy Bypass, Tool-Use Abuse.'
         ],
@@ -367,10 +325,7 @@ export const obligationsCatalog = {
         todo:
           'Risiko-Register führen (Risiken, Maßnahmen, Owner, Fristen, Wirksamkeit) und regelmäßig reviewen.',
         reference: 'EU AI Act (2024), Art. 55',
-        referenceId: 'ART_55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
-        evidence:
-          'Nachweis: Risko-Register, Reviews, KPI, Wirksamkeitsnachweise',
       },
       {
         id: 'GPAI_SYS_INCIDENT_LOG',
@@ -379,10 +334,7 @@ export const obligationsCatalog = {
         todo:
           'Incident-Log etablieren (Klassifikation, SLA, Eskalation, Lessons Learned, Anbieter-Schnittstelle).',
         reference: 'EU AI Act (2024), Art. 55',
-        referenceId: 'ART_55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
-        evidence:
-          'Nachweis: Eskalationsmatrix, Kommunikation',
       },
       {
         id: 'GPAI_SYS_CYBER_CONTROLS',
@@ -391,10 +343,7 @@ export const obligationsCatalog = {
         todo:
           'Cyber-Controls für GPAI-Nutzung umsetzen und nachweisen.',
         reference: 'EU AI Act (2024), Art. 55',
-        referenceId: 'ART_55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
-        evidence:
-          'Nachweis: Sicherheitskontrollen, Architekturdiagramme, Überwachungen, PenTest/Review',
       },
     ],
   },
@@ -410,9 +359,7 @@ export const obligationsCatalog = {
           'Gibt es einen dokumentierten KI-Risikomanagementprozess, der Risiken identifiziert, bewertet und Maßnahmen festlegt?',
         todo: 'KI-Risikomanagementprozess definieren, dokumentieren und in Kraft setzen (Identifikation, Bewertung, Maßnahmen, Verantwortlichkeiten).',
         reference: 'EU AI Act (2024), Art. 9',
-        referenceId: 'ART_9',
         referenceUrl: EU_AI_ACT_LINKS.ART_9,
-        evidence: 'Nachweis: Prozessbeschreibung, Risiko-Register, Freigabeprotokoll',
         info:
           'Der Prozess sollte KI-spezifische Risiken (z. B. Fehlklassifikation, Bias, Datenqualität, Modellveränderung als Leistungs-/Datenverschiebung) abdecken und Verantwortlichkeiten klar zuweisen.',
         examples: [
@@ -426,9 +373,7 @@ export const obligationsCatalog = {
           'Werden KI-Risiken vor der Produktivsetzung bewertet und während des Betriebs bei relevanten Änderungen regelmäßig überprüft?',
         todo: 'Regelmäßige Risiko-Reviews vor Produktivsetzung und im Betrieb etablieren (inkl. Review bei relevanten Änderungen).',
         reference: 'EU AI Act (2024), Art. 9',
-        referenceId: 'ART_9',
         referenceUrl: EU_AI_ACT_LINKS.ART_9,
-        evidence: 'Nachweis: Risiko-Reviews, Überwachungsberichte',
         info:
           '„Relevante Änderungen“ sind z. B. Modellwechsel, Neutraining/Feinabstimmung, neue Datenquellen, neue Nutzergruppe oder Prozessänderungen.',
         examples: [
@@ -441,9 +386,7 @@ export const obligationsCatalog = {
           'Sind Datenquellen, Datenherkunft und Nutzungsrechte für Training und Test dokumentiert?',
         todo: 'Datenquellen, Datenherkunft und Nutzungsrechte für Training und Test vollständig dokumentieren und nachvollziehbar nachweisen.',
         reference: 'EU AI Act (2024), Art. 10',
-        referenceId: 'ART_10',
         referenceUrl: EU_AI_ACT_LINKS.ART_10,
-        evidence: 'Nachweis: Datenherkunft, Verträge/Lizenzen, Datenkatalog',
         info:
           'Dokumentation sollte Herkunft, Erhebung, Zweckbindung, Rechtsgrundlage und Lizenz-/Vertragslage abdecken.',
         examples: [
@@ -457,9 +400,7 @@ export const obligationsCatalog = {
           'Gibt es definierte Kriterien zur Datenqualität und werden diese vor Einsatz des Modells nachweisbar geprüft?',
         todo: 'Kriterien zur Datenqualität festlegen und die Datenqualität vor Modell-Einsatz nachweisbar prüfen.',
         reference: 'EU AI Act (2024), Art. 10',
-        referenceId: 'ART_10',
         referenceUrl: EU_AI_ACT_LINKS.ART_10,
-        evidence: 'Nachweis: Datenqualitätsbericht, Prüfprotokoll, Freigabeentscheidung',
         info:
           'Kriterien umfassen typischerweise Vollständigkeit, Aktualität, Konsistenz, Repräsentativität sowie Umgang mit fehlenden Werten und Ausreißern.',
         examples: [
@@ -473,9 +414,7 @@ export const obligationsCatalog = {
           'Sind Maßnahmen zur Erkennung und Reduktion von Bias in Trainings- und Testdaten dokumentiert und umgesetzt?',
         todo: 'Maßnahmen zur Bias-Erkennung und -Reduktion definieren, dokumentieren und umsetzen (Trainings- und Testdaten).',
         reference: 'EU AI Act (2024), Art. 10',
-        referenceId: 'ART_10',
         referenceUrl: EU_AI_ACT_LINKS.ART_10,
-        evidence: 'Nachweis: Bias-Checks, Fairness-Bericht, Maßnahmenplan',
         info:
           'Bias-Checks sollten für relevante Gruppen/Segmente nachvollziehbar sein.',
         examples: [
@@ -489,9 +428,7 @@ export const obligationsCatalog = {
         question: 'Wurde eine technische Dokumentation erstellt und wird sie bei Änderungen aktuell gehalten?',
         todo: 'Technische Dokumentation erstellen und bei Änderungen konsequent aktuell halten (versioniert, nachvollziehbar).',
         reference: 'EU AI Act (2024), Art. 11',
-        referenceId: 'ART_11',
         referenceUrl: EU_AI_ACT_LINKS.ART_11,
-        evidence: 'Nachweis: Dokumentationspaket, Versionshistorie, Änderungs-Links',
         info:
           'Technische Dokumentation sollte Modell, Daten, Schnittstellen, Betrieb, Tests, Risiken und Governance abdecken und versioniert sein.',
         examples: [
@@ -507,9 +444,7 @@ export const obligationsCatalog = {
         todo:
           'Protokollierungsfähigkeit für relevante Systemereignisse sicherstellen und dokumentieren (Audit-Tauglichkeit, Modellversion, IDs).',
         reference: 'EU AI Act (2024), Art. 12',
-        referenceId: 'ART_12',
         referenceUrl: EU_AI_ACT_LINKS.ART_12,
-        evidence: 'Nachweis: Protokollierungskonzept, technische Spezifikation',
         info:
           'Protokolle sollten für Audit- und Vorfallanalyse geeignet sein (z. B. Modellversion, Eingabe-/Ausgabe-Referenzen, Nutzer-/Systemaktionen) unter Beachtung des Datenschutzes.',
         examples: [
@@ -524,9 +459,7 @@ export const obligationsCatalog = {
         todo:
           'Betriebs-/Nutzungsinformationen für eine sichere Nutzung bereitstellen (Zweck, Grenzen, Betriebsvoraussetzungen).',
         reference: 'EU AI Act (2024), Art. 13',
-        referenceId: 'ART_13',
         referenceUrl: EU_AI_ACT_LINKS.ART_13,
-        evidence: 'Nachweis: Nutzer-/Betriebsdokumentation, Handbuch, Versionshinweise',
         info:
           'Mindestens: Zweckbestimmung, bekannte Grenzen, erforderliche Datenqualität, geeignete Nutzerrollen, Fehlerszenarien und sichere Betriebsparameter.',
         examples: [
@@ -541,9 +474,7 @@ export const obligationsCatalog = {
         todo:
           'Mechanismen für menschliche Aufsicht im Systemdesign vorsehen und dokumentieren (Eingriff, manuelle Prüfung, Abschalt-/Überschreibungs-Möglichkeit).',
         reference: 'EU AI Act (2024), Art. 14',
-        referenceId: 'ART_14',
         referenceUrl: EU_AI_ACT_LINKS.ART_14,
-        evidence: 'Nachweis: Aufsichtskonzept, Architektur/UX, Bedien-/Abschaltverfahren',
         info:
           'Aufsicht muss praktisch durchführbar sein (z. B. Überschreibungsprozess, klare Kriterien für Eingriffe, Zuständigkeiten und Schulung).',
         examples: [
@@ -558,9 +489,7 @@ export const obligationsCatalog = {
         todo:
           'Leistungskennzahlen definieren und durch Tests vor der Produktivsetzung nachweisbar belegen (inkl. Akzeptanzkriterien).',
         reference: 'EU AI Act (2024), Art. 15',
-        referenceId: 'ART_15',
         referenceUrl: EU_AI_ACT_LINKS.ART_15,
-        evidence: 'Nachweis: Testbericht, Akzeptanzkriterien, Freigabeprotokoll',
         info:
           'Kennzahlen müssen Anwendungsfall-spezifisch sein (z. B. Fehlerquote, SLA/SLO) und Akzeptanzkriterien enthalten.',
         examples: [
@@ -575,9 +504,7 @@ export const obligationsCatalog = {
         todo:
           'Robustheitstests gegen typische Stör- und Fehlerszenarien durchführen und dokumentieren (inkl. Maßnahmen bei Feststellungen).',
         reference: 'EU AI Act (2024), Art. 15',
-        referenceId: 'ART_15',
         referenceUrl: EU_AI_ACT_LINKS.ART_15,
-        evidence: 'Nachweis: Robustheitstestplan, Testergebnisse, Maßnahmenplan',
         info:
           'Typisch: fehlerhafte Eingaben, Ausreißer, fehlende Daten, Verteilungsänderung, Systemausfälle.',
         examples: [
@@ -592,9 +519,7 @@ export const obligationsCatalog = {
         todo:
           'Sicherheitsbewertung (Cybersecurity) der KI-Komponente durchführen, dokumentieren und Maßnahmen nachverfolgen.',
         reference: 'EU AI Act (2024), Art. 15',
-        referenceId: 'ART_15',
         referenceUrl: EU_AI_ACT_LINKS.ART_15,
-        evidence: 'Nachweis: Sicherheitsbewertung, Penetrationstest/Bedrohungsmodell',
         info:
           'Umfang: Bedrohungsmodell, Zugriffspfade, Datenabfluss, Lieferkette, Modellangriffe (z. B. Prompt-Injection bei LLM-Anwendungsfälle).',
         examples: [
@@ -618,9 +543,7 @@ export const obligationsCatalog = {
         todo:
           'Sicherstellen und dokumentieren, dass das System gemäß Zweckbestimmung/Betriebsanleitung eingesetzt wird (zulässige Nutzung, Grenzen, Voraussetzungen). Abweichungen nur nach formaler Prüfung/Freigabe.',
         reference: 'EU AI Act (2024), Art. 26 i. V. m. Art. 13',
-        referenceId: 'ART_26',
         referenceUrl: EU_AI_ACT_LINKS.ART_26,
-        evidence: 'Nachweis: SOP/Betriebshandbuch, Betriebsfreigabe, Schulungsnachweis, Abweichungsfreigaben',
         info:
           'Art. 26 ist im Audit der Kern: Betrieb „wie vorgesehen“ plus dokumentierte Abweichungen (inkl. Kontrollen/Gates).',
         examples: [
@@ -636,9 +559,7 @@ export const obligationsCatalog = {
         todo:
           'Menschliche Aufsicht im Betrieb umsetzen und nachweisen: Rollen/RACI, Eingriffskriterien, Schulung, Überschreibungs-/Abschaltprozess sowie Kriterien für Stopp-Entscheidungen.',
         reference: 'EU AI Act (2024), Art. 26 i. V. m. Art. 14',
-        referenceId: 'ART_14',
         referenceUrl: EU_AI_ACT_LINKS.ART_14,
-        evidence: 'Nachweis: RACI, Schulungsunterlagen, Betriebsprozesse, Überschreibungs-/Stopp-Prozess, Entscheidungsprotokoll',
         info:
           '„Human in the loop“ muss im Betrieb wirksam sein und nicht nur als Richtlinie. Besonders wichtig bei Automatisierungs-Bias.',
         examples: [
@@ -654,9 +575,7 @@ export const obligationsCatalog = {
         todo:
           'Protokollierungen aktivieren, Aufbewahrung festlegen und Auswertung für Betrieb/Vorfälle sicherstellen. Zugriff auf Protokolle regeln.',
         reference: 'EU AI Act (2024), Art. 26 i. V. m. Art. 12',
-        referenceId: 'ART_12',
         referenceUrl: EU_AI_ACT_LINKS.ART_12,
-        evidence: 'Nachweis: Protokollierungskonzept, Aufbewahrungsfrist, SIEM/Überwachung, Beispiel-Protokolle, Zugriffskontrollen',
         info:
           'Auditfähig wird es erst, wenn Protokolle tatsächlich verfügbar sind (Kontrolle, Aufbewahrungsfrist, Zugriff) und zur Überwachung genutzt werden.',
         examples: [
@@ -672,9 +591,7 @@ export const obligationsCatalog = {
         todo:
           'Betriebsüberwachung definieren und umsetzen (Qualität, Verfügbarkeit, Datenanomalien, Vorfallprozess). Reaktionszeiten, Eskalation und Abhilfemaßnahmen dokumentieren.',
         reference: 'EU AI Act (2024), Art. 26',
-        referenceId: 'ART_26',
         referenceUrl: EU_AI_ACT_LINKS.ART_26,
-        evidence: 'Nachweis: Überwachungs-Dashboard, Alarmierung, Vorfall-Betriebshandbuch, Postmortem-Berichte, KPI',
         info:
           'Art. 26 verlangt „Betrieb unter Kontrolle“. Ohne Überwachung ist der Nachweis im Audit schwach.',
         examples: [
@@ -689,10 +606,8 @@ export const obligationsCatalog = {
           'Sind Prozesse zur Behandlung schwerwiegender Vorfälle und zur Zusammenarbeit mit Behörden/Anbieter definiert?',
         todo:
           'Prozess für schwerwiegende Vorfälle definieren (Klassifikation, Eskalation, Informationsweitergabe an Anbieter, ggf. Behördenkommunikation) und im Betrieb üben. Verantwortlichkeiten und Fristen festlegen.',
-        reference: 'EU AI Act (2024), Art. 26 (Betrieb) – i. V. m. Vorfall-Prozesse',
-        referenceId: 'ART_26',
+        reference: 'EU AI Act (2024), Art. 26',
         referenceUrl: EU_AI_ACT_LINKS.ART_26,
-        evidence: 'Nachweis: Vorfallsrichtlinie, Melde-/Eskalationsmatrix, Übungsprotokolle, Kommunikationsvorlagen',
         info:
           'Auch wenn Art. 73 primär Anbieter betrifft: als Betreiber benötigt es einer auditfähigen Eskalation und einer klaren Lieferanten-Schnittstelle.',
         examples: [
@@ -707,9 +622,7 @@ export const obligationsCatalog = {
         todo:
           'Verzahnung dokumentieren: Datenschutz-Folgenabschätzung (DSFA), ggf. Grundrechte-/Risikoanalysen, Freigaben/Reviews und Auflagen im Betrieb.',
         reference: 'EU AI Act (2024), Art. 26',
-        referenceId: 'ART_26',
         referenceUrl: EU_AI_ACT_LINKS.ART_26,
-        evidence: 'Nachweis: DSFA-Zusammenfassung, Risiko-Review-Protokolle, Auflagen-Tracking, Freigaben',
         info:
           'In der Praxis erwarten Prüfer eine konsistente Kette: Risikoanalyse -> Freigabe -> Betriebskontrollen -> Überwachung/Vorfälle.',
         examples: [
@@ -731,9 +644,7 @@ export const obligationsCatalog = {
           'Erhalten Nutzende einen klaren Hinweis, dass sie mit einem KI-System interagieren?',
         todo: 'Einen klaren, sichtbaren Hinweis zur KI-Interaktion in der Benutzeroberfläche bereitstellen und formal freigeben lassen.',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: Screenshot/UI-Text, freigegebene Hinweise/Disclaimer',
         info:
           'Der Hinweis sollte verständlich, sichtbar und kontextnah sein (nicht nur in Fußnoten).',
         examples: [
@@ -747,9 +658,7 @@ export const obligationsCatalog = {
           'Erzeugt das System Inhalte (Text, Bild, Audio oder Video), die an Nutzende ausgegeben werden?',
         todo: 'Prüfen und dokumentieren, ob das System Inhalte generiert, die an Nutzende ausgegeben werden (Text/Bild/Audio/Video).',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: Anwendungsfall-Beschreibung',
         info:
           'Relevant sind sowohl vollständig generierte Inhalte als auch KI-unterstützte Zusammenfassungen/Umformulierungen.',
         examples: [
@@ -763,9 +672,7 @@ export const obligationsCatalog = {
           'Werden KI-generierte Inhalte in den relevanten Fällen eindeutig gekennzeichnet?',
         todo: 'Kennzeichnung für KI-generierte Inhalte definieren und in allen relevanten Fällen konsistent umsetzen.',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: UI/Vorlagen, Inhaltsrichtlinie, Freigabe',
         info:
           'Kennzeichnung sollte konsistent sein (Vorlagen/Richtlinien) und die Fälle definieren, in denen Labeling erforderlich ist.',
         examples: [
@@ -778,9 +685,7 @@ export const obligationsCatalog = {
         question: 'Ist der Zweck des KI-Systems für Nutzende dokumentiert und verfügbar?',
         todo: 'Zweck des KI-Systems für Nutzende dokumentieren und leicht zugänglich bereitstellen (UI/Handbuch/Intranet).',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: Nutzerinformation/Handbuch, Intranet-Seite',
         info:
           'Der Zweck sollte nicht nur intern beschrieben sein, sondern dort verfügbar sein, wo Nutzende Entscheidungen treffen.',
         examples: [
@@ -793,9 +698,7 @@ export const obligationsCatalog = {
         question: 'Sind bekannte Grenzen und Limitierungen des Systems dokumentiert und verfügbar?',
         todo: 'Bekannte Grenzen und Limitierungen des Systems dokumentieren und für Nutzende verfügbar machen (inkl. Aktualisierung bei Änderungen).',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: Abschnitt „Einschränkungen“, Versionshinweise, Liste „Bekannte Probleme“',
         info:
           'Einschränkungen sollten praktisch nutzbar sein (z. B. „nicht für X geeignet“, „nur bei Y zuverlässig“).',
         examples: [
@@ -808,9 +711,7 @@ export const obligationsCatalog = {
         question: 'Sind Vorgaben zur zulässigen Nutzung (erlaubt/unzulässig) dokumentiert und verfügbar?',
         todo: 'Vorgaben zur zulässigen und unzulässigen Nutzung dokumentieren und für Nutzende bereitstellen (inkl. Beispiele).',
         reference: 'EU AI Act (2024), Art. 50',
-        referenceId: 'ART_50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
-        evidence: 'Nachweis: Nutzungsrichtlinie, Schulungsunterlagen',
         info:
           '„Erlaubt/unzulässig“ sollte konkrete Beispiele enthalten (z. B. Datenarten, Nutzerrollen, Entscheidungsarten).',
         examples: [
@@ -832,9 +733,7 @@ export const obligationsCatalog = {
           'Wurde dokumentiert festgestellt, ob für das System eine Konformitätsbewertung erforderlich ist?',
         todo: 'Erforderlichkeit einer Konformitätsbewertung prüfen, begründen und dokumentieren (inkl. Verweis auf relevante Artikel/Anhänge).',
         reference: 'EU AI Act (2024), Art. 43 ff.',
-        referenceId: 'ART_43',
         referenceUrl: EU_AI_ACT_LINKS.ART_43,
-        evidence: 'Nachweis: Klassifikationsnotiz',
         info:
           'Die Entscheidung sollte die Einstufung (z. B. Hochrisiko) und die einschlägigen Artikel/Anhänge referenzieren.',
         examples: [
@@ -848,9 +747,7 @@ export const obligationsCatalog = {
           'Wurde die Konformitätsbewertung durchgeführt und liegt ein dokumentiertes Ergebnis vor?',
         todo: 'Konformitätsbewertung durchführen, Ergebnis dokumentieren und formale Freigabeentscheidung festhalten.',
         reference: 'EU AI Act (2024), Art. 43 ff.',
-        referenceId: 'ART_43',
         referenceUrl: EU_AI_ACT_LINKS.ART_43,
-        evidence: 'Nachweis: Konformitätsbewertungsbericht, Freigabeentscheidung',
         info:
           'Der Bericht sollte Umfang, Methodik, Ergebnisse, Abweichungen und Maßnahmen enthalten.',
         examples: [
@@ -864,9 +761,7 @@ export const obligationsCatalog = {
           'Gibt es einen datierten Plan mit Verantwortlichen, falls die Konformitätsbewertung noch aussteht?',
         todo: 'Datieren und dokumentieren: Plan zur ausstehenden Konformitätsbewertung erstellen (Meilensteine, Verantwortliche, Freigabegates).',
         reference: 'EU AI Act (2024), Art. 43 ff.',
-        referenceId: 'ART_43',
         referenceUrl: EU_AI_ACT_LINKS.ART_43,
-        evidence: 'Nachweis: Projektplan, RACI, Meilensteine',
         info:
           'Der Plan sollte konkrete Meilensteine und Verantwortliche enthalten und ein Risiko- bzw. Go/No-Go-Kriterium definieren.',
         examples: [
@@ -881,9 +776,7 @@ export const obligationsCatalog = {
           'Deckt die technische Dokumentation mindestens Zweck, Modellbeschreibung, Daten, Tests, Risiken und Betriebsvoraussetzungen ab?',
         todo: 'Technische Dokumentation gemäß Mindestanforderungen (Anhang IV) erstellen/prüfen und Vollständigkeit dokumentieren.',
         reference: 'EU AI Act (2024), Anhang IV',
-        referenceId: 'ANHANG_4',
         referenceUrl: EU_AI_ACT_LINKS.ANHANG_4,
-        evidence: 'Nachweis: Anhang-IV-Indexliste, Dokumentationspaket',
         info:
           'Praktisch hilft eine Indexliste, die Anhang-IV-Punkte auf konkrete Dokumente/Abschnitte abbildet.',
         examples: [
@@ -898,9 +791,7 @@ export const obligationsCatalog = {
           'Sind Rollen (Anbieter/Betreiber) und Verantwortlichkeiten im Dokumentationspaket eindeutig beschrieben?',
         todo: 'Rollen (Anbieter/Betreiber) und Verantwortlichkeiten eindeutig definieren und im Dokumentationspaket nachvollziehbar festhalten.',
         reference: 'EU AI Act (2024), Art. 16 ff.',
-        referenceId: 'ART_16',
         referenceUrl: EU_AI_ACT_LINKS.ART_16,
-        evidence: 'Nachweis: Rollenbeschreibung, RACI, Vertrag/Leistungsbeschreibung (falls extern)',
         info:
           'Bei externen Parteien sollten Verantwortlichkeiten auch vertraglich klar geregelt sein (z. B. Leistungsbeschreibung, SLAs).',
         examples: [
@@ -914,9 +805,7 @@ export const obligationsCatalog = {
           'Gibt es einen dokumentierten Änderungsprozess, der Modelländerungen (Neutraining/Feinabstimmung) vor der Produktivsetzung freigibt?',
         todo: 'Änderungsmanagement für Modelländerungen etablieren und dokumentieren (Auswirkungsanalyse, Freigabe, Rücksetzung/Überwachung).',
         reference: 'EU AI Act (2024), Art. 11–12 (i. V. m. Governance)',
-        referenceId: 'ART_11',
         referenceUrl: EU_AI_ACT_LINKS.ART_11,
-        evidence: 'Nachweis: Änderungsrichtlinie, Versionshinweise',
         info:
           'Der Änderungsprozess sollte Risiko-/Auswirkungsanalyse, Freigabe sowie Rücksetzung und Überwachung beinhalten.',
         examples: [
@@ -938,9 +827,7 @@ export const obligationsCatalog = {
           'Wurde geprüft und dokumentiert, ob das System registrierungspflichtig ist?',
         todo: 'Registerpflicht des Systems prüfen, begründen und dokumentieren (inkl. Entscheidung zur Registrierungspflicht).',
         reference: 'EU AI Act (2024), Art. 60',
-        referenceId: 'ART_60',
         referenceUrl: EU_AI_ACT_LINKS.ART_60,
-        evidence: 'Nachweis: Klassifikationsnotiz, Registerpflicht-Entscheidung',
         info:
           'Die Entscheidung sollte die Einstufung und die Kriterien zur Registerpflicht nachvollziehbar dokumentieren.',
         examples: [
@@ -954,9 +841,7 @@ export const obligationsCatalog = {
           'Wurde die Registrierung durchgeführt und ist die Registrierungs-ID nachvollziehbar dokumentiert?',
         todo: 'Registrierung durchführen und Registrierungs-ID inkl. Ablageort revisionssicher dokumentieren.',
         reference: 'EU AI Act (2024), Art. 60',
-        referenceId: 'ART_49',
         referenceUrl: EU_AI_ACT_LINKS.ART_49,
-        evidence: 'Nachweis: Register-ID, Screenshot/PDF, Ablageort',
         info:
           'Der Ablageort sollte zugriffsgeschützt und revisionssicher sein (inkl. Zeitpunkt der Registrierung).',
         examples: [
@@ -970,9 +855,7 @@ export const obligationsCatalog = {
         question: 'Ist die EU-Datenbank-Referenz (URL/Eintrag) für das System dokumentiert und auffindbar?',
         todo: 'EU-DB-URL bzw. Referenz auf den Registereintrag dokumentieren (inkl. Ablageort/Verantwortliche) und in der Systemdokumentation verlinken.',
         reference: 'EU AI Act (2024), Art. 60',
-        referenceId: 'ART_49',
         referenceUrl: EU_AI_ACT_LINKS.ART_49,
-        evidence: 'Nachweis: Registereintrag-URL, Screenshot/PDF, Verweis in Systemdokumentation',
         info:
           'Die Referenz muss eindeutig sein (URL oder Eintrags-ID) und der Ablageort muss revisionssicher definiert sein.',
         examples: [
@@ -986,9 +869,7 @@ export const obligationsCatalog = {
         question: 'Ist (falls erforderlich) eine GRFA-Zusammenfassung als bereitstellbare Information erstellt und abgelegt?',
         todo: 'GRFA-Zusammenfassung erstellen (falls GRFA erforderlich) und bereitstellbar ablegen (Ablageort, Version, Freigabe).',
         reference: 'EU AI Act (2024), Art. 27 (i. V. m. Register-/Anhang-Informationen)',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: GRFA-Zusammenfassung, Freigabe/Review, Ablageort',
         info:
           'Die Zusammenfassung sollte den Freigabestatus, die Version und den Bereitstellungsweg eindeutig nennen.',
         examples: [
@@ -1005,10 +886,7 @@ export const obligationsCatalog = {
           'Nur wenn eine DSFA bereits existiert oder erforderlich ist: eine bereitstellbare Zusammenfassung erstellen/ablegen (Ablageort, Version, Freigabe). Wenn keine DSFA erforderlich ist, dokumentiere diese Entscheidung (kurze Begründung + Verantwortliche).',
         reference:
           'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence:
-          'Nachweis: (Optional) DSFA-Zusammenfassung ODER (wenn nicht erforderlich) dokumentierte Nicht-Erforderlichkeitsentscheidung',
         info:
           'Der EU AI Act verlangt hier keine DSFA. Wenn sie jedoch existiert/erforderlich ist, sollte eine bereitstellbare, nicht-sensitive Zusammenfassung verfügbar sein.',
         examples: [
@@ -1022,9 +900,7 @@ export const obligationsCatalog = {
           'Wurde geprüft und dokumentiert, ob eine Kennzeichnung erforderlich ist?',
         todo: 'Prüfen und dokumentieren, ob eine Kennzeichnung (z. B. CE) erforderlich ist.',
         reference: 'EU AI Act (2024), Art. 49 ff.',
-        referenceId: 'ART_49',
         referenceUrl: EU_AI_ACT_LINKS.ART_49,
-        evidence: 'Nachweis: Compliance-Notiz, Konformitätsunterlagen',
         info:
           'Bei integrierten Systemen sollte die Produktkonformität/CE-Logik mitbetrachtet werden.',
         examples: [
@@ -1039,9 +915,7 @@ export const obligationsCatalog = {
           'Sind Registrierungs- und Kennzeichnungsunterlagen versioniert, zugriffsgeschützt und auffindbar abgelegt?',
         todo: 'Registrierungs- und Kennzeichnungsunterlagen versioniert, zugriffsgeschützt und eindeutig auffindbar ablegen.',
         reference: 'EU AI Act (2024), Art. 49 ff.',
-        referenceId: 'ART_49',
         referenceUrl: EU_AI_ACT_LINKS.ART_49,
-        evidence: 'Nachweis: Repository-Link, Zugriffskonzept, Versionshistorie',
         info:
           'Auffindbarkeit heißt: klarer Ablagepfad plus eindeutige Namenskonvention plus Zugriffskonzept.',
         examples: [
@@ -1065,9 +939,7 @@ export const obligationsCatalog = {
         todo:
           'GRFA-Pflicht prüfen und dokumentieren (inkl. Geltungsbereich/Begründung, betroffene Gruppen, Prozesskontext, Anhang-III-Zuordnung).',
         reference: 'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: GRFA-Pflichtprüfung/Notiz, Geltungsbereich',
         info:
           'Die Prüfung sollte Kriterien, Geltungsbereich und Zuordnung zu Anhang III nachvollziehbar festhalten. ' +
           'Wichtig: GRFA ist nicht auf Finanzfälle beschränkt; sie ist kontextabhängig zu prüfen.',
@@ -1092,9 +964,7 @@ export const obligationsCatalog = {
         todo:
           'GRFA-Pflicht prüfen und dokumentieren (inkl. Geltungsbereich/Begründung, betroffene Gruppen, Prozesskontext, Anhang III-Zuordnung).',
         reference: 'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: GRFA-Pflichtprüfung/Notiz, Geltungsbereich',
         info:
           'Die Prüfung sollte Kriterien, Geltungsbereich und Zuordnung zu Anhang III nachvollziehbar festhalten.',
         examples: [
@@ -1109,9 +979,7 @@ export const obligationsCatalog = {
         todo:
           'GRFA durchführen und dokumentieren (Risiken/Betroffenheit, Maßnahmen, Restrisiko, Verantwortlichkeiten, Umsetzungsplan).',
         reference: 'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: GRFA-Dokument, Maßnahmenplan, Risiko-/Kontrollmapping',
         info:
           'Dokument muss Risiken, betroffene Grundrechte, Kontrollen und Restrisiko klar darstellen.',
         examples: [
@@ -1126,9 +994,7 @@ export const obligationsCatalog = {
         todo:
           'GRFA-Review und formale Freigabe durchführen (Rollen/RACI, Entscheidung, Auflagen, Abhilfemaßnahmen) und versioniert ablegen.',
         reference: 'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: Review-Protokoll, Freigabe, RACI',
         info:
           'Freigabe muss Rollen, Entscheidung und Auflagen eindeutig dokumentieren.',
         examples: [
@@ -1142,9 +1008,7 @@ export const obligationsCatalog = {
         todo:
           'GRFA-Maßnahmen operationalisieren und nachverfolgen (Kontrollen, Überwachung, Beschwerde-/Feedback-Kanal, Wirksamkeitsreview).',
         reference: 'EU AI Act (2024), Art. 27',
-        referenceId: 'ART_27',
         referenceUrl: EU_AI_ACT_LINKS.ART_27,
-        evidence: 'Nachweis: Kontrollnachweise, Überwachungsberichte, Beschwerdeprotokoll, Wirksamkeitsreview',
         info:
           'Nachverfolgung muss Status, Wirksamkeit und offene Punkte nachvollziehbar zeigen.',
         examples: [
@@ -1167,9 +1031,7 @@ export const obligationsCatalog = {
         todo:
           'Plan zur Überwachung nach dem Inverkehrbringen erstellen (Datenquellen, KPIs, Rollen/RACI, Review-Frequenz, Eskalationspfade, Maßnahmenlogik).',
         reference: 'EU AI Act (2024), Art. 72',
-        referenceId: 'ART_72',
         referenceUrl: EU_AI_ACT_LINKS.ART_72,
-        evidence: 'Nachweis: Überwachungs-Plan, RACI, KPI-Definitionen, Review-Kalender',
         info:
           'Der Plan sollte Datenquellen, KPIs, Schwellenwerte, Verantwortlichkeiten und Review-Zyklen konkret benennen.',
         examples: [
@@ -1184,9 +1046,7 @@ export const obligationsCatalog = {
         todo:
           'KPIs und Schwellenwerte definieren inkl. Auslöser/Eskalation.',
         reference: 'EU AI Act (2024), Art. 72',
-        referenceId: 'ART_72',
         referenceUrl: EU_AI_ACT_LINKS.ART_72,
-        evidence: 'Nachweis: KPI-Katalog, Schwellenwerte, Auslöser-Matrix',
         info:
           'Schwellenwerte müssen messbar sein und klare Auslöser für Eskalation, Maßnahmen oder Stopp enthalten.',
         examples: [
@@ -1201,9 +1061,7 @@ export const obligationsCatalog = {
         todo:
           'Reviews durchführen, Feststellungen dokumentieren, Maßnahmen ableiten und Nachverfolgung sicherstellen (inkl. Verantwortlichkeiten/Fristen).',
         reference: 'EU AI Act (2024), Art. 72',
-        referenceId: 'ART_72',
         referenceUrl: EU_AI_ACT_LINKS.ART_72,
-        evidence: 'Nachweis: Review-Protokolle, Überwachungsberichte, Feststellungen, Änderungsunterlagen',
         info:
           'Reviews müssen Datum, Teilnehmer, Feststellungen, Entscheidungen und Maßnahmen inklusive Tracking enthalten.',
         examples: [
@@ -1226,9 +1084,7 @@ export const obligationsCatalog = {
         todo:
           'Auslöser-Definition für „schwerwiegende Vorfälle“ erstellen (Beispiele, Schweregrade, Abgrenzung zu normalen Vorfällen) und kommunizieren.',
         reference: 'EU AI Act (2024), Art. 73',
-        referenceId: 'ART_73',
         referenceUrl: EU_AI_ACT_LINKS.ART_73,
-        evidence: 'Nachweis: Beispielkatalog, Schulungs-/Kommunikationsnachweis',
         info:
           'Auslöser müssen klar abgrenzen, wann ein Vorfall als „schwerwiegend“ gilt, und wer entscheidet.',
         examples: [
@@ -1243,9 +1099,7 @@ export const obligationsCatalog = {
         todo:
           'Meldeprozess definieren (Rollen/RACI, Fristen, Behördenkontakt, Eskalation, Zusammenarbeit mit Anbieter/Betreiber) und testen.',
         reference: 'EU AI Act (2024), Art. 73',
-        referenceId: 'ART_73',
         referenceUrl: EU_AI_ACT_LINKS.ART_73,
-        evidence: 'Nachweis: Prozessdokumentation, RACI, Kontaktliste, Test-Protokoll',
         info:
           'Der Prozess sollte Kontaktpunkte, Fristen, Informationsumfang und Eskalationsstufen konkret festlegen.',
         examples: [
@@ -1260,9 +1114,7 @@ export const obligationsCatalog = {
         todo:
           'Vorfallsregister inkl. Ursachenanalyse, Maßnahmen und Abschlussdokumentation etablieren (auditfähig, versioniert, nachvollziehbar).',
         reference: 'EU AI Act (2024), Art. 73',
-        referenceId: 'ART_73',
         referenceUrl: EU_AI_ACT_LINKS.ART_73,
-        evidence: 'Nachweis: Vorfallsregister, Ursachenanalyse, Maßnahmenlog, Abschlussfreigabe',
         info:
           'Revisionssicherheit heißt: unveränderbare Historie, klare Versionen und nachvollziehbarer Abschluss je Vorfall.',
         examples: [
@@ -1288,7 +1140,6 @@ export const obligationsCatalog = {
           'IKT-Governance sowie Verantwortlichkeiten für die KI-relevanten Systeme verbindlich definieren und dokumentieren (inkl. Vertretungen und Eskalationswege).',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence: 'Nachweis: Governance-Dokument, RACI, Rollenbeschreibung',
         info:
           'Die Governance sollte klar machen, wer fachlich, technisch und risikoseitig verantwortlich ist (inkl. Vertretungen, Eskalation und Entscheidungswegen).',
         examples: [
@@ -1304,7 +1155,6 @@ export const obligationsCatalog = {
           'IKT-Risikomanagement-Rahmenwerk dokumentieren und verabschieden (Rollen, Kontrollen) und KI-relevante Risiken explizit abdecken.',
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence: 'Nachweis: Rahmenwerk, Richtlinien, Kontrollkatalog',
         info:
           'Das Rahmenwerk sollte KI-relevante Risiken explizit abdecken (z. B. Modellbetrieb, Datenpipelines, externe KI-Dienste, Abhängigkeiten von Drittanbietern).',
         examples: [
@@ -1319,10 +1169,8 @@ export const obligationsCatalog = {
           'Gibt es eine vom Leitungsorgan genehmigte digitale operationelle Resilienzstrategie und wird sie regelmäßig überprüft?',
         todo:
           'Digitale operationelle Resilienzstrategie erstellen, vom Leitungsorgan genehmigen lassen und regelmäßig (mind. jährlich bzw. bei wesentlichen Änderungen) überprüfen. Abgleich mit IKT-RMF, Risikoprofil, kritischen/wichtigen Funktionen, Toleranzen sowie Maßnahmen-/Investitionsplan dokumentieren.',
-        reference: 'DORA (2022), Art. 5(2)(d) i. V. m. Art. 6(8)',
+        reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Resilienzstrategie (Version/Freigabe), Protokoll, Review-/Update-Nachweise, Maßnahmen-/Investitionsplan',
         info:
           'Auditfähig wird es durch klare Governance (Genehmigung/Review) und Konsistenz zur tatsächlichen IKT-Risikolage (inkl. KI-relevanter Abhängigkeiten).',
         examples: [
@@ -1337,10 +1185,8 @@ export const obligationsCatalog = {
           'Gibt es einen vom Leitungsorgan genehmigten IKT-Audit-/Prüfplan (inkl. IKT-RMF/KI-relevanter Systeme) und wird die Umsetzung nachverfolgt?',
         todo:
           'IKT-Audit-/Prüfplan (intern/extern) festlegen, vom Leitungsorgan genehmigen lassen, Durchführung dokumentieren und Findings/Maßnahmen inkl. Follow-up nachverfolgen (Fristen, Verantwortliche, Wirksamkeitsprüfung).',
-        reference: 'DORA (2022), Art. 5(2)(f)',
+        reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence:
-          'Nachweis: Audit-/Prüfplan, Genehmigungsprotokoll, Auditberichte, Maßnahmen-Tracking, Follow-up-Nachweise',
         info:
           'Plan sollte KI-relevante IKT-Komponenten (Modelle, Datenpipelines, Schnittstellen, Drittanbieter) explizit enthalten.',
         examples: [
@@ -1355,10 +1201,8 @@ export const obligationsCatalog = {
           'Wird dem Leitungsorgan mindestens jährlich ein Bericht zum IKT-Risikomanagement und Resilienzstatus vorgelegt?',
         todo:
           'Jährliches Reporting an das Leitungsorgan etablieren und dokumentieren: Status IKT-Risikolage, wesentliche Vorfälle, KPI/KRI, Top-Risiken, Maßnahmen/Roadmap, Wirksamkeit der Kontrollen. Bericht/Präsentation versioniert ablegen.',
-        reference: 'DORA (2022), Art. 6(5)',
+        reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Jahresbericht, Agenda/Präsentation, Protokoll, Beschlüsse/Nachverfolgung',
         info:
           'Es geht um nachvollziehbare Information des Leitungsorgans und ggf. Beschlüsse/Nachverfolgung.',
         examples: [
@@ -1375,8 +1219,6 @@ export const obligationsCatalog = {
           'Schulungs-/Awareness-Programm definieren und durchführen: Zielgruppen, Inhalte, Frequenz, Pflichtquoten, Wirksamkeitskontrolle.',
         reference: 'DORA (2022), Art. 13–14',
         referenceUrl: DORA_LINKS.ART_13,
-        evidence:
-          'Nachweis: Trainingsplan, Inhalte/Material, Teilnahmequote, Wirksamkeitsnachweise, Kommunikationskampagnen',
         info:
           'Damit verhindern Sie reine Papierkontrollen: Awareness muss messbar sein (Teilnahme, Tests, Wiederholung).',
         examples: [
@@ -1391,10 +1233,8 @@ export const obligationsCatalog = {
           'Gibt es einen dokumentierten Prozess zur Technologiebeobachtung, der neue Bedrohungen/Technologien bewertet und Richtlinien/Kontrollen regelmäßig aktualisiert?',
         todo:
           'Prozess zur Technologiebeobachtung etablieren: Quellen, Bewertungsmethodik, Verantwortliche, Entscheidungs- und Update-Zyklus, Änderungsprotokoll und Kommunikation an betroffene Teams.',
-        reference: 'DORA (2022), Art. 6(5) i. V. m. Art. 13',
+        reference: 'DORA (2022), Art. 6 i. V. m. Art. 13',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Technologiebeobachtungsprotokoll, Risiko-/Bewertungsnotizen, Richtlinien-/Standard-Updates, Änderungsnachweise, Kommunikationsnachweise',
         info:
           'Auditfähig wird es durch geschlossene Nachweiskette: Beobachtung -> Bewertung -> Entscheidung -> Update -> Kommunikation -> Nachweis.',
         examples: [
@@ -1408,9 +1248,8 @@ export const obligationsCatalog = {
           'Gibt es ein aktuelles Inventar der IKT-Assets, die für das KI-System genutzt werden?',
         todo:
           'Inventar der KI-relevanten IKT-Assets vollständig erfassen, aktuell halten und nachvollziehbar dokumentieren (inkl. Datenquellen, Modelle, Pipelines, Schnittstellen).',
-        reference: 'DORA (2022), Art. 6-9 (i. V. m. Governance)',
+        reference: 'DORA (2022), Art. 6-9',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence: 'Nachweis: Asset-Register/CMDB-Auszug, Architekturdiagramm',
         info:
           'Wichtig ist, dass nicht nur Server/Cloud-Ressourcen, sondern auch Datenquellen, Modellartefakte, Pipelines, Schnittstellen und Betriebswerkzeuge erfasst sind.',
         examples: [
@@ -1427,8 +1266,6 @@ export const obligationsCatalog = {
           'Prinzip minimaler Rechte umsetzen und nachweisen: Rollen- und Rechtekonzept definieren, privilegierte Konten minimieren, Trennung von Aufgaben (Entwicklung/Betrieb/Review) etablieren, regelmäßige Rezertifizierung durchführen.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Rollen-/Rechtekonzept, IAM-Exporte, Rezertifizierungsprotokolle, Matrix zur Trennung von Aufgaben',
         info:
           'Auditfähig wird das erst durch nachvollziehbare Rollenmodelle, Rezertifizierung und klare Trennung von Aufgaben.',
         examples: [
@@ -1445,8 +1282,6 @@ export const obligationsCatalog = {
           'Schwachstellen- und Update-Management etablieren: regelmäßige Scans, Priorisierung, Update-SLAs, Ausnahmen dokumentieren, Abhilfemaßnahmen nachverfolgen.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Scan-Reports, Update-Compliance-Reports, Tickets, Ausnahmen-Register',
         info:
           'Update-Management umfasst auch Container-Images, Drittbibliotheken und KI-Abhängigkeiten.',
         examples: [
@@ -1463,8 +1298,6 @@ export const obligationsCatalog = {
           'Härtungsbasis definieren und durchsetzen: sichere Konfigurationen (z. B. CIS/BSI), Netzwerksegmentierung, regelmäßige Konfigurationsprüfungen.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Basis-Dokument, Firewall/SG-Regeln',
         info:
           'Auditfähig wird es durch eine definierte Basis plus regelmäßige Compliance-Messung.',
         examples: [
@@ -1480,8 +1313,6 @@ export const obligationsCatalog = {
           'Management von Geheimnissen umsetzen: zentrale Ablage, Rotation, kurze Laufzeiten, Zugriff nach Need-to-know, kein Hardcoding in Code/Konfigurationen, Protokollierung für Zugriffe auf Geheimnisse.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Rotationsprotokolle, Zugriffsprotokolle für Geheimnisse, Repository-Scans',
         info:
           'Management von Geheimnissen ist ein häufiger Audit-Fund: Rotation und Zugriffsnachweise sind entscheidend.',
         examples: [
@@ -1498,8 +1329,6 @@ export const obligationsCatalog = {
           'Protokollierung/SIEM sicherstellen: Authentifizierungs- und Admin-Aktionen, Datenzugriffe, Modell- und Konfigurationsänderungen protokollieren, Aufbewahrungsfristen definieren, zentrale Korrelation/Alarmierung, Zugriffsschutz auf Protokolle.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Protokollierungskonzept, Alarmregeln, Aufbewahrungsrichtlinien',
         info:
           'Für Audit zählt: „Was wird protokolliert?“, „Wie lange?“, „Wer wertet aus?“ und „Welche Alarme gibt es?“.',
         examples: [
@@ -1516,8 +1345,6 @@ export const obligationsCatalog = {
           'Freigabegates definieren: Code-Reviews, Freigaben für Bereitstellungen, Trennung von Entwicklung/Produktion, Nachvollziehbarkeit, Notfallprozess geregelt.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Änderungsrichtlinie, Review-Protokolle, Release-Freigaben, Bereitstellungsprotokolle, RACI',
         info:
           'Gerade bei KI ist Änderung nicht nur Code: Modellversionen, Features, Datenquellen und Prompt-/Richtlinien-Änderungen gehören dazu.',
         examples: [
@@ -1533,7 +1360,6 @@ export const obligationsCatalog = {
           'Resilienzmaßnahmen für KI-relevante Komponenten festlegen und dokumentieren (Redundanz, Umschaltung/Failover, Kapazitätsplanung, definierte Rückfalls).',
         reference: 'DORA (2022), Art. 11–12',
         referenceUrl: DORA_LINKS.ART_11,
-        evidence: 'Nachweis: Architektur, DR-Konzept, Failover-Tests',
         info:
           'Resilienz umfasst auch definierte Rückfalls (z. B. manuelle Prozesse) und Kapazitätsplanung bei Lastspitzen.',
         examples: [
@@ -1549,7 +1375,6 @@ export const obligationsCatalog = {
           'Backup- und Wiederherstellungsverfahren für KI-relevante Systeme regelmäßig testen und dokumentieren (inkl. Daten, Modellartefakte, Konfigurationen und Schlüssel).',
         reference: 'DORA (2022), Art. 11–12',
         referenceUrl: DORA_LINKS.ART_12,
-        evidence: 'Nachweis: Testbericht, RTO/RPO, Protokolle',
         info:
           'Tests sollten die Wiederherstellung der relevanten Komponenten umfassen (Daten, Modellartefakte, Konfigurationen, Schlüssel)',
         examples: [
@@ -1574,8 +1399,6 @@ export const obligationsCatalog = {
           'Auswirkungsanalyse erstellen/aktualisieren: betroffene Geschäftsprozesse/Services, Kundenauswirkungen, regulatorische Pflichten, Schwellenwerte und Begründung der Kritikalität.',
         reference: 'DORA (2022), Art. 8',
         referenceUrl: DORA_LINKS.ART_8,
-        evidence:
-          'Nachweis: Auswirkungsanalyse, Service-/Prozessbeschreibung, Risikoanalyse, Management-/Gremienunterlage',
         info:
           'Die Analyse muss Kritikalität nachvollziehbar begründen (Auswirkungen, Schwellenwerte, betroffene Services/Outputs).',
         examples: [
@@ -1592,8 +1415,6 @@ export const obligationsCatalog = {
           'Abhängigkeitskarte erstellen/aktualisieren: Systeme, Datenflüsse, Schnittstellen, Drittanbieter, gemeinsame Ausfall-Domänen, manuelle Schritte.',
         reference: 'DORA (2022), Art. 8',
         referenceUrl: DORA_LINKS.ART_8,
-        evidence:
-          'Nachweis: Architektur-/Datenflussdiagramme, Inventar, Schnittstellenliste',
         info:
           'Abhängigkeiten müssen End-to-End nachvollziehbar sein (Systeme, Datenflüsse, Schnittstellen, Drittanbieter, manuelle Schritte).',
         examples: [
@@ -1610,8 +1431,6 @@ export const obligationsCatalog = {
           'Stoßtoleranzen und RTO/RPO definieren und mit BCM verknüpfen (inkl. Annahmen, Messmethodik, Abnahmekriterien).',
         reference: 'DORA (2022), Art. 8',
         referenceUrl: DORA_LINKS.ART_8,
-        evidence:
-          'Nachweis: BCM-Dokumente, RTO/RPO-Katalog, Stoßtoleranz-Definitionen, Testprotokolle',
         info:
           'Definitionen müssen messbar sein und mit BCM konsistent bleiben (Annahmen, Messmethodik, Abnahmekriterien).',
         examples: [
@@ -1628,8 +1447,6 @@ export const obligationsCatalog = {
           'Formale Freigabe einholen und versioniert dokumentieren (Verantwortlicher, Risikomanagementk/BCM, ggf. Leitungsorgan/Gremium) inkl. Auflagen und Review-Zyklus.',
         reference: 'DORA (2022), Art. 8',
         referenceUrl: DORA_LINKS.ART_8,
-        evidence:
-          'Nachweis: Freigabeprotokoll, Entscheidungsprotokoll, Gremienprotokolle, RACI-Matrix',
         info:
           'Freigabe muss Entscheidung, Version, Verantwortliche und Auflagen eindeutig dokumentieren.',
         examples: [
@@ -1653,8 +1470,6 @@ export const obligationsCatalog = {
           'IKT-Drittanbieter in einem Register führen, KI-relevante Leistungen eindeutig abbilden und risikobasierte Bewertungen regelmäßig durchführen und dokumentieren.',
         reference: 'DORA (2022), Art. 28',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence:
-          'Nachweis: Drittanbieter-Register, Risikobewertung, Review-Protokolle',
         info:
           'Das Register sollte die KI-relevanten Leistungen eindeutig abbilden (Service, Datenzugriff, Kritikalität) und regelmäßig aktualisiert werden.',
         examples: [
@@ -1670,7 +1485,6 @@ export const obligationsCatalog = {
           'Vertragsregister um verbindliche Mindestfelder ergänzen und sicherstellen, dass alle KI-relevanten Services vollständig gepflegt sind (Service, Kritikalität, Datenzugriff, Subdienstleister, Laufzeiten).',
         reference: 'DORA (2022), Art. 28–29',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence: 'Nachweis: Register-Auszug, Datenmodell/Vorlage',
         info:
           'Mindestfelder helfen, Abhängigkeiten und Risiken schnell zu identifizieren (z. B. Datenlokation, Unterbeauftragte, Ausstiegs-Optionen).',
         examples: [
@@ -1686,8 +1500,6 @@ export const obligationsCatalog = {
           'Drittanbieter-Verträge um Mindestklauseln zu Sicherheit, Audit-/Prüfrechten und Vorfallmeldungen ergänzen und die Durchsetzbarkeit (Fristen/Geltungsbereich/Ansprechpartner) sicherstellen.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence:
-          'Nachweis: Vertragsanhang, Musterklauseln, Leistungsbeschreibung',
         info:
           'Klauseln sollten praktisch durchsetzbar sein (Fristen, Ansprechpartner, Nachweispflichten, Audit-Umfang, Unterauftragnehmer-Regeln).',
         examples: [
@@ -1704,7 +1516,6 @@ export const obligationsCatalog = {
           'Ausstiegsstrategie dokumentieren und testbar machen (Datenrückgabe/-löschung, Übergangsplan, Migration/Portabilität).',
         reference: 'DORA (2022), Art. 28–30',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence: 'Nachweis: Ausstiegsplan, Migrations-Betriebshandbuch, Vertrag',
         info:
           'Der Ausstieg sollte testbar sein (z. B. Migration/Portabilität) und einen „Plan B“ für kritische Ausfälle oder Anbieterwechsel beinhalten.',
         examples: [
@@ -1728,7 +1539,6 @@ export const obligationsCatalog = {
           'Konzentrationsrisiko (Single Point of Failure) für den Anbieter bewerten, dokumentieren und eine Risikoentscheidung (inkl. Restrisiken/Auflagen) festhalten.',
         reference: 'DORA (2022), Art. 28–29 (i. V. m. Governance)',
         referenceUrl: DORA_LINKS.ART_29,
-        evidence: 'Nachweis: Konzentrationsanalyse, Risikoentscheidung',
         info:
           'Konzentrationsrisiko umfasst technische, organisatorische und marktbezogene Abhängigkeiten (z. B. ein Cloud-Anbieter für mehrere kritische Services).',
         examples: [
@@ -1744,7 +1554,6 @@ export const obligationsCatalog = {
           'Strategie zur Reduktion des Konzentrationsrisikos definieren, dokumentieren und freigeben (z. B. Zweitanbieter, Ausstiegs-Optionen).',
         reference: 'DORA (2022), Art. 28–30',
         referenceUrl: DORA_LINKS.ART_29,
-        evidence: 'Nachweis: Multi-Anbieter-/Ausstiegsstrategie, Management-Freigabe',
         info:
           'Strategie sollte konkrete Maßnahmen enthalten (z. B. Multi-Anbieter, Vertragsoptionen, standardisierte Schnittstellen).',
         examples: [
@@ -1760,7 +1569,6 @@ export const obligationsCatalog = {
           'Subdienstleister identifizieren, vertraglich regeln und risikobasiert regelmäßig überprüfen (inkl. Transparenz zu Zugriff/Standort/Wechseln).',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Subdienstleister-Liste, Vertragsklauseln, Reviews',
         info:
           'Wichtig ist Transparenz über Unterauftragnehmer und deren Zugriff auf Daten/Systeme sowie Wechsel- und Zustimmungspflichten.',
         examples: [
@@ -1776,7 +1584,6 @@ export const obligationsCatalog = {
           'Anbieter regelmäßig anhand definierter KPIs/SLAs überwachen und Eskalation bei Schwellenwertverletzungen sicherstellen.',
         reference: 'DORA (2022), Art. 28–30',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence: 'Nachweis: SLA-Reports, Sicherheitsberichte, Review-Protokolle',
         info:
           'Überwachung sollte sowohl Leistungs- als auch Sicherheitskennzahlen umfassen, inklusive Schwellenwerten und Eskalationsprozess.',
         examples: [
@@ -1792,7 +1599,6 @@ export const obligationsCatalog = {
           'Interne Prozesse für Aufsichtsanforderungen zu kritischen IKT-Drittanbietern definieren und umsetzen (Anfragen, Audits, Auskünfte, Fristen, Artefakte).',
         reference: 'DORA (2022), Art. 31–44',
         referenceUrl: DORA_LINKS.ART_31,
-        evidence: 'Nachweis: Prozessbeschreibung, Ansprechpartner, Audit-Betriebshandbuch',
         info:
           'Es sollte klar sein, wer Anfragen koordiniert, welche Unterlagen vorzuhalten sind und wie Fristen/Schnittstellen gehandhabt werden.',
         examples: [
@@ -1817,8 +1623,6 @@ export const obligationsCatalog = {
           'Benennungsbewusstsein umsetzen: Anbieterstatus/Beobachtungsliste pflegen (inkl. Verantwortliche, Datenquellen, Review-Zyklus) und in Outsourcing-/Beschaffungs-Kontrollen verankern.',
         reference: 'DORA (2022), Art. 31–44',
         referenceUrl: DORA_LINKS.ART_31,
-        evidence:
-          'Nachweis: Anbieter-Beobachtungsliste/Statuslog, Outsourcing-/Beschaffungs-Kontrollen, Review-Protokolle, Eskalations-Tickets',
         info:
           'Ziel: nicht nur „kritisch ja/nein“, sondern laufend nachhalten, ob ein Anbieter als kritischer IKT-Drittanbieter benannt ist/werden könnte und welche internen Kontrollen dadurch ausgelöst werden.',
         examples: [
@@ -1834,8 +1638,6 @@ export const obligationsCatalog = {
           'Betriebshandbuch erstellen: Rollen/Ansprechpartner (inkl. Stellvertretung), Daten-/Dokumentenbereitstellung, interne Freigaben, Zeitvorgaben, Kommunikationskanäle; in Übungen validieren.',
         reference: 'DORA (2022), Art. 31–44',
         referenceUrl: DORA_LINKS.ART_31,
-        evidence:
-          'Nachweis: Betriebshandbuch/Ablaufplan, RACI, Datenbereitstellungsprozess, Kontaktliste, Übungs-Protokolle',
         info:
           'Damit vermeiden Sie Audit-Lücken: Anbieter ist kritisch (oder wird kritisch), aber Rollen, Fristen und Dokumentenwege sind nicht umgesetzt.',
         examples: [
@@ -1859,7 +1661,6 @@ export const obligationsCatalog = {
           'Datenklassifizierung anwenden und eine dokumentierte Freigabe für die Übermittlung an externe KI-Dienste einholen (Datenarten, Zweck, Empfänger, Schutzmaßnahmen, Kanäle).',
         reference: 'DORA (2022), Art. 6–9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Klassifizierungsrichtlinie, Freigabeprotokoll',
         info:
           'Freigabe sollte Datenarten, Zweck, Empfänger, Schutzmaßnahmen und zulässige Übermittlungskanäle abdecken.',
         examples: [
@@ -1875,8 +1676,6 @@ export const obligationsCatalog = {
           'Verschlüsselung für Datenübertragung und Speicherung bei externen KI-Diensten umsetzen und dokumentieren (TLS, Verschlüsselung ruhender Daten, Schlüsselmanagement).',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Kryptografie-Konfiguration, Architektur, Schlüsselmanagement',
         info:
           'Wichtig sind Transportverschlüsselung (TLS), Verschlüsselung ruhender Daten sowie geregeltes Schlüsselmanagement (Rotation/Zugriff).',
         examples: [
@@ -1892,7 +1691,6 @@ export const obligationsCatalog = {
           'Sensible Daten vor Übermittlung an externe KI-Dienste pseudonymisieren (sofern erforderlich) und die Umsetzung im Datenfluss dokumentieren.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Pseudonymisierungskonzept, Datenflussdiagramm',
         info:
           'Pseudonymisierung sollte nachvollziehbar sein (Mapping-/Schlüsselschutz) und im Datenfluss berücksichtigt werden.',
         examples: [
@@ -1908,7 +1706,6 @@ export const obligationsCatalog = {
           'DLP-Kontrollen für relevante Kanäle aktivieren, testen und überwachen, um Datenabfluss bei Nutzung externer KI zu verhindern (inkl. Ausnahmen/Freigaben).',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: DLP-Richtlinie, Regelsets, Testprotokoll',
         info:
           'DLP sollte insbesondere Upload-/Prompt-Kanäle, Exporte (E-Mail/Download/API) und Ausnahmen/Freigaben berücksichtigen.',
         examples: [
@@ -1924,7 +1721,6 @@ export const obligationsCatalog = {
           'Datenlokation/Hostingregion für externe KI-Dienste vertraglich festlegen und Änderungen zustimmungspflichtig regeln.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Vertrag/Anhang, Hosting-Nachtrag',
         info:
           'Vertrag sollte Regionen klar benennen und Änderungen (z. B. neue Regionen) zustimmungspflichtig machen.',
         examples: [
@@ -1940,7 +1736,6 @@ export const obligationsCatalog = {
           'Datenrückgabe und Löschung nach Vertragsende vertraglich regeln (Fristen, Nachweise/Löschbestätigung, Rückgabeformate) und ein Löschkonzept dokumentieren.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Vertrag/Anhang, Löschkonzept',
         info:
           'Regelung sollte Fristen, Nachweise (Löschbestätigung) und Formate für Datenrückgabe umfassen.',
         examples: [
@@ -1956,7 +1751,6 @@ export const obligationsCatalog = {
           'Subprozessoren transparent benennen und deren Einsatz vertraglich regeln (Informationsfristen, Zustimmung/Widerspruch, gleichwertige Sicherheitsstandards).',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Subprozessoren-Liste, Vertragsklauseln',
         info:
           'Transparenz umfasst auch Änderungen (Wechsel/Neuaufnahme) und die Verpflichtung, gleichwertige Sicherheitsstandards sicherzustellen.',
         examples: [
@@ -1980,7 +1774,6 @@ export const obligationsCatalog = {
           'Datenminimierung und Schwärzung/Maskierung vor LLM-Aufrufen umsetzen und dokumentieren.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Schwärzungs-/Maskierungsregeln, Richtlinie, Datenflussdiagramm, Beispiel-Protokolle (maskiert), Tests',
         info:
           'Ziel: keine unnötigen sensiblen Daten an externe Dienste für generative KI übertragen; Schwärzung/Maskierung muss technisch erzwungen und testbar sein.',
         examples: [
@@ -1996,7 +1789,6 @@ export const obligationsCatalog = {
           'Aufbewahrungs- und Löschkonzept für GenAI-Eingaben/Ausgaben festlegen und umsetzen: Aufbewahrungsfristen, Löschpfade, Zugriffsschutz, Nachweise/Löschbestätigungen.',
         reference: 'DORA (2022), Art. 9 i. V. m. Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Aufbewahrungsrichtlinie, Konfigurationen (Anbieter/Plattform), Löschprotokolle, Vertrag/Anhang',
         info:
           'Typische Audit-Fragen: „Wie lange existieren Prompts/Antworten? Wo und wer kann darauf zugreifen?“',
         examples: [
@@ -2012,7 +1804,6 @@ export const obligationsCatalog = {
           'Vertragliche Zusicherungen kein Training/keine Feinabstimmung mit Kundendaten sicherstellen und in Einkauf/Auslagerungssteuerung verankern.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Vertrag/Anhang, Zusicherungen des Anbieters, Subdienstleister-Liste, Review-Protokoll',
         info:
           'Gerade bei generativer KI ist kein Training mit Kundendaten ein zentraler Kontrollpunkt inkl. Subdienstleistern und Änderungen der Vertragsbedingungen.',
         examples: [
@@ -2028,7 +1819,6 @@ export const obligationsCatalog = {
           'Versionierung und Änderungsmanagement für LLM-Anbieter etablieren: feste Modell-IDs/Endpunkte, Überwachung von Änderungsmitteilungen, Auswirkungsanalyse, Wiederholungstests, Freigabe-Gate, Rücksetz-/Rollback-Optionen.',
         reference: 'DORA (2022), Art. 9 i. V. m. Art. 28–29',
         referenceUrl: DORA_LINKS.ART_29,
-        evidence: 'Nachweis: Änderungsrichtlinie, Änderungslog des Anbieters, Testberichte, Freigabeprotokolle',
         info:
           'LLM-Anbieter ändern Modelle häufig. Ohne Versionierung/Änderungsprozess entstehen stille Risikoänderungen.',
         examples: [
@@ -2044,7 +1834,6 @@ export const obligationsCatalog = {
           'Protokollierungskonzept für generative KI definieren: wann wird protokolliert, welche Felder (maskiert), Zugriffskontrollen, Aufbewahrung, SIEM-Überwachung, Nachweisbarkeit für Vorfälle.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Protokollierungskonzept, IAM-/Zugriffsprotokolle, Aufbewahrung, Beispiel-Protokolle (maskiert), SIEM-Use-Cases',
         info:
           'Zielkonflikt: genug Protokollierung für Audit/Vorfälle, aber datensparsam. Lösung: Metadaten plus selektive, maskierte Nutzdaten-Protokollierung.',
         examples: [
@@ -2060,7 +1849,6 @@ export const obligationsCatalog = {
           'Sicherheitskontrollen implementieren: Eingabevalidierung, Prompt-Injection-Abwehr, Richtlinienprüfungen, regelmäßige Tests und Nachverfolgung von Feststellungen.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Testberichte, Feststellungen-Tracking',
         info:
           'Generative KI bringt neue Angriffsflächen. Ohne Leitplanken entstehen Sicherheits- und Compliance-Risiken.',
         examples: [
@@ -2075,7 +1863,6 @@ export const obligationsCatalog = {
           'Missbrauchsprävention umsetzen: Ratenbegrenzung/Kontingente, Anomalieerkennung, Authentifizierung/Autorisierung je Nutzer/Rolle, Missbrauchsprozesse, Alarmierung und Nachweiskette.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Ratenbegrenzungs-Konfiguration, SIEM/Alarme, Missbrauchsprozess, Tickets',
         info:
           'Schützt vor Prompt-Stuffing, Datenabfluss, Kostenexplosion und unerlaubter Nutzung.',
         examples: [
@@ -2099,7 +1886,6 @@ export const obligationsCatalog = {
           'Änderungsprozess für Modelländerungen etablieren und dokumentieren, der Freigaben nur nach Risiko- und Auswirkungsanalyse erlaubt.',
         reference: 'DORA (2022), Art. 6–9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Änderungsrichtlinie, Auwirkungs-Vorlage, Freigaben',
         info:
           'Der Prozess sollte Auslöser definieren (z. B. Neutraining/Feinabstimmung, neue Features, neue Datenquelle) und Re-Tests/Überwachungsauflagen enthalten.',
         examples: [
@@ -2115,7 +1901,6 @@ export const obligationsCatalog = {
           'Leistungskennzahlen im Betrieb überwachen und Schwellenwerte inkl. Eskalations- und Reaktionsprozess definieren (inkl. Rückfall/Degradationsmodus).',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Überwachungs-Dashboard, Alarmregeln',
         info:
           'Definieren Sie Metriken, Schwellenwerte, Verantwortliche und Reaktionszeiten (inkl. Rückfall/Degradationsmodus).',
         examples: [
@@ -2131,7 +1916,6 @@ export const obligationsCatalog = {
           'Modelländerung überwachen sowie Maßnahmen bei Schwellenwertüberschreitung definieren und umsetzen (Warnung, Analyse, Mitigation, Rücksetzung/Neutraining).',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: Änderungs-Bericht, Betriebshandbücher, Alarme',
         info:
           'Änderungsüberwachung sollte sowohl Datenverteilung als auch Modellleistung berücksichtigen; Maßnahmen reichen von Warnung bis Rücksetzung/Neutraining.',
         examples: [
@@ -2147,7 +1931,6 @@ export const obligationsCatalog = {
           'Sicherheitsüberwachung für KI-relevante Komponenten einrichten und betreiben (APIs, Modellendpunkte, Datenzugriffe, Secrets) inkl. Alarmierung und Nachverfolgung.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence: 'Nachweis: SIEM-Anwendungsfälle, Protokolle, Alarmierung',
         info:
           'Sicherheitsüberwachung sollte relevante Angriffsflächen abdecken (APIs, Modellendpunkte, Datenzugriffe, Secrets) und nachvollziehbar auswertbar sein.',
         examples: [
@@ -2163,8 +1946,6 @@ export const obligationsCatalog = {
           'Betriebshandbücher für Modellfehler erstellen, testen und pflegen (Diagnose, Abschalten/Rückfall/Rücksetzung) inkl. klarer Eskalationskette und Entscheidungsbefugnissen.',
         reference: 'DORA (2022), Art. 17',
         referenceUrl: DORA_LINKS.ART_17,
-        evidence:
-          'Nachweis: Betriebshandbücher/Ablaufpläne, Rufbereitschaftsplan, Eskalationsmatrix',
         info:
           'Betriebshandbücher sollten klare Diagnose- und Entscheidungswege haben (z. B. Abschalten, Rückfall, Rücksetzung) und Verantwortlichkeiten je Stufe.',
         examples: [
@@ -2180,7 +1961,6 @@ export const obligationsCatalog = {
           'Betriebshandbücher für Cyber- und IKT-Vorfälle in KI-Komponenten erstellen, üben und pflegen (Erkennung, Eindämmung, Wiederherstellung, Kommunikation/Meldepflichten).',
         reference: 'DORA (2022), Art. 17',
         referenceUrl: DORA_LINKS.ART_17,
-        evidence: 'Nachweis: Betriebshandbücher, Rollen, Übungen',
         info:
           'Cyber-Betriebshandbücher sollten Erkennung, Eindämmung, Wiederherstellung sowie Kommunikations- und Meldepflichten berücksichtigen.',
         examples: [
@@ -2205,8 +1985,6 @@ export const obligationsCatalog = {
           'Kommunikationsplan erstellen/aktualisieren: Schweregrade, Auslöser, Freigabeprozess, Kundeninformation, verantwortungsbewusste Offenlegung gegenüber Öffentlichkeit/anderen Finanzunternehmen; inkl. Kontaktlisten und Eskalationswegen.',
         reference: 'DORA (2022), Art. 14(1)',
         referenceUrl: DORA_LINKS.ART_14,
-        evidence:
-          'Nachweis: Kommunikationsplan, Schweregradmatrix, Freigaberegeln, Kontaktlisten, Dokumentation verantwortungsbewusster Offenlegung',
         info:
           'Der Plan muss Auslöser, Freigaben, Zielgruppen, Inhalte und Kanäle je Schweregrad nachvollziehbar festlegen.',
         examples: [
@@ -2223,8 +2001,6 @@ export const obligationsCatalog = {
           'Kommunikationsstrategie umsetzen: interne/externe Zielgruppen definieren, Rollen und Verantwortlichkeiten festlegen, Informationskanäle und Inhalte je Zielgruppe standardisieren.',
         reference: 'DORA (2022), Art. 14(2)',
         referenceUrl: DORA_LINKS.ART_14,
-        evidence:
-          'Nachweis: Kommunikationsstrategie, RACI, Zielgruppen-/Stakeholder-Matrix, Kanal-/Verteilerkonzept',
         info:
           'Die Strategie muss Zielgruppen, Rollen, Kanäle sowie Mindestinhalte pro Lagebild definieren und versioniert pflegen.',
         examples: [
@@ -2240,8 +2016,6 @@ export const obligationsCatalog = {
           'Kommunikationsverantwortung festlegen: benannte Rolle/Person (inkl. Stellvertretung) für externe Kommunikation/Medien, eingebettet in Vorfalls- und Krisenorganisation.',
         reference: 'DORA (2022), Art. 14(3)',
         referenceUrl: DORA_LINKS.ART_14,
-        evidence:
-          'Nachweis: Rollenbeschreibung, Benennung, Stellvertretungsregel, Organigramm',
         info:
           'Benennung muss Rolle, Stellvertretung, Erreichbarkeit und Freigabebefugnisse eindeutig dokumentieren.',
         examples: [
@@ -2257,8 +2031,6 @@ export const obligationsCatalog = {
           'Vorlagen erstellen und üben: Kundenbenachrichtigung, Statusseiten-Update, interne Lageupdates, FAQ',
         reference: 'DORA (2022), Art. 14 i. V. m. Art. 17',
         referenceUrl: DORA_LINKS.ART_14,
-        evidence:
-          'Nachweis: Vorlagen, Übungsprotokolle, Lessons Learned, Aktualisierungsnachweise',
         info:
           'Vorlagen müssen freigegeben, aktuell und in Übungen erprobt sein (inkl. Nachweis der Freigabekette).',
         examples: [
@@ -2282,7 +2054,6 @@ export const obligationsCatalog = {
           'Art.-16-Eignung dokumentieren: Unternehmenstyp/Geltungsbereich prüfen, Begründung festhalten, Entscheidung versionieren (inkl. Verantwortlicher/Datum).',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
-        evidence: 'Nachweis: Compliance-Notiz, Entscheidungsvorlage, Richtlinienauszug, Version/Verantwortlicher',
         info:
           'Die Dokumentation muss Geltungsbereich, Kriterien und Entscheidung (inkl. Datum/Verantwortlicher) eindeutig nachweisen.',
         examples: [
@@ -2299,7 +2070,6 @@ export const obligationsCatalog = {
           'Vereinfachten IKT-RMF definieren: Rollen/Verantwortlichkeiten, Richtlinien/Standards, Mindestkontrollen und Betriebsprozesse festlegen.',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
-        evidence: 'Nachweis: RMF-Dokument, Rollenmodell/RACI, Richtlinien/Standards, Kontrollkatalog',
         info:
           'Der Mindestumfang muss Rollen, Richtlinien, Kontrollen und Betriebsprozesse abdecken und versioniert gepflegt werden.',
         examples: [
@@ -2314,10 +2084,8 @@ export const obligationsCatalog = {
           'Gibt es eine digitale operationelle Resilienzstrategie mit Genehmigung/Review durch das Leitungsorgan?',
         todo:
           'Resilienzstrategie im Minimalumfang dokumentieren (Ziele/Prioritäten, wichtigste Abhängigkeiten, Maßnahmenplan) und Genehmigung/Review des Leitungsorgans nachweisen.',
-        reference: 'DORA (2022), Art. 5(2)(d) i. V. m. Art. 6(8)',
+        reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Kurzstrategie, Protokoll, Review-/Update-Nachweise, Maßnahmenliste',
         info:
           'Auch bei Art. 16 sollte das Leitungsorgan die strategische Ausrichtung zur operativen Resilienz nachvollziehbar genehmigen/überprüfen.',
         examples: [
@@ -2331,10 +2099,8 @@ export const obligationsCatalog = {
           'Gibt es einen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und dokumentiertem Follow-up?',
         todo:
           'Minimalen Audit-/Prüfplan festlegen, genehmigen lassen und Follow-up der Findings/Maßnahmen nachweisen (Owner/Frist/Wirkung).',
-        reference: 'DORA (2022), Art. 5(2)(f)',
+        reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence:
-          'Nachweis: Prüfplan, Genehmigungsnotiz, Check-/Prüfberichte, Maßnahmen-Tracking',
         info:
           'Minimalanforderung = planbar + nachvollziehbar: Prüfungen sind terminiert, dokumentiert und führen zu nachverfolgten Maßnahmen.',
         examples: [
@@ -2350,7 +2116,6 @@ export const obligationsCatalog = {
           'Überwachung und Review-Zyklus definieren: KPIs/KRIs, regelmäßige Reviews, änderungsgetriebene Neubewertungen, Feststellungen-Tracking.',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
-        evidence: 'Nachweis: Überwachungskonzept, KPI/KRI-Set, Review-Protokolle, Feststellungen-Backlog',
         info:
           'Review-Zyklus muss Frequenz, Verantwortliche, Inputs (KPIs/KRIs) und Nachverfolgung von Feststellungen festlegen.',
         examples: [
@@ -2367,7 +2132,6 @@ export const obligationsCatalog = {
           'Mindestmaßnahmen umsetzen: Zugriffssteuerung (minimale Rechte), Protokollierung, Backup/Wiederherstellung.',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
-        evidence: 'Nachweis: IAM-Konzept, Protokollierung/SIEM-Nachweis, Backup-Plan, HärtungsBasis',
         info:
           'Mindestmaßnahmen müssen umgesetzt und auditfähig nachweisbar sein (Konfiguration, Aufbewahrung, Wiederherstellungstests).',
         examples: [
@@ -2384,7 +2148,6 @@ export const obligationsCatalog = {
           'Minimalen Vorfallprozess definieren: Schweregrade/Eskalation, Betriebshandbücher, Rollen, Lessons Learned und Nachverfolgung.',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
-        evidence: 'Nachweis: Vorfallprozess, Betriebshandbücher, Rufbereitschaft/Eskalationsmatrix',
         info:
           'Der Prozess muss Schweregrade, Eskalation, Zuständigkeiten und Nachweise je Vorfall festlegen.',
         examples: [
@@ -2407,7 +2170,6 @@ export const obligationsCatalog = {
           'Prozess zur Erfassung, Klassifikation und Bearbeitung von IKT-Vorfällen definieren, dokumentieren und in den Betrieb integrieren (inkl. KI-spezifischer Vorfälle).',
         reference: 'DORA (2022), Art. 17',
         referenceUrl: DORA_LINKS.ART_17,
-        evidence: 'Nachweis: Prozessbeschreibung, Ticket-Workflow, Rollen',
         info:
           'Der Prozess sollte auch KI-spezifische Vorfälle berücksichtigen (z. B. systematische Fehlentscheidungen, Modellveränderungen, Datenqualitätsvorfälle). ' +
           'Art. 17 verweist auf Kommunikationspläne nach Art. 14',
@@ -2424,7 +2186,6 @@ export const obligationsCatalog = {
           'Kriterien und Schwellenwerte für meldepflichtige IKT-Vorfälle festlegen, dokumentieren und verbindlich an relevante Teams kommunizieren.',
         reference: 'DORA (2022), Art. 18–19',
         referenceUrl: DORA_LINKS.ART_18,
-        evidence: 'Nachweis: Richtlinie, Schulungsnachweis, Kommunikationsmail',
         info:
           'Schwellenwerte sollten konkret und operationalisiert sein (z. B. Nutzerauswirkung, Dauer, Datenverlust, kritische Services).',
         examples: [
@@ -2440,7 +2201,6 @@ export const obligationsCatalog = {
           'Meldeprozess an die zuständige Aufsicht dokumentieren und umsetzen (Fristen, Rollen, Vorlagen, Freigaben, Informationsquellen).',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_19,
-        evidence: 'Nachweis: Meldeprozess, Vorlagen, RACI',
         info:
           'Prozess sollte Verantwortlichkeiten (wer meldet?), Fristen und Informationsquellen für die Meldung klar definieren.',
         examples: [
@@ -2458,8 +2218,6 @@ export const obligationsCatalog = {
           'Sicherstellen, dass Vorfall- und Aufsichtsmeldungen konsistent die geforderten Datenfelder abdecken.',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_19,
-        evidence:
-          'Nachweis: Vorlagen-Repository, Versionshistorie/Änderungsprotokoll, Freigabeprotokoll, Review-Zyklus',
         info:
           'Audit-Falle: Vorlage existiert, ist aber veraltet/ungeprüft. Hier geht es explizit um Version-Governance und Nachvollziehbarkeit.',
         examples: [
@@ -2477,8 +2235,6 @@ export const obligationsCatalog = {
           'Betriebshandbuch so gestalten, dass bekannte/noch unbekannte Informationen sauber getrennt und nachgereicht werden können.',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_20,
-        evidence:
-          'Nachweis: Betriebshandbuch mit Phasen, SLA/Timer-Konzept, Eskalationsmatrix, Beispielmeldungen, Lessons Learned',
         info:
           'Die häufigste Lücke ist nicht keine Meldung, sondern Fristen/Phasen nicht beherrscht (wer liefert wann welche Inhalte).',
         examples: [
@@ -2495,8 +2251,6 @@ export const obligationsCatalog = {
           'Für schwerwiegende IKT-Vorfälle Nachbereitungen durchführen und dokumentieren (Abschlussbericht, Ursachenanalyse, Maßnahmenplan inkl. Verantwortlicher/Frist/Wirksamkeitsprüfung).',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_20,
-        evidence:
-          'Nachweis: Abschlussbericht, Ursachenanalyse, Maßnahmen-Tracker, Wirksamkeitsprüfung',
         info:
           'Nachbereitungen sollten messbare Maßnahmen enthalten (Verantwortlicher, Frist, Erfolgskriterium) und Rückkopplung in Kontrollen/Überwachung sicherstellen.',
         examples: [
@@ -2522,8 +2276,6 @@ export const obligationsCatalog = {
           'Entscheidungsmatrix dokumentieren und den relevanten Teams kommunizieren.',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_19,
-        evidence:
-          'Nachweis: Richtlinie/Entscheidungsmatrix, Bedrohungstaxonomie, Schulungs-/Kommunikationsnachweise',
         info:
           'Ziel: Cyber-Bedrohungsaufklärung und Vorwarnungen governancefähig machen und nicht jeden Kompromittierungsindikator melden, sondern nachvollziehbar entscheiden.',
         examples: [
@@ -2540,8 +2292,6 @@ export const obligationsCatalog = {
           'Inhaltsminimum, Vertraulichkeitsprüfung und Abstimmung mit parallel laufenden Behördenprozessen.',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_20,
-        evidence:
-          'Nachweis: Prozessbeschreibung, RACI, Betriebshandbuch/Ablaufplan, Freigabeprotokolle',
         info:
           'Der Prozess muss Rollen, Freigaben, Kanal/Format, Dokumentation und Nachverfolgung eindeutig festlegen.',
         examples: [
@@ -2559,8 +2309,6 @@ export const obligationsCatalog = {
           'Lessons Learned in Bedrohungs- und Vorfallprozesse zurückspielen.',
         reference: 'DORA (2022), Art. 19–20',
         referenceUrl: DORA_LINKS.ART_19,
-        evidence:
-          'Nachweis: Entscheidungsprotokoll, Meldungsablage, Ticket-/Fallakten, Review-Protokolle',
         info:
           'Auditfähig ist die Dokumentation nur, wenn auch Nicht-Meldungen und deren Begründung nachvollziehbar erfasst sind.',
         examples: [
@@ -2583,7 +2331,6 @@ export const obligationsCatalog = {
           'Testprogramm definieren: Testarten-Mix (z. B. Schwachstellenmanagement/Penetrationstests, Szenario-Tests), Frequenzen, Rollen, Unabhängigkeit/Kompetenz und Abhilfemaßnahmen-Governance festlegen.',
         reference: 'DORA (2022), Art. 24–25',
         referenceUrl: DORA_LINKS.ART_24,
-        evidence: 'Nachweis: Testprogramm, Testkalender, Rollen/RACI',
         info:
           'Auditfähig = Plan -> Durchführung -> Feststellungen -> Abhilfemaßnahmen -> Wirksamkeitsprüfung (geschlossene Nachweiskette).',
         examples: [
@@ -2599,7 +2346,6 @@ export const obligationsCatalog = {
           'Testumfang so festlegen, dass Drittanbieter-Schnittstellen und kritische Abhängigkeiten einbezogen sind (vertragliche Mitwirkung, Geltungsbereich, Berichtserhalt).',
         reference: 'DORA (2022), Art. 25',
         referenceUrl: DORA_LINKS.ART_25,
-        evidence: 'Nachweis: Test-Geltungsbereich, Anbieter-Einbindung, Vertragsklauseln',
         info:
           'Der Geltungsbereich muss Schnittstellen, Abhängigkeiten und Mitwirkung von Drittanbietern nachvollziehbar regeln.',
         examples: [
@@ -2615,10 +2361,8 @@ export const obligationsCatalog = {
           'Prozess zur Priorisierung, Zuweisung und fristgerechten Nachverfolgung von Feststellungen etablieren (Schweregrad, Verantwortlicher, Fristen, Wirksamkeitsprüfung).',
         reference: 'DORA (2022), Art. 25',
         referenceUrl: DORA_LINKS.ART_25,
-        evidence:
-          'Nachweis: Feststellungen-Tracker, Behebungsplan, Statusreports',
         info:
-          'Governance-Haken: regelmäßiges Review/Eskalation bei Verzug und Wirksamkeitsnachweis nach Umsetzung.',
+        'Governance-Hinweis: Feststellungen sind regelmäßig zu reviewen, bei Fristüberschreitungen zu eskalieren und nach Umsetzung ist die Wirksamkeit der Maßnahme zu belegen.',
         examples: [
           'Feststellungen-Tracker enthält Schweregrad, Verantwortlicher, Fälligkeit und Status.',
           'Statusreport wird regelmäßig im Gremium reviewed und eskaliert bei Verzug.',
@@ -2640,7 +2384,6 @@ export const obligationsCatalog = {
           'TLPT-Geltungsbereich prüfen und dokumentieren: Systemgrenzen, kritische Pfade, Abhängigkeiten (inkl. IKT-Drittanbieter) und Kriterien/Begründung festhalten.',
         reference: 'DORA (2022), Art. 26–27',
         referenceUrl: DORA_LINKS.ART_26,
-        evidence: 'Nachweis: Geltungsbereich, Risikoanalyse, TLPT-Plan/Beauftragung',
         info:
           'TLPT ist institutsspezifisch. Entscheidend ist die dokumentierte Geltungsbereich-/Pfad-Definition und die Nachvollziehbarkeit der Begründung.',
         examples: [
@@ -2664,7 +2407,6 @@ export const obligationsCatalog = {
           'Sorgfaltsprüfung risikobasiert durchführen und dokumentieren (Sicherheit, Resilienz, Subdienstleister, Datenverarbeitung, Abhängigkeiten).',
         reference: 'DORA (2022), Art. 28–29',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence: 'Nachweis: Fragebogen, Risikoentscheidung',
         info:
           'Die Sorgfaltsprüfung sollte risikobasiert sein und die tatsächlichen Leistungen/Abhängigkeiten des Anbieters abdecken.',
         examples: [
@@ -2681,7 +2423,6 @@ export const obligationsCatalog = {
           'Audit- und Prüfrechte vertraglich regeln (inkl. Unterauftragnehmer) und klare Nachweispflichten, Fristen, Geltungsbereich und Abhilfemaßnahmen festlegen.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: Vertrag/Anhang, Audit-Klausel',
         info:
           'Audit-Rechte sollten auch Unterauftragnehmer einschließen und klare Nachweispflichten/Fristen definieren.',
         examples: [
@@ -2697,7 +2438,6 @@ export const obligationsCatalog = {
           'Messbare Sicherheitsanforderungen vertraglich festlegen (KPIs/SLAs, Schwellenwerte, Reporting-Frequenz, Eskalation) und deren Überprüfbarkeit sicherstellen.',
         reference: 'DORA (2022), Art. 30',
         referenceUrl: DORA_LINKS.ART_30,
-        evidence: 'Nachweis: SLA/Anhang, Sicherheits-Nachtrag',
         info:
           'Anforderungen sollten messbar und überprüfbar sein (KPI/SLA, Schwellenwerte, Reporting-Frequenz, Eskalation).',
         examples: [
@@ -2714,7 +2454,6 @@ export const obligationsCatalog = {
           'Ausstiegsstrategie inkl. Datenmigration und Übergangsbetrieb dokumentieren und umsetzen.',
         reference: 'DORA (2022), Art. 28–30',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence: 'Nachweis: Ausstiegsplan, Migrations-Betriebshandbuch, Verantwortliche',
         info:
           'Ausstieg sollte auch Übergangsbetrieb (Parallelbetrieb) und Rückfalloptionen (Rücksetzung) berücksichtigen.',
         examples: [
@@ -2730,8 +2469,6 @@ export const obligationsCatalog = {
           'Risikobasierte Prüf-Frequenz für Drittanbieter festlegen und regelmäßige KPI-Reviews inkl. Neubewertung bei Änderungen durchführen und dokumentieren.',
         reference: 'DORA (2022), Art. 28–30',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence:
-          'Nachweis: KPI-Reports, Review-Protokolle, Neubewertung',
         info:
           'Die Prüf-Frequenz sollte vom Risiko abhängen (kritischer Anbieter = häufiger) und Feststellungen/Maßnahmen nachverfolgen.',
         examples: [
@@ -2755,7 +2492,6 @@ export const obligationsCatalog = {
           'Risikobasierte Mindestkontrollen proportional zur Kritikalität definieren, dokumentieren und in den Betrieb übernehmen (Zugriff, Protokollierung, Backup).',
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence: 'Nachweis: Kontroll-Basis, Checkliste',
         info:
           'Proportional heißt: Mindestkontrollen passend zur Kritikalität, aber dennoch nachvollziehbar und wiederholbar.',
         examples: [
@@ -2771,7 +2507,6 @@ export const obligationsCatalog = {
           'Verantwortlichkeiten für Betrieb und Sicherheit der KI-relevanten Systeme festlegen und dokumentieren.',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence: 'Nachweis: RACI, Rollenbeschreibung',
         info:
           'Auch bei kleinerem Umfang sollten Zuständigkeiten eindeutig sein, inkl. Eskalation.',
         examples: [
@@ -2786,10 +2521,8 @@ export const obligationsCatalog = {
           'Gibt es eine digitale operationelle Resilienzstrategie mit Genehmigung/Review durch das Leitungsorgan?',
         todo:
           'Resilienzstrategie proportional dokumentieren: Ziele/Prioritäten, wesentliche IKT-/KI-Abhängigkeiten, Risikoappetit und Maßnahmenplan. Genehmigung/Review durch Leitungsorgan nachweisen (mind. jährlich bzw. anlassbezogen).',
-        reference: 'DORA (2022), Art. 5(2)(d) i. V. m. Art. 6(8)',
-        referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Kurzstrategie (Version/Freigabe), Protokoll, Review-Nachweise, Maßnahmenliste',
+        reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
+        referenceUrl: DORA_LINKS.ART_5,
         info:
           'Proportional heißt nicht ohne Strategie“ sondern angepasster Umfang mit klarer Genehmigung/Review.',
         examples: [
@@ -2803,10 +2536,8 @@ export const obligationsCatalog = {
           'Gibt es einen proportionalen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und Follow-up der Findings?',
         todo:
           'Proportionalen Prüfplan definieren (Scope/Frequenz), genehmigen lassen und Findings/Maßnahmen nachverfolgen (Owner/Frist/Wirkung).',
-        reference: 'DORA (2022), Art. 5(2)(f)',
+        reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence:
-          'Nachweis: Audit-/Prüfplan, Genehmigungsnotiz, Prüfberichte/Checks, Maßnahmen-Tracking',
         info:
           'Auch Light-Setups brauchen nachvollziehbare, geplante Prüfungen (statt ad-hoc).',
         examples: [
@@ -2821,8 +2552,6 @@ export const obligationsCatalog = {
           'Protokollierung für KI-relevante Systeme aktivieren, revisionssicher aufbewahren und für Audit/Vorfallaufklärung nutzbar machen.',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
-        evidence:
-          'Nachweis: Protokollierungskonfiguration, Aufbewahrung, Beispiel-Protokolle',
         info:
           'Protokolle sollten für Audit und Vorfallaufklärung nutzbar sein unter Beachtung des Datenschutzes.',
         examples: [
@@ -2839,8 +2568,6 @@ export const obligationsCatalog = {
           'Verzahnung mit Modellrisikomanagement sicherstellen: Modellinventar pflegen, Validierungs-/Revalidierungszyklen definieren, unabhängige Reviews dokumentieren und Feststellungen nachverfolgen.',
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
-        evidence:
-          'Nachweis: Modellinventar, Validierungsplan, unabhängige Review-Protokolle, Feststellungen-Tracking',
         info:
           'Falls bereits ein Modellrisikomanagement existiert: die KI dort sauber einhängen und Doppelstrukturen vermeiden.',
         examples: [
@@ -2857,8 +2584,6 @@ export const obligationsCatalog = {
           'Freigabegates mit Management-/Gremienentscheidung dokumentieren und im Betrieb anwenden.',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
-        evidence:
-          'Nachweis: Freigabeprozess, Gremienprotokoll, RACI',
         info:
           'Das reduziert Schleichbetrieb: wesentliche Änderungen werden vorab beurteilt und formal freigegeben.',
         examples: [
@@ -2883,8 +2608,6 @@ export const obligationsCatalog = {
           'Kritikalitätseinstufung dokumentieren: Abhängigkeitsanalyse (Auswirkungen, RTO/RPO), Konzentrationsbewertung (gemeinsame Ausfallbereiche), Ausstiegs-/Substitutionsplan (technisch und vertraglich).',
         reference: 'DORA (2022), Art. 28–29',
         referenceUrl: DORA_LINKS.ART_28,
-        evidence:
-          'Nachweis: Auslagerungs-/IKT-Risikoanalyse, Konzentrationsanalyse, Ausstiegsplan, BCM',
         info:
           'Die Einstufung muss Kriterien, Analyseergebnisse und Begründung nachvollziehbar dokumentieren.',
         examples: [
@@ -2899,10 +2622,8 @@ export const obligationsCatalog = {
           'Liegt eine formale Freigabe durch Risiko-/Compliance-/Auslagerungsfunktion zur Einstufung vor?',
         todo:
           'Formale Freigabe (Risikomanagement/Compliance/Auslagerung) zur Einstufung einholen und versioniert dokumentieren (inkl. Auflagen/Abhilfemaßnahmen).',
-        reference: 'DORA (2022), Art. 28–30',
-        referenceUrl: DORA_LINKS.ART_30,
-        evidence:
-          'Nachweis: Freigabeprotokoll, Entscheidungsvorlage, RACI/Verantwortlicher',
+        reference: 'DORA (2022), Art. 5',
+        referenceUrl: DORA_LINKS.ART_5,
         info:
           'Freigabe muss Entscheidung, Auflagen, Verantwortliche und Review-Zyklus eindeutig festhalten.',
         examples: [
@@ -2926,8 +2647,6 @@ export const obligationsCatalog = {
           'Betriebshandbuch erstellen/aktualisieren: Rollen und Verantwortlichkeiten (inkl. Vertretung), Eskalationspfade, StoppKriterien, Kommunikationsplan und operative Schritte für den Rückfallbetrieb.',
         reference: 'DORA (2022), Art. 11–12',
         referenceUrl: DORA_LINKS.ART_11,
-        evidence:
-          'Nachweis: Betriebshandbuch/Ablaufplan, RACI, Eskalationsmatrix, Kommunikationsplan',
         info:
           'Das Betriebshandbuch muss Kriterien, Schritte, Zuständigkeiten und Kommunikationswege für Rückfallbetrieb nachweisbar regeln.',
         examples: [
@@ -2944,8 +2663,6 @@ export const obligationsCatalog = {
           'RTO/RPO und manuelle Prozessschritte definieren; in BCM/Prozessdokumentation verankern (inkl. Auslöser, Verantwortlichkeiten, Abhängigkeiten).',
         reference: 'DORA (2022), Art. 11–12',
         referenceUrl: DORA_LINKS.ART_11,
-        evidence:
-          'Nachweis: BCM, Prozessdokumentation, RTO/RPO-Festlegung, Abhängigkeitsanalyse',
         info:
           'RTO/RPO und manuelle Schritte müssen mit BCM abgestimmt und in Tests überprüfbar beschrieben sein.',
         examples: [
@@ -2962,8 +2679,6 @@ export const obligationsCatalog = {
           'Rückfalltest durchführen und dokumentieren (Szenarien, Geltungsbereich, Erfolgskriterien, Ergebnisse); Feststellungen mit Verantwortlicher, Frist und Nachverfolgung (Abhilfemaßnahmen-Tracking).',
         reference: 'DORA (2022), Art. 11–12',
         referenceUrl: DORA_LINKS.ART_12,
-        evidence:
-          'Nachweis: Testprotokoll, Ergebnisbericht, Feststellungsprotokolle, Abhilfemaßnahmen-Nachweise',
         info:
           'Tests müssen Erfolgskriterien, Abweichungen, Feststellungen und Nachverfolgung bis zum Abschluss dokumentieren.',
         examples: [
@@ -2999,7 +2714,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Handelt es sich um ein KI-System nach EU AI Act?',
     reference: 'EU AI Act (2024), Art. 3',
-    referenceId: 'ART_3',
     referenceUrl: EU_AI_ACT_LINKS.ART_3,
     yes: 'A2',
     no: 'A0',
@@ -3019,7 +2733,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Kein KI-System -> EU AI Act nicht anwendbar.',
     reference: 'EU AI Act (2024), Art. 3',
-    referenceId: 'ART_3',
     referenceUrl: EU_AI_ACT_LINKS.ART_3,
     obligations: ['AI_ACT_NICHT_ZUTREFFEND'],
     next: 'ENDE',
@@ -3038,7 +2751,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Liegt eine potenziell verbotene Praxis nach EU AI Act vor?',
     reference: 'EU AI Act (2024), Art. 5',
-    referenceId: 'ART_5',
     referenceUrl: EU_AI_ACT_LINKS.ART_5,
     yes: 'A2_Y',
     no: 'A2_ROLLE',
@@ -3057,7 +2769,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Verbotene Praxis -> Nutzung untersagen und Eskalation auslösen.',
     reference: 'EU AI Act (2024), Art. 5',
-    referenceId: 'ART_5',
     referenceUrl: EU_AI_ACT_LINKS.ART_5,
     obligations: ['KI_VERBOTENE_PRAKTIKEN'],
     next: 'D1',
@@ -3080,7 +2791,6 @@ export const decisionTree = {
     regulation: 'EU AI Act',
     label: 'Review-Gate: Wurde der Einsatz gestoppt und die Eskalation dokumentiert?',
     reference: 'EU AI Act (2024), Art. 5',
-    referenceId: 'ART_5',
     referenceUrl: EU_AI_ACT_LINKS.ART_5,
     yes: 'ENDE',
     no: 'W_KI_WIDERSPRUCH',
@@ -3100,13 +2810,14 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Sind Sie Betreiber oder Anbieter des zu integrierenden KI-Systems?',
     reference: 'EU AI Act (2024), Art. 3',
-    referenceId: 'ART_3',
     referenceUrl: EU_AI_ACT_LINKS.ART_3,
     yes: 'A2_ROLLE_BEREITSTELLUNG',
     no: 'A2_ROLLE_BETRIEB_KONTROLLE',
     yesLabel: 'Anbieter',
     noLabel: 'Betreiber',
-    info: 'Hier wird die Rolle des Unternehmens im konkreten Anwendungsfall geklärt.',
+    info: 
+    'Hier wird die Rolle des Unternehmens im konkreten Anwendungsfall geklärt.' +
+    'Die konkreten Begriffsbestimmungen sind in Art. 3 Abs. 3-4 zu finden.',
     examples: [
       'Anbieter: Sie entwickeln/bringen das KI-System in Verkehr oder stellen es bereit.',
       'Betreiber: Sie nutzen ein KI-System (intern oder extern bezogen) im eigenen Prozess.',
@@ -3190,7 +2901,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Rollenempfehlung: Anbieter',
     reference: 'EU AI Act (2024)',
-    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS', 'KI_KENNTNIS_ART_4'],
+    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS'],
     next: 'A2_GPAI_ANBIETER',
   },
 
@@ -3200,7 +2911,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Rollenempfehlung: Betreiber',
     reference: 'EU AI Act (2024) – Rollenklärung (intern)',
-    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS', 'KI_KENNTNIS_ART_4'],
+    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS'],
     next: 'A2_GPAI_BETREIBER',
   },
 
@@ -3210,7 +2921,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Rolle unklar (Unsicher)',
     reference: 'EU AI Act (2024)',
-    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS', 'KI_KENNTNIS_ART_4'],
+    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS'],
     next: 'A2_GPAI_UNSICHER',
     info:
       'Die Antworten sind inkonsistent. Review-Gate auslösen und konservativ als Anbieter weiterprüfen, bis Rollen/Pflichten vertraglich und dokumentatorisch geklärt sind.',
@@ -3222,14 +2933,14 @@ export const decisionTree = {
     id: 'A2_GPAI_ANBIETER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Wird ein GPAI-Modell bzw. externes Basismodell genutzt?',
+    label: 'Wird ein KI-Modell mit allgemeinem Verwendungszweck (GPAI) genutzt?',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_51',
     referenceUrl: EU_AI_ACT_LINKS.ART_51,
     yes: 'A2_GPAI_SCREENING_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein externes Basismodell (GPAI) genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen.',
+      'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.' +
+      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen.',
     examples: [
       'Externe LLM/API.',
       'Extern gehostetes Basismodell.',
@@ -3242,8 +2953,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI erkannt -> Screening & Lieferkettentransparenz prüfen',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_52',
-    referenceUrl: EU_AI_ACT_LINKS.ART_52,
+    referenceUrl: EU_AI_ACT_LINKS.ART_51,
     obligations: ['KI_GPAI_SCREENING_ART_51_52'],
     next: 'A2_GPAI_SYSTEMRISIKO_ANBIETER',
     info:
@@ -3256,7 +2966,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Ist ein systemisches Risiko betroffen (GPAI mit systemischem Risiko)?',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
@@ -3273,7 +2982,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI mit systemischem Risiko -> zusätzliche Pflichten',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     obligations: ['KI_GPAI_SYSTEMISCHES_RISIKO_ART_55'],
     next: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
@@ -3285,7 +2993,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Wird ein GPAI-Modell bzw. externes Basismodell genutzt?',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_51',
     referenceUrl: EU_AI_ACT_LINKS.ART_51,
     yes: 'A2_GPAI_SCREENING_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
@@ -3303,8 +3010,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI erkannt -> Screening & Lieferkettentransparenz prüfen',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_52',
-    referenceUrl: EU_AI_ACT_LINKS.ART_52,
+    referenceUrl: EU_AI_ACT_LINKS.ART_51,
     obligations: ['KI_GPAI_SCREENING_ART_51_52'],
     next: 'A2_GPAI_SYSTEMRISIKO_BETREIBER',
     info:
@@ -3317,7 +3023,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Ist ein systemisches Risiko betroffen?',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
@@ -3334,7 +3039,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI mit systemischem Risiko -> zusätzliche Pflichten (Art. 55)',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     obligations: ['KI_GPAI_SYSTEMISCHES_RISIKO_ART_55'],
     next: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
@@ -3346,7 +3050,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Wird ein GPAI-Modell bzw. externes Basismodell genutzt?',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_51',
     referenceUrl: EU_AI_ACT_LINKS.ART_51,
     yes: 'A2_GPAI_SCREENING_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
@@ -3364,8 +3067,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI erkannt -> Screening & Lieferkettentransparenz prüfen',
     reference: 'EU AI Act (2024), Art. 51–52',
-    referenceId: 'ART_52',
-    referenceUrl: EU_AI_ACT_LINKS.ART_52,
+    referenceUrl: EU_AI_ACT_LINKS.ART_51,
     obligations: ['KI_GPAI_SCREENING_ART_51_52'],
     next: 'A2_GPAI_SYSTEMRISIKO_UNSICHER',
     info:
@@ -3378,7 +3080,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Ist ein systemisches Risiko betroffen (GPAI mit systemischem Risiko)?',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
@@ -3395,7 +3096,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GPAI mit systemischem Risiko -> zusätzliche Pflichten',
     reference: 'EU AI Act (2024), Art. 55',
-    referenceId: 'ART_55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     obligations: ['KI_GPAI_SYSTEMISCHES_RISIKO_ART_55'],
     next: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
@@ -3409,7 +3109,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft der Anhang-III-Bereich „Finanzen“ zu ?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_FIN_KREDIT_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_SICHERHEITSBAUTEIL',
@@ -3427,7 +3126,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Ist das KI-System ein Sicherheitsbauteil oder Teil eines Produkts nach Art. 6?',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BIOMETRIE',
@@ -3442,7 +3140,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft der Anhang-III-Bereich „Biometrie“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_KRIT_INFRA',
@@ -3457,7 +3154,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft der Anhang-III-Bereich „Kritische Infrastruktur“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BILDUNG_ARBEIT_DIENSTE',
@@ -3473,7 +3169,6 @@ export const decisionTree = {
     label:
       'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/HR oder Zugang zu wesentlichen Dienstleistungen?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
     no: 'W_AI_HR_UEBERPRUEFUNG',
@@ -3492,8 +3187,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label:
       'Wird das KI-System bestimmungsgemäß für Kreditwürdigkeitsprüfung/Bonitätsbewertung natürlicher Personen verwendet (außer reine Finanzbetrugserkennung)?',
-    reference: 'EU AI Act (2024), Anhang III, Nr. 5(b)',
-    referenceId: 'ANHANG_III',
+    reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_FIN_VERSICHERUNGS_ANBIETER',
@@ -3513,8 +3207,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label:
       'Wird das KI-System bestimmungsgemäß für Risikobewertung und Preisbildung bei Lebens-/Krankenversicherung natürlicher Personen verwendet?',
-    reference: 'EU AI Act (2024), Anhang III, Nr. 5(c)',
-    referenceId: 'ANHANG_III',
+    reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_ANBIETER',
@@ -3533,7 +3226,6 @@ export const decisionTree = {
     label:
       'Keiner der vorherigen Anhang-III/Art.-6-Auslöser hat eindeutig gegriffen: Liegt trotzdem ein Hochrisiko-Fall vor, der dokumentiert werden muss?',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'W_AI_HR_UEBERPRUEFUNG',
     no: 'A3_KEIN_HR_PRUEFUNG',
@@ -3553,7 +3245,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Hochrisiko-KI -> Hochrisiko-Pflichten anwenden.',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     obligations: ['KI_HR_ANBIETER', 'KI_KONFORMITAET_UND_DOKU', 'KI_REGISTRIERUNG_UND_KENNZEICHNUNG', 'KI_UEBERWACHUNG_NACH_INVERKEHRBRINGEN_ART_72', 'KI_MELDUNG_SCHWERWIEGENDER_VORFAELLE_ART_73'],
     next: 'D0',
@@ -3573,7 +3264,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft der Anhang-III-Bereich „Finanzen“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_FIN_KREDIT_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_SICHERHEITSBAUTEIL',
@@ -3591,7 +3281,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Ist das KI-System ein Sicherheitsbauteil oder Teil eines Produkts nach Art. 6?',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A3_HR_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_BIOMETRIE',
@@ -3606,7 +3295,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft der Anhang-III-Bereich „Biometrie“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_KRIT_INFRA',
@@ -3621,7 +3309,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Trifft Anhang-III-Bereich „Kritische Infrastruktur“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_BILDUNG_ARBEIT_DIENSTE',
@@ -3637,7 +3324,6 @@ export const decisionTree = {
     label:
       'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/HR oder Zugang zu wesentlichen Dienstleistungen?',
     reference: 'EU AI Act (2024), Anhang III',
-    referenceId: 'ANHANG_III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_BETREIBER',
     no: 'A3_BETREIBER',
@@ -3656,8 +3342,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label:
       'Wird das KI-System bestimmungsgemäß für Kreditwürdigkeitsprüfung/Bonitätsbewertung natürlicher Personen verwendet (außer reine Finanzbetrugserkennung)?',
-    reference: 'EU AI Act (2024), Anhang III Nr. 5(b)',
-    referenceId: 'ANHANG_III',
+    reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_GRFA_TRIGGER_BETREIBER',
     no: 'A3_HR_FIN_VERSICHERUNGS_BETREIBER',
@@ -3677,8 +3362,7 @@ export const decisionTree = {
     cluster: 'AI Act',
     label:
       'Wird das KI-System bestimmungsgemäß für Risikobewertung und Preisbildung bei Lebens-/Krankenversicherung natürlicher Personen verwendet?',
-    reference: 'EU AI Act (2024), Anhang III, Nr. 5(c)',
-    referenceId: 'ANHANG_III',
+    reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_GRFA_TRIGGER_BETREIBER',
     no: 'A3_BETREIBER',
@@ -3696,7 +3380,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Keiner der vorherigen Anhang-III/Art.-6-Trigger hat eindeutig gegriffen: Liegt trotzdem ein Hochrisiko-Fall vor (z. B. andere Anhang-III-Bereiche), der dokumentiert werden muss?',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'W_AI_HR_UEBERPRUEFUNG',
     no: 'A3_KEIN_HR_PRUEFUNG',
@@ -3710,14 +3393,12 @@ export const decisionTree = {
     ],
   },
 
-
   A3_HR_BETREIBER: {
     id: 'A3_HR_BETREIBER',
     type: 'leaf',
     cluster: 'AI Act',
     label: 'Hochrisiko-KI -> Hochrisiko-Pflichten anwenden.',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     obligations: ['KI_HR_BETREIBER', 'KI_MELDUNG_SCHWERWIEGENDER_VORFAELLE_ART_73'],
     next: 'D0',
@@ -3738,7 +3419,6 @@ export const decisionTree = {
     label:
       'Kann das System (direkt oder faktisch) den Zugang zu wesentlichen Dienstleistungen/Chancen beeinflussen?',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     yes: 'A3_GRFA_HEUR_DISKRIMINIERUNG',
     no: 'A3_GRFA_HEUR_DISKRIMINIERUNG',
@@ -3757,7 +3437,6 @@ export const decisionTree = {
     label:
       'Besteht ein plausibles Diskriminierungs-/Fairness-Risiko?',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     yes: 'A3_GRFA_HEUR_VULNERABLE_GRUPPEN',
     no: 'A3_GRFA_HEUR_VULNERABLE_GRUPPEN',
@@ -3776,7 +3455,6 @@ export const decisionTree = {
     label:
       'Sind verletzliche Gruppen betroffen oder ist eine besondere Schutzbedürftigkeit plausibel?',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     yes: 'A3_GRFA_HEUR_AUTOMATISIERUNGSGRAD',
     no: 'A3_GRFA_HEUR_AUTOMATISIERUNGSGRAD',
@@ -3794,7 +3472,6 @@ export const decisionTree = {
     label:
       'Werden Empfehlungen typischerweise übernommen oder sind Kontrollmöglichkeiten begrenzt?',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     yes: 'A3_GRFA_TRIGGER_BETREIBER',
     no: 'A3_GRFA_TRIGGER_BETREIBER',
@@ -3813,7 +3490,6 @@ export const decisionTree = {
     label:
       'Ist für diesen Hochrisiko Anwendungsfall eine Grundrechts-Folgenabschätzung (GRFA) nach Art. 27 erforderlich?',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     yes: 'A3_HR_BETREIBER_GRFA',
     no: 'A3_HR_BETREIBER_OHNE_GRFA',
@@ -3833,7 +3509,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'GRFA: Konservatives Review erforderlich.',
     reference: 'EU AI Act (2024), Art. 27',
-    referenceId: 'ART_27',
     referenceUrl: EU_AI_ACT_LINKS.ART_27,
     obligations: ['KI_GRFA_PFLICHTPRUEFUNG_ART_27'],
     next: 'A3_HR_BETREIBER_GRFA',
@@ -3848,8 +3523,7 @@ export const decisionTree = {
     label:
       'Hochrisiko-KI -> Betreiberpflichten anwenden (inkl. GRFA nach Art. 27).',
     reference: 'EU AI Act (2024), Art. 26–27',
-    referenceId: 'ART_27',
-    referenceUrl: EU_AI_ACT_LINKS.ART_27,
+    referenceUrl: EU_AI_ACT_LINKS.ART_26,
     obligations: ['KI_HR_BETREIBER', 'KI_HR_GRUNDRECHTE_FOLGENABSCHAETZUNG_ART_27', 'KI_MELDUNG_SCHWERWIEGENDER_VORFAELLE_ART_73'],
     next: 'D0',
     info:
@@ -3863,8 +3537,7 @@ export const decisionTree = {
     label:
       'Hochrisiko-KI -> Betreiberpflichten anwenden (GRFA nicht erforderlich – Pflichtprüfung dokumentieren).',
     reference: 'EU AI Act (2024), Art. 26–27',
-    referenceId: 'ART_27',
-    referenceUrl: EU_AI_ACT_LINKS.ART_27,
+    referenceUrl: EU_AI_ACT_LINKS.ART_26,
     obligations: ['KI_HR_BETREIBER', 'KI_GRFA_PFLICHTPRUEFUNG_ART_27','KI_MELDUNG_SCHWERWIEGENDER_VORFAELLE_ART_73'],
     next: 'D0',
     info:
@@ -3880,7 +3553,6 @@ export const decisionTree = {
     label:
       'Kein Hochrisiko festgestellt: Ist die Einstufung nachvollziehbar dokumentiert?',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A4_TRANSPARENZ_ANWENDBAR',
     no: 'W_AI_HR_UEBERPRUEFUNG',
@@ -3899,7 +3571,6 @@ export const decisionTree = {
     label:
       'Interagiert das System direkt mit natürlichen Personen oder erzeugt es synthetische Inhalte (Text/Bild/Audio/Video), die gekennzeichnet werden müssen?',
     reference: 'EU AI Act (2024), Art. 50',
-    referenceId: 'ART_50',
     referenceUrl: EU_AI_ACT_LINKS.ART_50,
     yes: 'A4_KEIN_HR_MIT_TRANSPARENZPFLICHTEN',
     no: 'A4_KEIN_HR_NUR_GOVERNANCE_BASIS',
@@ -3917,10 +3588,9 @@ export const decisionTree = {
     type: 'leaf',
     cluster: 'AI Act',
     label: 'Kein Hochrisiko -> Art.-50-Transparenzpflichten gelten.',
-    reference: 'EU AI Act (2024), Art. 50 / Art. 4',
-    referenceId: 'ART_50',
+    reference: 'EU AI Act (2024), Art. 50',
     referenceUrl: EU_AI_ACT_LINKS.ART_50,
-    obligations: ['KI_KENNTNIS_ART_4', 'KI_TRANSPARENZ_ART_50'],
+    obligations: ['KI_TRANSPARENZ_ART_50'],
     next: 'D0',
     info:
       'Nicht-Hochrisiko bleibt bestehen, aber Transparenzanforderungen gelten aufgrund Interaktion/Inhaltsausgabe. Zusätzlich ist KI-Kompetenz/Kenntnis sicherzustellen.',
@@ -3935,7 +3605,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Kein Hochrisiko -> keine Art.-50-Trigger -> nur Kenntnis-Pflichten sicherstellen.',
     reference: 'EU AI Act (2024), Art. 4',
-    referenceId: 'ART_4',
     referenceUrl: EU_AI_ACT_LINKS.ART_4,
     obligations: ['KI_KENNTNIS_ART_4'],
     next: 'D0',
@@ -3951,7 +3620,6 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Warnung: Hochrisiko-Einstufung unklar -> Review und Dokumentation erforderlich.',
     reference: 'EU AI Act (2024), Art. 6',
-    referenceId: 'ART_6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     obligations: [],
     next: 'ENDE',
@@ -3980,8 +3648,7 @@ export const decisionTree = {
     type: 'leaf',
     cluster: 'AI Act',
     label: 'Hochrisiko-KI (Finanz, Anhang III, Nr. 5) -> Betreiberpflichten inkl. GRFA anwenden.',
-    reference: 'EU AI Act (2024), Anhang III, Nr. 5(b)/(c)',
-    referenceId: 'ANHANG_III',
+    reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     obligations: ['KI_HR_BETREIBER', 'KI_HR_GRUNDRECHTE_FOLGENABSCHAETZUNG_ART_27', 'KI_MELDUNG_SCHWERWIEGENDER_VORFAELLE_ART_73'],
     next: 'D0',
@@ -3996,16 +3663,16 @@ export const decisionTree = {
     id: 'D0',
     type: 'question',
     cluster: 'DORA',
-    label: 'DORA-Prüfung starten?',
-    reference: 'DORA (2022), Art. 5',
-    referenceUrl: DORA_LINKS.ART_5,
+    label: 'Fällt Ihr Unternehmen unter DORA?',
+    reference: 'DORA (2022), Art. 2',
+    referenceUrl: DORA_LINKS.ART_2,
     yes: 'B1',
     no: 'ENDE',
     info:
-      'Hier wird entschieden, ob zusätzlich zum EU AI Act eine strukturierte DORA-Analyse durchgeführt wird.',
+      'DORA gilt nur für Finanzunternehmen im Sinne von Art. 2. Wenn Ihr Unternehmen nicht darunter fällt, wird die DORA-Prüfung nicht weiter durchgeführt.',
     examples: [
-      'Bank prüft direkt IKT-Risiken und Resilienzanforderungen mit.',
-      'Es liegt bereits eine DORA-Bewertung vor.',
+      'Ja: Kreditinstitut, Zahlungsinstitut, Wertpapierfirma oder Versicherungsunternehmen.',
+      'Nein: Unternehmen außerhalb des Finanzsektors ohne DORA-Anwendungsbereich.',
     ],
   },
 
@@ -4014,13 +3681,14 @@ export const decisionTree = {
     type: 'question',
     cluster: 'DORA',
     label: 'Unterstützt das KI-System eine kritische oder wichtige Funktion?',
-    reference: 'DORA (2022), Art. 8',
-    referenceUrl: DORA_LINKS.ART_8,
+    reference: 'DORA (2022), Art. 3',
+    referenceUrl: DORA_LINKS.ART_3,
     yes: 'B1_SCOPE_NACHWEIS',
     no: 'B3',
     info:
       'Diese Frage klärt, ob das KI-System in Prozessen eingesetzt wird, die für das Unternehmen kritisch oder wichtig sind. ' +
-      'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden.',
+      'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden.' +
+      'Die konkrete Begriffsbestimmung ist in Art. 3 Abs. 22 zu finden.',
     examples: [
       'Kritisch: Zahlungsverkehr, Kreditvergabe, Risikomanagement.',
       'Nicht-kritisch: interne Wissenssuche ohne Kernprozesswirkung.',
@@ -4285,8 +3953,7 @@ export const decisionTree = {
     label:
       'Wird ein Dienst für generative KI/LLM/Grundlagenmodell (API) genutzt oder ein vergleichbarer externer Dienst für generative KI?',
     reference: 'DORA (2022), Art. 9 (IKT-Kontrollen) / Art. 28–30 (Drittanbieter)',
-    referenceId: 'ART_30',
-    referenceUrl: DORA_LINKS.ART_30,
+    referenceUrl: DORA_LINKS.ART_9,
     yes: 'W_DORA_GENAI_LLM_KONTROLLEN',
     no: 'B5',
     info:
@@ -4306,7 +3973,6 @@ export const decisionTree = {
     label:
       'Dienst für generative KI/LLM genutzt -> spezifische Kontrollen für generative KI prüfen/umsetzen.',
     reference: 'DORA (2022), Art. 9 / Art. 28–30',
-    referenceId: 'ART_9',
     referenceUrl: DORA_LINKS.ART_9,
     obligations: [
       'DORA_DATENUEBERMITTLUNG_EXTERNE_KI_SCHUTZ',
@@ -4345,7 +4011,7 @@ export const decisionTree = {
     label:
       'Gibt es eine realistische Ausstiegs-/Substitutionsmöglichkeit (vertraglich + technisch) innerhalb einer definierten Frist?',
     reference: 'DORA (2022), Art. 28–30',
-    referenceUrl: DORA_LINKS.ART_30,
+    referenceUrl: DORA_LINKS.ART_28,
     yes: 'B5_KONZENTRATION',
     no: 'B5_C',
     info:
@@ -4556,7 +4222,7 @@ export const decisionTree = {
     cluster: 'DORA',
     label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
     reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
-    referenceUrl: DORA_LINKS.ART_6,
+    referenceUrl: DORA_LINKS.ART_4,
     obligations: ['DORA_BASIS_PROPORTIONAL'],
     next: 'B4',
     info:
@@ -4594,7 +4260,7 @@ export const decisionTree = {
     cluster: 'DORA',
     label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
     reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
-    referenceUrl: DORA_LINKS.ART_6,
+    referenceUrl: DORA_LINKS.ART_4,
     obligations: ['DORA_BASIS_PROPORTIONAL'],
     next: 'B7_RUECKFALL',
   },
@@ -4611,7 +4277,7 @@ export const decisionTree = {
     yes: 'B7_RUECKFALL_OK',
     no: 'B7_RUECKFALL_LUECKE',
     info:
-      'Brücke zu BCM: Entscheidend ist nicht wir können theoretisch, sondern ob ein Ausweichverfahren ' +
+      'Entscheidend ist nicht wir können theoretisch, sondern ob ein Ausweichverfahren ' +
       'mit klaren Rollen, Betriebshandbuch und getesteten Zeiten (RTO/RPO) wirklich funktioniert.',
     examples: [
       'Betriebshandbuch inkl. Stopp-Kriterien (z. B. harte Abschaltkriterien bei Qualitäts-/Verfügbarkeitsproblemen).',
@@ -4624,7 +4290,7 @@ export const decisionTree = {
     id: 'B7_RUECKFALL_OK',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Ausweichverfahren vorhanden -> BCM-Brücke erfüllt.',
+    label: 'Ausweichverfahren vorhanden -> BCM Anforderungen erfüllt.',
     reference: 'DORA (2022), Art. 11–12',
     referenceUrl: DORA_LINKS.ART_11,
     next: 'B8',
@@ -4909,9 +4575,7 @@ export function getRequirementChain(leafId) {
         question: item.question,
         todo: item.todo,
         reference: item.reference,
-        referenceId: item.referenceId,
         referenceUrl: item.referenceUrl,
-        evidence: item.evidence,
         info: item.info,
         examples: item.examples,
       });
