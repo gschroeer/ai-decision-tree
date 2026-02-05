@@ -127,7 +127,7 @@ export async function exportAssessmentPdf({
                 },
               },
             ],
-            ['Fehlende Anforderung', 'Durchgeführt durch', 'Geprüft von'],
+            ['Fehlende Anforderung', 'Durchgeführt durch', 'Kontrolliert durch'],
           ],
           body,
           styles: {
