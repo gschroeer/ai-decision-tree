@@ -12,6 +12,7 @@ export const EU_AI_ACT_LINKS = {
   ART_14: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_14',
   ART_15: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_15',
   ART_16: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_16',
+  ART_25: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_25',
   ART_26: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_26',
   ART_27: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_27',
   ART_43: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689#art_43',
@@ -154,7 +155,7 @@ export const obligationsCatalog = {
   KI_ROLLENKLAERUNG_NACHWEIS_BASIS: {
     label: 'EU AI Act: Rollenklärung – Basis',
     regulation: 'EU AI Act',
-    articles: ['EU AI Act (2024), Art. 3; Art. 16 ff.'],
+    articles: ['EU AI Act (2024), Art. 25'],
     items: [
       {
         id: 'KI_RK_ROLLEN_DEFINIERT',
@@ -162,9 +163,9 @@ export const obligationsCatalog = {
         question:
           'Sind Rollen (Anbieter/Betreiber) und Verantwortlichkeiten im Dokumentationspaket eindeutig beschrieben?',
         todo:
-        'Rollen (Anbieter/Betreiber) und Verantwortlichkeiten eindeutig definieren und im Dokumentationspaket nachvollziehbar festhalten.',
-        reference: 'EU AI Act (2024), Art. 16 ff.',
-        referenceUrl: EU_AI_ACT_LINKS.ART_16,
+          'Rollen (Anbieter/Betreiber) und Verantwortlichkeiten eindeutig definieren und im Dokumentationspaket nachvollziehbar festhalten.',
+        reference: 'EU AI Act (2024), Art. 25',
+        referenceUrl: EU_AI_ACT_LINKS.ART_25,
         info:
           'Ziel ist eine auditfeste, eindeutige Rollen- und Pflichtenzuordnung (auch bei SaaS-Konstellationen).',
         examples: [
@@ -339,7 +340,7 @@ export const obligationsCatalog = {
         question:
           'Sind Angriffstests oder äquivalente Modellbewertungen geplant/durchgeführt und dokumentiert?',
         todo:
-          'Modellbewertungen durchführen und dokumentieren (Scope, Findings, etc.).',
+          'Modellbewertungen durchführen und dokumentieren (Scope, Feststellungen, etc.).',
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
         info:
@@ -357,7 +358,7 @@ export const obligationsCatalog = {
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
         info:
-          'Das Register sollte Owner, Fristen und Wirksamkeitsnachweise enthalten und mit Findings aus Tests/Vorfällen rückgekoppelt werden.',
+          'Das Register sollte Owner, Fristen und Wirksamkeitsnachweise enthalten und mit Feststellungen aus Tests/Vorfällen rückgekoppelt werden.',
         examples: [
           'Eintrag pro Risiko mit Status (offen/in Arbeit/geschlossen) und Verweis.',
         ],
@@ -1220,7 +1221,7 @@ export const obligationsCatalog = {
           'Auditfähig wird es durch klare Governance (Genehmigung/Review) und Konsistenz zur tatsächlichen IKT-Risikolage (inkl. KI-relevanter Abhängigkeiten).',
         examples: [
           'Strategie enthält Ziele, Prioritäten, Risikoappetit, Verantwortlichkeiten und Ressourcen.',
-          'Protokoll belegt Genehmigung und periodischen Review inkl. Entscheidungen/Follow-ups.',
+          'Protokoll belegt Genehmigung und periodischen Review inkl. Entscheidungen/Nachverfolgungen.',
         ],
       },
       {
@@ -1229,14 +1230,14 @@ export const obligationsCatalog = {
         question:
           'Gibt es einen vom Leitungsorgan genehmigten IKT-Audit-/Prüfplan (inkl. IKT-RMF/KI-relevanter Systeme) und wird die Umsetzung nachverfolgt?',
         todo:
-          'IKT-Audit-/Prüfplan (intern/extern) festlegen, vom Leitungsorgan genehmigen lassen, Durchführung dokumentieren und Findings/Maßnahmen inkl. Follow-up nachverfolgen (Fristen, Verantwortliche, Wirksamkeitsprüfung).',
+          'IKT-Audit-/Prüfplan (intern/extern) festlegen, vom Leitungsorgan genehmigen lassen, Durchführung dokumentieren und Feststellungen/Maßnahmen inkl. Nachverfolgung (Fristen, Verantwortliche, Wirksamkeitsprüfung).',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
         info:
           'Plan sollte KI-relevante IKT-Komponenten (Modelle, Datenpipelines, Schnittstellen, Drittanbieter) explizit enthalten.',
         examples: [
           'Auditplan enthält Geltungsbereich, Frequenz, Prüffelder, Verantwortliche und Zeitplan.',
-          'Maßnahmen-Register zeigt Findings, Owner, Frist, Status und Wirksamkeitsnachweis.',
+          'Maßnahmen-Register zeigt Feststellungen, Owner, Frist, Status und Wirksamkeitsnachweis.',
         ],
       },    
       {
@@ -1353,7 +1354,7 @@ export const obligationsCatalog = {
         id: 'DORA_SEC_GEHEIMNISSE_MANAGEMENT',
         canonicalId: 'DORA_SEC_GEHEIMNISSE_MANAGEMENT',
         question:
-          'Sind Geheimnisse/Tokens für KI-relevante Systeme sicher verwaltet?',
+          'Sind Zugangsdaten für KI-relevante Systeme so verwaltet, dass sie nicht unbefugt ausgelesen oder missbraucht werden können?',
         todo:
           'Management von Geheimnissen umsetzen: zentrale Ablage, Rotation, kurze Laufzeiten, Zugriff nach Need-to-know, kein Hardcoding in Code/Konfigurationen, Protokollierung für Zugriffe auf Geheimnisse.',
         reference: 'DORA (2022), Art. 9',
@@ -2126,11 +2127,10 @@ export const obligationsCatalog = {
         id: 'DORA_ART16_DIG_RESILIENZ_STRATEGIE',
         canonicalId: 'DORA_GOV_DIG_RESILIENZ_STRATEGIE',
         question:
-          'Gibt es eine digitale operationelle Resilienzstrategie mit Genehmigung/Review durch das Leitungsorgan?',
+          'Ist der Einsatz der KI mit der digitalen operationalen Resilienzstrategie abgestimmt und vom Leitungsorgan genehmigt bzw. regelmäßig überprüft?',
         todo:
-          'Resilienzstrategie im Minimalumfang dokumentieren (Ziele/Prioritäten, wichtigste Abhängigkeiten, Maßnahmenplan) und Genehmigung/Review des Leitungsorgans nachweisen.',
-        reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
-        referenceUrl: DORA_LINKS.ART_6,
+          'Nachweisen, dass der KI-Einsatz in der digitalen operationalen Resilienzstrategie berücksichtigt ist und dass Genehmigung bzw. regelmäßiger Review durch das Leitungsorgan dokumentiert ist.',        reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
+        referenceUrl: DORA_LINKS.ART_5,
         info:
           'Auch bei Art. 16 sollte das Leitungsorgan die strategische Ausrichtung zur operativen Resilienz nachvollziehbar genehmigen/überprüfen.',
         examples: [
@@ -2141,9 +2141,9 @@ export const obligationsCatalog = {
         id: 'DORA_ART16_IKT_AUDITPLAN',
         canonicalId: 'DORA_GOV_IKT_AUDITPLAN',
         question:
-          'Gibt es einen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und dokumentiertem Follow-up?',
+          'Gibt es einen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und dokumentierter Nachverfolgung?',
         todo:
-          'Minimalen Audit-/Prüfplan festlegen, genehmigen lassen und Follow-up der Findings/Maßnahmen nachweisen (Owner/Frist/Wirkung).',
+          'Minimalen Audit-/Prüfplan festlegen, genehmigen lassen und Nachverfolgung der Festtellungen/Maßnahmen nachweisen (Owner/Frist/Wirkung).',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
         info:
@@ -2336,7 +2336,7 @@ export const obligationsCatalog = {
           'Prozess für Bedrohungsmeldungen dokumentieren: Rollen (Vorfallsmanager, Compliance), Freigaben, Meldekanal, ' +
           'Inhaltsminimum, Vertraulichkeitsprüfung und Abstimmung mit parallel laufenden Behördenprozessen.',
         reference: 'DORA (2022), Art. 19–20',
-        referenceUrl: DORA_LINKS.ART_20,
+        referenceUrl: DORA_LINKS.ART_19,
         info:
           'Der Prozess muss Rollen, Freigaben, Kanal/Format, Dokumentation und Nachverfolgung eindeutig festlegen.',
         examples: [
@@ -2538,10 +2538,15 @@ export const obligationsCatalog = {
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
         info:
-          'Proportional heißt: Mindestkontrollen passend zur Kritikalität, aber dennoch nachvollziehbar und wiederholbar.',
+          'Art. 6 verlangt einen gut dokumentierten IKT-Risikomanagementrahmen, der u. a. Strategien/Richtlinien, Verfahren sowie Protokolle/Tools umfasst, ' +
+          'um Informations- und IKT-Assets angemessen zu schützen. „Proportional“ bedeutet: Mindestkontrollen müssen zur Kritikalität passen, ' +
+          'dürfen aber nicht beliebig sein – sie müssen standardisiert, wiederholbar und auditfähig nachweisbar sein (inkl. regelmäßiger Überprüfung und Weiterentwicklung).',
         examples: [
-          'Checkliste ist Teil des Freigabe-/Betriebsprozesses und wird versioniert.',
-          'Kontroll-Basis beschreibt Mindestanforderungen für Zugriff, Protokollierung und Backup.',
+          'Es gibt einen versionierten „Baseline-Control-Katalog“ mit Kritikalitätsstufen und Muss-Kontrollen pro Stufe.',
+          'Jede KI-relevante Komponente (Modell, Pipeline, Schnittstelle, Infrastruktur) ist einer Kritikalitätsstufe zugeordnet und begründet.',
+          'Für jede Baseline-Kontrolle ist klar definiert, wie der Nachweis aussieht (z. B. IAM-Export, Log-Aufbewahrungseinstellungen, Backup-Report, Restore-Testprotokoll).',
+          'Patch-/Schwachstellenmanagement: Regelmäßige Scans laufen; SLAs je Kritikalität sind dokumentiert und Abweichungen werden nachverfolgt.',
+          'Backups/Wiederherstellung: Mindestens ein erfolgreicher Wiederherstellungstest je kritischer Komponente ist dokumentiert (Datum, Ergebnis, Maßnahmen).',
         ],
       },
       {
@@ -2578,9 +2583,9 @@ export const obligationsCatalog = {
         id: 'DORA_LIGHT_IKT_AUDITPLAN',
         canonicalId: 'DORA_GOV_IKT_AUDITPLAN',
         question:
-          'Gibt es einen proportionalen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und Follow-up der Findings?',
+          'Gibt es einen proportionalen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und Nachverfolgung der Feststellungen?',
         todo:
-          'Proportionalen Prüfplan definieren (Scope/Frequenz), genehmigen lassen und Findings/Maßnahmen nachverfolgen (Owner/Frist/Wirkung).',
+          'Proportionalen Prüfplan definieren (Scope/Frequenz), genehmigen lassen und Feststellungen/Maßnahmen nachverfolgen (Owner/Frist/Wirkung).',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
         info:
@@ -2966,10 +2971,10 @@ export const decisionTree = {
     cluster: 'AI Act',
     label: 'Rolle unklar (Unsicher)',
     reference: 'EU AI Act (2024)',
-    obligations: ['KI_ROLLENKLAERUNG_NACHWEIS_BASIS'],
+    obligations: [],
     next: 'A2_GPAI_UNSICHER',
     info:
-      'Die Antworten sind inkonsistent. Review-Gate auslösen und konservativ als Anbieter weiterprüfen, bis Rollen/Pflichten vertraglich und dokumentatorisch geklärt sind.',
+      'Die Antworten sind inkonsistent.',
   },
 
   // AI Act – GPAI (Basismodelle)
@@ -3178,8 +3183,12 @@ export const decisionTree = {
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BIOMETRIE',
+    info:
+      'Beantworte „Ja“, wenn die KI eine sicherheitsrelevante Funktion in einem Produkt übernimmt oder die Konformität/ Betriebssicherheit beeinflusst.',
     examples: [
-      'KI als sicherheitsrelevante Komponente in einem regulierten Produkt.'
+      'KI als sicherheitsrelevante Komponente in einem regulierten Produkt (z. B. Steuerung/Überwachung einer Schutzfunktion).',
+      'KI trifft/unterstützt Entscheidungen, die die sichere Betriebsführung eines Geräts unmittelbar beeinflussen (z. B. Notabschaltung, Kollisionsvermeidung, Schutz vor Überhitzung).',
+      'KI ist Teil eines Systems, das für die Konformitätsbewertung als sicherheitskritisch eingestuft ist (z. B. als „safety function“ im technischen Dossier).',
     ],
   },
 
@@ -3600,7 +3609,7 @@ export const decisionTree = {
     type: 'question',
     cluster: 'AI Act',
     label:
-      'Kein Hochrisiko festgestellt: Ist die Einstufung nachvollziehbar dokumentiert?',
+      'Kein Hochrisiko festgestellt: Ist die Einstufung nachvollziehbar in einem entsprechenden Dokument begründet?',
     reference: 'EU AI Act (2024), Art. 6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A4_TRANSPARENZ_ANWENDBAR',
@@ -3736,7 +3745,7 @@ export const decisionTree = {
     no: 'B3',
     info:
       'Diese Frage klärt, ob das KI-System in Prozessen eingesetzt wird, die für das Unternehmen kritisch oder wichtig sind. ' +
-      'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden.' +
+      'Davon hängt ab, wie streng die IKT-Risikomanagement- und Resilienzanforderungen aus DORA ausgestaltet werden. ' +
       'Die konkrete Begriffsbestimmung ist in Art. 3 Abs. 22 zu finden.',
     examples: [
       'Kritisch: Zahlungsverkehr, Kreditvergabe, Risikomanagement.',
@@ -4023,10 +4032,7 @@ export const decisionTree = {
       'Dienst für generative KI/LLM genutzt -> spezifische Kontrollen für generative KI prüfen/umsetzen.',
     reference: 'DORA (2022), Art. 9 / Art. 28–30',
     referenceUrl: DORA_LINKS.ART_9,
-    obligations: [
-      'DORA_DATENUEBERMITTLUNG_EXTERNE_KI_SCHUTZ',
-      'DORA_GENERATIVE_KI_LLM_ALS_DIENST_KONTROLLEN',
-    ],
+    obligations: ['DORA_DATENUEBERMITTLUNG_EXTERNE_KI_SCHUTZ', 'DORA_GENERATIVE_KI_LLM_ALS_DIENST_KONTROLLEN'],
     next: 'B5',
     info:
       'Dieser Knoten erzeugt zusätzliche Feststellungen/Anforderungen für generative KI/LLM, ohne den DORA-Pfad zu unterbrechen. ' +
@@ -4045,9 +4051,9 @@ export const decisionTree = {
     no: 'B5_KONZENTRATION',
     info:
       'Umsetzung von (potenziell) kritisch über Auswirkungen/Abhängigkeit. ' +
-      'Wenn ein Ausfall eure RTO/RPO oder regulatorische Pflichten reißt, ist das ein starker Kritikalitätsindikator.',
+      'Wenn ein Ausfall ihre RTO/RPO oder regulatorische Pflichten reißt, ist das ein starker Kritikalitätsindikator.',
     examples: [
-      'Single Point of Failure: Ohne Dienst steht ein kritischer Prozess (z. B. Zahlungsverkehr-Teilprozess/AML-Workflow) still.',
+      'Single Point of Failure: Ohne Dienst steht ein kritischer Prozess (z. B. Zahlungsverkehr-Teilprozess/Arbeitsablauf zur Bekämpfung von Geldwäsche) still.',
       'Dienst-Ausfall führt zu einem regulatorischen Verstoß (z. B. Kontrollen/Reporting/BCM-Anforderungen nicht erfüllbar).',
       'RTO/RPO sind ohne Anbieter nicht einhaltbar.',
     ],
@@ -4133,7 +4139,7 @@ export const decisionTree = {
     type: 'question',
     cluster: 'DORA',
     label:
-      'Ist die Einstufung dokumentiert und durch Risiko-/Compliance-Funktion formal freigegeben?',
+      'Ist die Einstufung dokumentiert und durch das Compliance-Team formal freigegeben?',
     reference: 'DORA (2022), Art. 28–30',
     referenceUrl: DORA_LINKS.ART_28,
     yes: 'B7',
@@ -4283,7 +4289,7 @@ export const decisionTree = {
     type: 'question',
     cluster: 'DORA',
     label:
-      'Darf für eure Organisation ein vereinfachter IKT-Risikomanagementrahmen nach Art. 16 angewendet werden?',
+      'Darf für Ihre Organisation ein vereinfachter IKT-Risikomanagementrahmen nach Art. 16 angewendet werden?',
     reference: 'DORA (2022), Art. 16',
     referenceUrl: DORA_LINKS.ART_16,
     yes: 'D1_ART16_Y_B7',
@@ -4552,7 +4558,7 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
     else if (score === 0) recommended = 'betreiber';
 
     // Konservativ:
-    // Sobald jemand "Betreiber" gewählt hat, aber irgendein Anbieter-Indikator "ja" ist => Review-Gate
+    // Sobald jemand "Betreiber" gewählt hat, aber irgendein Anbieter-Indikator "ja" ist Unsicher
     const conservativeReview =
       (initialRole === 'betreiber' && score >= 1) ||
       (initialRole === 'anbieter' && score === 0) ||
