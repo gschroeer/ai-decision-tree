@@ -251,13 +251,15 @@ export const obligationsCatalog = {
       {
         id: 'GPAI_SCR_MODELLIDENTITAET',
         question:
-          'Ist dokumentiert, ob ein externes Basismodell/GPAI genutzt wird?',
+          'Ist dokumentiert, ob ein KI-Modell mit allgemeinem Verwendungszweck (GPAI) genutzt wird?',
         todo:
           'GPAI-Nutzung dokumentieren.',
         reference: 'EU AI Act (2024), Art. 51–52',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
+        info:
+          'Erfasse mindestens Anbieter, Modellname/-ID, Version, Region und Zugriffspfad (API/Endpunkt), damit das Screening nachvollziehbar bleibt.',
         examples: [
-          'Modellregistrierung: Anbieter, Modell-ID, Region, SLA, Datenverarbeitungsbedingungen.'
+          'Modellregistrierung: Anbieter, Modell-ID, Region, SLA, Datenverarbeitungsbedingungen.',
         ],
       },
       {
@@ -268,6 +270,8 @@ export const obligationsCatalog = {
           'Modellkarte vom Anbieter einholen und intern ablegen; Lücken dokumentieren und mitigieren.',
         reference: 'EU AI Act (2024), Art. 51–52',
         referenceUrl: EU_AI_ACT_LINKS.ART_52,
+        info:
+        'Die Modellkarte sollte u. a. Bestimmungsgemäße Verwendung, bekannte Einschränkungen/Risiken sowie empfohlene Sicherheitsmaßnahmen abdecken; fehlende Angaben als Risiko/Offenpunkt dokumentieren.',
       },
       {
         id: 'GPAI_SCR_TRAINING_COMPUTE',
@@ -277,8 +281,11 @@ export const obligationsCatalog = {
           'Training-Indikatoren dokumentieren (falls verfügbar); ansonsten Info + Ersatzindikatoren begründen.',
         reference: 'EU AI Act (2024), Art. 51–52',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
-        info:
+        iinfo:
           'Wenn der Anbieter keine Zahlen liefert: dokumentierte Anfrage + Ersatzindikatoren.',
+        examples: [
+          'Ersatzindikatoren: Modellfamilie/Größenklasse, veröffentlichte Sicherheitsbericht, Anbieterrichtlinie zu Risikokontrollen.',
+        ],
       },
       {
         id: 'GPAI_SCR_EINSTUFUNG_NOTIZ',
@@ -287,7 +294,12 @@ export const obligationsCatalog = {
         todo:
           'Einstufungs-Notiz erstellen (GPAI + systemisches Risiko), inkl. Begründung, Review/Freigabe.',
         reference: 'EU AI Act (2024), Art. 51–52',
-        referenceUrl: EU_AI_ACT_LINKS.ART_52,
+        referenceUrl: EU_AI_ACT_LINKS.ART_51,
+        info:
+          'Lege die Entscheidungsgrundlage (Inputs, Annahmen, Unsicherheiten) und die Freigabe (Owner/Datum) auditfest ab.',
+        examples: [
+          'Kurznotiz mit Entscheidung, Begründung, und offenen Punkten.',
+        ],
       },
       {
         id: 'GPAI_SCR_LIEFERKETTE_TRANSPARENZ',
@@ -297,6 +309,11 @@ export const obligationsCatalog = {
           'Lieferkette dokumentieren (Subanbieter, Hosting, Subprozessoren, Artefakt-Verantwortung, etc.).',
         reference: 'EU AI Act (2024), Art. 51–52',
         referenceUrl: EU_AI_ACT_LINKS.ART_51,
+        info:
+          'Dokumentiere Verantwortlichkeiten und Schnittstellen, damit Pflichten und Erwartungen gegenüber dem Anbieter eindeutig bleiben.',
+        examples: [
+          'Subprozessorliste + RACI: Hosting (wer), Modellupdates (wer), Konformitätsartefakte (wer), Vorfall-Kommunikation (wie).',
+        ],
       },
     ],
   },
@@ -314,8 +331,10 @@ export const obligationsCatalog = {
           'Modellbewertungen durchführen und dokumentieren (Scope, Findings, etc.).',
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
+        info:
+          'Der Testumfang sollte Risiken aus dem konkreten Einsatzkontext abdecken und eine Wiederholungstest-Strategie enthalten.',
         examples: [
-          'Prompt-Injection, Data Exfiltration, Jailbreaks, Policy Bypass, Tool-Use Abuse.'
+          'Prompt-Injection, Datenexfiltration, Jailbreaks, Umgehung von Richtlinien, Missbruach von Tools.',
         ],
       },
       {
@@ -326,6 +345,11 @@ export const obligationsCatalog = {
           'Risiko-Register führen (Risiken, Maßnahmen, Owner, Fristen, Wirksamkeit) und regelmäßig reviewen.',
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
+        info:
+          'Das Register sollte Owner, Fristen und Wirksamkeitsnachweise enthalten und mit Findings aus Tests/Vorfällen rückgekoppelt werden.',
+        examples: [
+          'Eintrag pro Risiko mit Status (offen/in Arbeit/geschlossen) und Verweis.',
+        ],
       },
       {
         id: 'GPAI_SYS_INCIDENT_LOG',
@@ -335,6 +359,11 @@ export const obligationsCatalog = {
           'Incident-Log etablieren (Klassifikation, SLA, Eskalation, Lessons Learned, Anbieter-Schnittstelle).',
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
+        info:
+          'Erfasse sicherheitsrelevante Vorfälle inkl. Ursache, Einfluss, Maßnahmen und Kommunikation nachvollziehbar.',
+        examples: [
+          'Grundursache, Zeitachse, Behebung, Nachverfolgung; Ticket-Referenz.',
+        ],
       },
       {
         id: 'GPAI_SYS_CYBER_CONTROLS',
@@ -344,6 +373,11 @@ export const obligationsCatalog = {
           'Cyber-Controls für GPAI-Nutzung umsetzen und nachweisen.',
         reference: 'EU AI Act (2024), Art. 55',
         referenceUrl: EU_AI_ACT_LINKS.ART_55,
+        info:
+          'Belege Kontrollen entlang Zugriff, Schlüssel, Überwachung/Warnungen und Missbrauchsprävention sowie sichere Betriebsprozesse.',
+        examples: [
+          'Least Privilege, Schlüssel-Rotation, Anomalie-Erkennung, getrennte Umgebungen.',
+        ],
       },
     ],
   },
@@ -2939,8 +2973,8 @@ export const decisionTree = {
     yes: 'A2_GPAI_SCREENING_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.' +
-      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen.',
+      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
       'Externe LLM/API.',
       'Extern gehostetes Basismodell.',
@@ -2991,13 +3025,14 @@ export const decisionTree = {
     id: 'A2_GPAI_BETREIBER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Wird ein GPAI-Modell bzw. externes Basismodell genutzt?',
+    label: 'Wird ein KI-Modell mit allgemeinem Verwendungszweck (GPAI) genutzt?',
     reference: 'EU AI Act (2024), Art. 51–52',
     referenceUrl: EU_AI_ACT_LINKS.ART_51,
     yes: 'A2_GPAI_SCREENING_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
     info:
-      'Wenn ein externes Basismodell (GPAI) genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen.',
+      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
       'Externe LLM/API.',
       'Extern gehostetes Basismodell.',
@@ -3048,13 +3083,14 @@ export const decisionTree = {
     id: 'A2_GPAI_UNSICHER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Wird ein GPAI-Modell bzw. externes Basismodell genutzt?',
+    label: 'Wird ein KI-Modell mit allgemeinem Verwendungszweck (GPAI) genutzt?',
     reference: 'EU AI Act (2024), Art. 51–52',
     referenceUrl: EU_AI_ACT_LINKS.ART_51,
     yes: 'A2_GPAI_SCREENING_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein externes Basismodell (GPAI) genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen.',
+      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
       'Externe LLM/API.',
       'Extern gehostetes Basismodell.',
