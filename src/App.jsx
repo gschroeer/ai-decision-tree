@@ -1632,24 +1632,8 @@ function Wizard({ createdBy }) {
   // Bei Sprüngen wird eine evtl. angezeigte Konsistenzverletzung zurückgesetzt
   const jumpToStep = useCallback((index) => {
     setConsistencyViolations([]);
-  
-    const nextActiveLen = index + 1;
-  
-    setPath((prev) => prev.slice(0, nextActiveLen));
-  
-    setAnswers((prevAnswers) => {
-      const prefixIds = new Set(path.slice(0, nextActiveLen).map((s) => s.id));
-      return pruneAnswersAfterBranchChange({
-        nextAnswers: prevAnswers,
-        keepIds: prefixIds,
-        clearRequirements: false, 
-      });
-    });
-  
     setCurrentStepIndex(index);
-    setActivePathLength(nextActiveLen);
-    setUpdatedAt(new Date());
-  }, [path, pruneAnswersAfterBranchChange]);
+  }, []);
 
   const jumpToNodeId = useCallback(
     (nodeId) => {
@@ -1685,53 +1669,61 @@ function Wizard({ createdBy }) {
  */
   const answerNode = useCallback(
     (id, answer) => {
-      const basePath = path.slice(0, activePathLength);
+      const basePath = path.slice(0, currentStepIndex + 1);
       const baseIds = basePath.map((s) => s.id);
       const keepIds = new Set(baseIds);
-  
+
       const isRequirement = id.includes('__req__');
       const prevAnswer = answers[id];
-  
+
       if (isRequirement) {
         let { nextReqId, summaryId } = getNextInRequirementChain(id);
         let nextId = nextReqId ?? summaryId;
         if (!nextId) return;
-  
+
         const nextAnswersRaw = { ...answers, [id]: answer };
 
         const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
         const currentCanonical = getCanonicalIdForRequirementInstance(id);
         if (currentCanonical) answeredCanonicalIds.add(currentCanonical);
-  
+
         while (nextId && nextId.includes('__req__') && !nextId.includes('__req__summary')) {
           const a = nextAnswersRaw[nextId];
-  
+
           const canonicalId = getCanonicalIdForRequirementInstance(nextId);
           const alreadyAnswered =
-            (a === 'yes' || a === 'no') ||
-            (canonicalId && answeredCanonicalIds.has(canonicalId));
-  
+            (a === 'yes' || a === 'no') || (canonicalId && answeredCanonicalIds.has(canonicalId));
+
           if (!alreadyAnswered) break;
-  
+
           const step = getNextInRequirementChain(nextId);
           summaryId = step.summaryId;
           nextId = step.nextReqId ?? summaryId;
         }
-  
+
+        const existingNext = path[currentStepIndex + 1]?.id;
+
+        if (prevAnswer === answer && existingNext === nextId) {
+          setConsistencyViolations([]);
+          setCurrentStepIndex(currentStepIndex + 1);
+          setUpdatedAt(new Date());
+          return;
+        }
+
         const nextPathIds = [...baseIds, nextId];
-  
+
         const { violations } = validatePathConsistency({
           decisionTree,
           obligationsCatalog,
           answers: nextAnswersRaw,
           pathIds: nextPathIds,
         });
-  
+
         if (violations?.length) {
           setConsistencyViolations(violations);
           return;
         }
-  
+
         setConsistencyViolations([]);
         setAnswers(nextAnswersRaw);
         setPath([...basePath, { id: nextId }]);
@@ -1740,26 +1732,13 @@ function Wizard({ createdBy }) {
         setUpdatedAt(new Date());
         return;
       }
-  
-      // Question Nodes
+
       const def = decisionTree[id];
       const rawNextId = answer === 'yes' ? def?.yes : def?.no;
       if (!rawNextId) return;
-  
+
       let nextAnswersRaw = { ...answers, [id]: answer };
-  
-      // WICHTIG: Wenn eine frühere Entscheidung geändert wurde, ist alles danach ungültig:
-      // - entferne alle Antworten außerhalb des "keep" Prefix
-      // - und lösche zusätzlich Requirement-Answers (weil Pflichten/Leaves sich ändern können)
-      const isChangingDecision = prevAnswer != null && prevAnswer !== answer;
-      if (isChangingDecision) {
-        nextAnswersRaw = pruneAnswersAfterBranchChange({
-          nextAnswers: nextAnswersRaw,
-          keepIds,
-          clearRequirements: true,
-        });
-      }
-  
+
       const { nextId } = validateNextNode({
         currentId: id,
         answer,
@@ -1767,21 +1746,41 @@ function Wizard({ createdBy }) {
         answers: nextAnswersRaw,
         pathIds: [...baseIds, rawNextId],
       });
-  
+
+      const existingNext = path[currentStepIndex + 1]?.id;
+
+      if (prevAnswer === answer && existingNext === nextId) {
+        setConsistencyViolations([]);
+        setCurrentStepIndex(currentStepIndex + 1);
+        setUpdatedAt(new Date());
+        return;
+      }
+
+      const isChangingDecision = prevAnswer != null && prevAnswer !== answer;
+      const isPathMismatchWithoutChange = prevAnswer === answer && existingNext && existingNext !== nextId;
+
+      if (isChangingDecision || isPathMismatchWithoutChange) {
+        nextAnswersRaw = pruneAnswersAfterBranchChange({
+          nextAnswers: nextAnswersRaw,
+          keepIds,
+          clearRequirements: true,
+        });
+      }
+
       const nextPathIds = [...baseIds, nextId];
-  
+
       const { violations } = validatePathConsistency({
         decisionTree,
         obligationsCatalog,
         answers: nextAnswersRaw,
         pathIds: nextPathIds,
       });
-  
+
       if (violations?.length) {
         setConsistencyViolations(violations);
         return;
       }
-  
+
       setConsistencyViolations([]);
       setAnswers(nextAnswersRaw);
       setPath([...basePath, { id: nextId }]);
@@ -1789,7 +1788,14 @@ function Wizard({ createdBy }) {
       setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
     },
-    [answers, path, activePathLength, decisionTree, obligationsCatalog, reqAnswerByCanonicalId]
+    [
+      answers,
+      path,
+      currentStepIndex,
+      decisionTree,
+      obligationsCatalog,
+      reqAnswerByCanonicalId,
+    ]
   );
 
   // Navigation aus Leaf-Knoten:
@@ -1799,18 +1805,18 @@ function Wizard({ createdBy }) {
     (leafId) => {
       let nextId = decisionTree[leafId]?.next;
       if (!nextId) return;
-
-      const basePath = path.slice(0, activePathLength);
+  
+      const basePath = path.slice(0, currentStepIndex + 1);
       const baseIds = basePath.map((s) => s.id);
-
+  
       nextId = validateNextNode({
         currentId: leafId,
-        answer: undefined, 
+        answer: undefined,
         nextId,
         answers,
         pathIds: [...baseIds, nextId],
       }).nextId;
-
+  
       const nextPathIds = [...baseIds, nextId];
       const { violations } = validatePathConsistency({
         decisionTree,
@@ -1818,61 +1824,62 @@ function Wizard({ createdBy }) {
         answers,
         pathIds: nextPathIds,
       });
-
+  
       if (violations?.length) {
         setConsistencyViolations(violations);
         return;
       }
-
+  
       setConsistencyViolations([]);
       setPath([...basePath, { id: nextId }]);
       setCurrentStepIndex(basePath.length);
       setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
-    },[answers, path, activePathLength]
+    },
+    [answers, path, currentStepIndex, decisionTree, obligationsCatalog]
   );
 
   const startCheck = useCallback(
     (leafId) => {
       const { reqs, summaryId } = getRequirementChain(leafId);
       if (!reqs?.length) return;
-
+  
       const answeredCanonicalIds = new Set(reqAnswerByCanonicalId.keys());
-
+  
       const firstOpen = reqs.find((r) => {
         const instId = r.id ?? r.instanceId;
         if (!instId) return false;
-
+  
         const cId =
           r.canonicalId ??
           getCanonicalIdForRequirementInstance(instId) ??
           instId.split('__req__')[1];
-
+  
         return !answeredCanonicalIds.has(cId);
       });
-
+  
       const nextId =
         (firstOpen?.id ?? firstOpen?.instanceId) ??
         summaryId ??
         (reqs[0].id ?? reqs[0].instanceId);
-
+  
       if (!nextId) return;
-
-      const basePath = path.slice(0, activePathLength);
+  
+      const basePath = path.slice(0, currentStepIndex + 1);
       const baseIds = basePath.map((s) => s.id);
-
+  
       const { violations } = validatePathConsistency({
         decisionTree,
         obligationsCatalog,
         answers,
         pathIds: [...baseIds, nextId],
       });
-
+  
       if (violations?.length) {
         setConsistencyViolations(violations);
         return;
       }
-
+  
       setConsistencyViolations([]);
       setPath([...basePath, { id: nextId }]);
       setCurrentStepIndex(basePath.length);
@@ -1881,7 +1888,7 @@ function Wizard({ createdBy }) {
     },
     [
       path,
-      activePathLength,
+      currentStepIndex,
       answers,
       reqAnswerByCanonicalId,
       decisionTree,
@@ -1900,13 +1907,13 @@ function Wizard({ createdBy }) {
   }, []);
   
   const continueFromSummary = useCallback(
-    (leafId) => { 
+    (leafId) => {
       let nextId = decisionTree[leafId]?.next;
       if (!nextId) return;
-
-      const basePath = path.slice(0, activePathLength);
+  
+      const basePath = path.slice(0, currentStepIndex + 1);
       const baseIds = basePath.map((s) => s.id);
-
+  
       nextId = validateNextNode({
         currentId: leafId,
         answer: undefined,
@@ -1914,7 +1921,7 @@ function Wizard({ createdBy }) {
         answers,
         pathIds: [...baseIds, nextId],
       }).nextId;
-
+  
       const nextPathIds = [...baseIds, nextId];
       const { violations } = validatePathConsistency({
         decisionTree,
@@ -1922,18 +1929,19 @@ function Wizard({ createdBy }) {
         answers,
         pathIds: nextPathIds,
       });
-
+  
       if (violations?.length) {
         setConsistencyViolations(violations);
         return;
       }
-
+  
       setConsistencyViolations([]);
       setPath([...basePath, { id: nextId }]);
       setCurrentStepIndex(basePath.length);
       setActivePathLength(basePath.length + 1);
       setUpdatedAt(new Date());
-    },[answers, path, activePathLength]
+    },
+    [answers, path, currentStepIndex, decisionTree, obligationsCatalog]
   );
 
   function buildReqAnswerByCanonicalIdForLeaves({ answers, leavesInPath, getCanonicalIdForRequirementInstance }) {

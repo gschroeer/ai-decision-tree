@@ -203,6 +203,8 @@ export const obligationsCatalog = {
           'Rollen-/Skill-Matrix definieren.',
         reference: 'EU AI Act (2024), Art. 4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
+        info:
+          'Die Matrix sollte pro Rolle Mindestkompetenzen und Verantwortlichkeiten enthalten.',
         examples: [
           'Dev: Datenqualität, Bias, Tests, Überwachung; Compliance: Pflichtenpakete/Review-Gates.',
         ],
@@ -215,6 +217,8 @@ export const obligationsCatalog = {
           'Teilnahme-Logs einführen/auswerten.',
         reference: 'EU AI Act (2024), Art. 4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
+        info:
+          'Teilnahmen sollten auditfähig (wer/was/wann) erfasst und bei Lücken über einen definierten Prozess nachverfolgt werden.',
         examples: [
           'LMS-Export + monatlicher Report an Team Leads; Eskalation bei Pflichttrainings.'
         ],
@@ -227,6 +231,8 @@ export const obligationsCatalog = {
           'Wissenscheck einführen.',
         reference: 'EU AI Act (2024), Art. 4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
+        info:
+        'Ein Wissenscheck belegt Wirksamkeit (nicht nur Teilnahme) und erleichtert Nachweise im Audit.',
         examples: [
           'Kurzquiz nach Training; Mindestscore 80%; Wiederholung binnen 2 Wochen.'
         ],
@@ -239,6 +245,11 @@ export const obligationsCatalog = {
           'Auffrischungszyklus festlegen und Inhalte bei wesentlichen Änderungen/Incidents aktualisieren.',
         reference: 'EU AI Act (2024), Art. 4',
         referenceUrl: EU_AI_ACT_LINKS.ART_4,
+        info:
+          'Lege Zyklus und Auslöser fest und dokumentiere die Aktualisierung nachvollziehbar.',
+        examples: [
+          'Mögliche Auslöser: Wichtige Veröffentlichung, neue Risikofeststellung, Vorfall/Nachbesprechung, Änderung der Anbieterrichtlinie.',
+        ],
       },
     ],
   },
@@ -290,7 +301,7 @@ export const obligationsCatalog = {
       {
         id: 'GPAI_SCR_EINSTUFUNG_NOTIZ',
         question:
-          'Gibt es ein Einstufungs-Notiz: „GPAI ja/nein“ und „systemisches Risiko betroffen ja/nein“ inkl. Begründung und Freigabe?',
+          'Gibt es eine Einstufungs-Notiz: „GPAI ja/nein“ und „systemisches Risiko betroffen ja/nein“ inkl. Begründung und Freigabe?',
         todo:
           'Einstufungs-Notiz erstellen (GPAI + systemisches Risiko), inkl. Begründung, Review/Freigabe.',
         reference: 'EU AI Act (2024), Art. 51–52',
@@ -3004,7 +3015,8 @@ export const decisionTree = {
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein systemisches Risiko betroffen ist, gelten zusätzliche Pflichten.',
+      '„Systemisches Risiko“ liegt vor, wenn ein GPAI aufgrund seiner hohen Fähigkeiten und breiten Einsatzmöglichkeiten erhebliche, weitreichende Auswirkungen verursachen kann. ' +
+      'Typische Indikatoren sind sehr hohe Leistungsfähigkeit/Skalierung, breite Verfügbarkeit/Integration, und ein erhöhtes Potenzial für schwere Schäden über einzelne Einzelfälle hinaus.',
     examples: [
       'Unklare Einstufung -> konservativ Ja wählen und Review-Gate dokumentieren.'
     ],
@@ -3120,7 +3132,8 @@ export const decisionTree = {
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein systemisches Risiko betroffen ist, gelten zusätzliche Pflichten (Bewertung/Red-Teaming, Cyber, Incident-Infos).',
+    '„Systemisches Risiko“ liegt vor, wenn ein GPAI aufgrund seiner hohen Fähigkeiten und breiten Einsatzmöglichkeiten erhebliche, weitreichende Auswirkungen verursachen kann. ' +
+    'Typische Indikatoren sind sehr hohe Leistungsfähigkeit/Skalierung, breite Verfügbarkeit/Integration, und ein erhöhtes Potenzial für schwere Schäden über einzelne Einzelfälle hinaus.',
     examples: [
       'Unklare Einstufung -> konservativ Ja wählen und Review-Gate dokumentieren.'
     ],
@@ -3207,7 +3220,7 @@ export const decisionTree = {
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
-    no: 'W_AI_HR_UEBERPRUEFUNG',
+    no: 'A3_ANBIETER',
     info:
       'Diese Sammelfrage reduziert Falsch-Negative, wenn der Anwendungsfall nicht „Finanzen“ ist, aber trotzdem in Anhang III fallen kann.',
     examples: [
@@ -3591,7 +3604,7 @@ export const decisionTree = {
     reference: 'EU AI Act (2024), Art. 6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A4_TRANSPARENZ_ANWENDBAR',
-    no: 'W_AI_HR_UEBERPRUEFUNG',
+    no: 'A4_TRANSPARENZ_ANWENDBAR',
     info:
       'Art. 50 gilt nicht pauschal für Nicht-Hochrisiko. Bevor Transparenz geprüft wird, sollte die Nicht-Hochrisiko-Einstufung nachvollziehbar dokumentiert sein.',
     examples: [
@@ -4483,7 +4496,17 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
   const locks = deriveConsistencyLocks({ answers, pathIds });
 
   if (!nextId || !decisionTree[nextId]) {
-    return { nextId: 'W_KI_WIDERSPRUCH' };
+    const isHighRiskClassificationContext =
+      typeof currentId === 'string' &&
+      (
+        currentId.startsWith('A2_GPAI_SYSTEMRISIKO') ||
+        currentId.startsWith('A3_HR_') ||
+        currentId === 'A3_ANBIETER' ||
+        currentId === 'A3_BETREIBER' ||
+        currentId === 'A3_KEIN_HR_PRUEFUNG'
+      );
+
+    return { nextId: isHighRiskClassificationContext ? 'W_AI_HR_UEBERPRUEFUNG' : 'W_KI_WIDERSPRUCH' };
   }
 
   if (currentId === 'A2') {
