@@ -32,6 +32,7 @@ export const EU_AI_ACT_LINKS = {
 export const DORA_LINKS = {
   ART_2:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_2',
   ART_3:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_3',
+  ART_4:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_4',
   ART_5:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_5',
   ART_6:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_6',
   ART_8:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_8',
@@ -2331,7 +2332,7 @@ export const obligationsCatalog = {
         id: 'DORA_BEDROHUNGSMELDUNG_PROZESS',
         canonicalId: 'DORA_BEDROHUNGSMELDUNG_PROZESS',
         question:
-          'Gibt es einen dokumentierten Prozess für Bedrohungsmeldungen ?',
+          'Gibt es einen dokumentierten Prozess für Bedrohungsmeldungen?',
         todo:
           'Prozess für Bedrohungsmeldungen dokumentieren: Rollen (Vorfallsmanager, Compliance), Freigaben, Meldekanal, ' +
           'Inhaltsminimum, Vertraulichkeitsprüfung und Abstimmung mit parallel laufenden Behördenprozessen.',
@@ -2453,7 +2454,7 @@ export const obligationsCatalog = {
         reference: 'DORA (2022), Art. 28–29',
         referenceUrl: DORA_LINKS.ART_28,
         info:
-          'Die Sorgfaltsprüfung sollte risikobasiert sein und die tatsächlichen Leistungen/Abhängigkeiten des Anbieters abdecken.',
+          'Eine Sorgfaltsprüfung ist die strukturierte, dokumentierte Vorab- und Regelprüfung eines IKT-Dienstleisters, um dessen Eignung und die relevanten Risiken für Ihr Unternehmen zu bewerten.',
         examples: [
           'Sorgfaltspflicht-Report bewertet Sicherheit/Resilienz, Subdienstleister und Datenzugriff.',
           'Risikoentscheidung dokumentiert akzeptierte Risiken und Auflagen.',
@@ -2574,7 +2575,8 @@ export const obligationsCatalog = {
         reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
         referenceUrl: DORA_LINKS.ART_5,
         info:
-          'Proportional heißt nicht ohne Strategie“ sondern angepasster Umfang mit klarer Genehmigung/Review.',
+          'Die digitale operationelle Resilienzstrategie ist die Leitplanke für den Umgang mit IKT-/KI-Risiken: ' +
+          'Sie legt fest, welche Resilienz-Ziele und Prioritäten gelten, welche kritischen Abhängigkeiten berücksichtigt werden und wie Risikoappetit sowie Maßnahmen gesteuert werden.',
         examples: [
           '1–3 Seiten Strategie + Maßnahmenliste, genehmigt und versioniert.',
         ],
@@ -3161,7 +3163,7 @@ export const decisionTree = {
     id: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Trifft der Anhang-III-Bereich „Finanzen“ zu ?',
+    label: 'Trifft der Anhang-III-Bereich „Finanzen“ zu?',
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_FIN_KREDIT_ANBIETER',
@@ -3184,7 +3186,7 @@ export const decisionTree = {
     yes: 'A3_HR_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BIOMETRIE',
     info:
-      'Beantworte „Ja“, wenn die KI eine sicherheitsrelevante Funktion in einem Produkt übernimmt oder die Konformität/ Betriebssicherheit beeinflusst.',
+      'Ein Sicherheitsbauteil ist eine (Hard-/Soft-)Komponente eines Produkts, die eine Schutzfunktion erfüllt oder für die sichere Verwendung wesentlich ist.',
     examples: [
       'KI als sicherheitsrelevante Komponente in einem regulierten Produkt (z. B. Steuerung/Überwachung einer Schutzfunktion).',
       'KI trifft/unterstützt Entscheidungen, die die sichere Betriebsführung eines Geräts unmittelbar beeinflussen (z. B. Notabschaltung, Kollisionsvermeidung, Schutz vor Überhitzung).',
@@ -3342,8 +3344,12 @@ export const decisionTree = {
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
     yes: 'A3_HR_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_BIOMETRIE',
+    info:
+      'Ein Sicherheitsbauteil ist eine (Hard-/Soft-)Komponente eines Produkts, die eine Schutzfunktion erfüllt oder für die sichere Verwendung wesentlich ist',
     examples: [
-      'KI als sicherheitsrelevante Komponente in einem regulierten Produkt.'
+      'KI als sicherheitsrelevante Komponente in einem regulierten Produkt (z. B. Steuerung/Überwachung einer Schutzfunktion).',
+      'KI trifft/unterstützt Entscheidungen, die die sichere Betriebsführung eines Geräts unmittelbar beeinflussen (z. B. Notabschaltung, Kollisionsvermeidung, Schutz vor Überhitzung).',
+      'KI ist Teil eines Systems, das für die Konformitätsbewertung als sicherheitskritisch eingestuft ist (z. B. als „safety function“ im technischen Dossier).',
     ],
   },
 
@@ -3724,7 +3730,7 @@ export const decisionTree = {
     label: 'Fällt Ihr Unternehmen unter DORA?',
     reference: 'DORA (2022), Art. 2',
     referenceUrl: DORA_LINKS.ART_2,
-    yes: 'B1',
+    yes: 'D1_ART16_B4',
     no: 'ENDE',
     info:
       'DORA gilt nur für Finanzunternehmen im Sinne von Art. 2. Wenn Ihr Unternehmen nicht darunter fällt, wird die DORA-Prüfung nicht weiter durchgeführt.',
@@ -3732,6 +3738,54 @@ export const decisionTree = {
       'Ja: Kreditinstitut, Zahlungsinstitut, Wertpapierfirma oder Versicherungsunternehmen.',
       'Nein: Unternehmen außerhalb des Finanzsektors ohne DORA-Anwendungsbereich.',
     ],
+  },
+
+  D1_ART16_B4: {
+    id: 'D1_ART16_B4',
+    type: 'question',
+    cluster: 'DORA',
+    label:
+      'Darf für Ihr Unternehmen ein vereinfachter IKT-Risikomanagementrahmen nach Art. 16 angewendet werden?',
+    reference: 'DORA (2022), Art. 16',
+    referenceUrl: DORA_LINKS.ART_16,
+    yes: 'D1_ART16_Y_B4',
+    no: 'D1_ART16_N_B4',
+    info:
+      'Art. 16 ist eine besondere Ausnahme (vereinfachter IKT-RMF) und nicht identisch mit proportional. ' +
+      'Wenn unklar: konservativ Nein wählen und die Begründung dokumentieren (Audit-Sicherheit).',
+    examples: [
+      'Kleine und nicht verflochtene Wertpapierfirma nach den einschlägigen MiFID/IFR-Kriterien.',
+      'Zahlungsinstitut, das nach nationaler Umsetzung der PSD2 als „ausgenommenes Zahlungsinstitut“ gilt (z. B. begrenzte Produktpalette / sonstige PSD2-Ausnahmefälle).',
+      'E-Geld-Institut, das nach nationaler Umsetzung der E-Geld-Richtlinie als „ausgenommenes E-Geld-Institut“ gilt (z. B. begrenzter Tätigkeitsumfang; nationale Ausnahme).',
+      '„Ausgenommenes Institut“ im Sinne der CRD-Ausnahmekategorien, sofern der Mitgliedstaat NICHT die DORA-Ausnahme nach Art. 2 Abs. 4 nutzt und DORA daher anwendbar bleibt.',
+      'Kleine Einrichtung der betrieblichen Altersversorgung (EbAV), die als „klein“ nach den einschlägigen EbAV-Vorgaben/Schwellen gilt.',
+    ],
+  },
+
+  D1_ART16_Y_B4: {
+    id: 'D1_ART16_Y_B4',
+    type: 'leaf',
+    cluster: 'DORA',
+    label: 'Art. 16 anwendbar -> vereinfachter IKT-RMF (Minimalanforderungen) umsetzen.',
+    reference: 'DORA (2022), Art. 16',
+    referenceUrl: DORA_LINKS.ART_16,
+    obligations: ['DORA_VEREINFACHTE_BASIS'],
+    next: 'B1',
+    info:
+      'Die Light-Variante ist hier auditfähig, weil sie explizit auf Art. 16 gestützt wird (inkl. Nachweis).',
+  },
+
+  D1_ART16_N_B4: {
+    id: 'D1_ART16_N_B4',
+    type: 'leaf',
+    cluster: 'DORA',
+    label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
+    reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
+    referenceUrl: DORA_LINKS.ART_4,
+    obligations: ['DORA_BASIS_PROPORTIONAL'],
+    next: 'B1',
+    info:
+      'Proportional ist zulässig, aber die Begründung muss klar sein: Art. 16 ist NICHT der Rechtsgrund.',
   },
 
   B1: {
@@ -3925,7 +3979,7 @@ export const decisionTree = {
     reference: 'DORA (2022), Art. 6',
     referenceUrl: DORA_LINKS.ART_6,
     obligations: ['DORA_BASIS_PROPORTIONAL'],
-    next: 'D1_ART16_B4',
+    next: 'B4',
     info:
       'Die KI wird nur unterstützend und nicht in kritischen Kernprozessen eingesetzt. ' +
       'Es gelten grundsätzliche, aber weniger weitreichende IKT-Kontrollen.',
@@ -4229,7 +4283,7 @@ export const decisionTree = {
     reference: 'DORA (2022), Art. 6',
     referenceUrl: DORA_LINKS.ART_6,
     obligations: [],
-    next: 'D1_ART16_B7',
+    next: 'B7_RUECKFALL',
     info:
       'Wenn keine produktiven oder kritischen Daten an externe KI übermittelt werden, reichen in der Regel ' +
       'Standard-Sicherheitsmaßnahmen aus. Eine Dokumentation der Annahmen bleibt dennoch wichtig.',
@@ -4238,89 +4292,7 @@ export const decisionTree = {
       'Ausschließliche Offline-Tests ohne Live-Kundendaten.',
     ],
   },
-
-  D1_ART16_B4: {
-    id: 'D1_ART16_B4',
-    type: 'question',
-    cluster: 'DORA',
-    label:
-      'Darf für Ihr Unternehmen ein vereinfachter IKT-Risikomanagementrahmen nach Art. 16 angewendet werden?',
-    reference: 'DORA (2022), Art. 16',
-    referenceUrl: DORA_LINKS.ART_16,
-    yes: 'D1_ART16_Y_B4',
-    no: 'D1_ART16_N_B4',
-    info:
-      'Art. 16 ist eine besondere Ausnahme (vereinfachter IKT-RMF) und nicht identisch mit proportional. ' +
-      'Wenn unklar: konservativ Nein wählen und die Begründung dokumentieren (Audit-Sicherheit).',
-    examples: [
-      'Rechts-/Compliance-Check bestätigt: Art. 16 ist für den Unternehmenstyp anwendbar.',
-      'Begründung/Geltungsbereich ist dokumentiert (warum Art. 16 greift oder nicht greift).',
-    ],
-  },
   
-  D1_ART16_Y_B4: {
-    id: 'D1_ART16_Y_B4',
-    type: 'leaf',
-    cluster: 'DORA',
-    label: 'Art. 16 anwendbar -> vereinfachter IKT-RMF (Minimalanforderungen) umsetzen.',
-    reference: 'DORA (2022), Art. 16',
-    referenceUrl: DORA_LINKS.ART_16,
-    obligations: ['DORA_VEREINFACHTE_BASIS'],
-    next: 'B4',
-    info:
-      'Die Light-Variante ist hier auditfähig, weil sie explizit auf Art. 16 gestützt wird (inkl. Nachweis).',
-  },
-  
-  D1_ART16_N_B4: {
-    id: 'D1_ART16_N_B4',
-    type: 'leaf',
-    cluster: 'DORA',
-    label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
-    reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
-    referenceUrl: DORA_LINKS.ART_4,
-    obligations: ['DORA_BASIS_PROPORTIONAL'],
-    next: 'B4',
-    info:
-      'Proportional ist zulässig, aber die Begründung muss klar sein: Art. 16 ist NICHT der Rechtsgrund.',
-  },
-  
-  D1_ART16_B7: {
-    id: 'D1_ART16_B7',
-    type: 'question',
-    cluster: 'DORA',
-    label:
-      'Darf für Ihre Organisation ein vereinfachter IKT-Risikomanagementrahmen nach Art. 16 angewendet werden?',
-    reference: 'DORA (2022), Art. 16',
-    referenceUrl: DORA_LINKS.ART_16,
-    yes: 'D1_ART16_Y_B7',
-    no: 'D1_ART16_N_B7',
-    info:
-      'Gleiche Eignungsprüfung wie oben hier eingefügt, weil dieser Pfad sonst vereinfacht ohne Art.16-Begründung wäre.',
-  },
-  
-  D1_ART16_Y_B7: {
-    id: 'D1_ART16_Y_B7',
-    type: 'leaf',
-    cluster: 'DORA',
-    label: 'Art. 16 anwendbar -> vereinfachter IKT-RMF (Minimalanforderungen) umsetzen.',
-    reference: 'DORA (2022), Art. 16',
-    referenceUrl: DORA_LINKS.ART_16,
-    obligations: ['DORA_VEREINFACHTE_BASIS'],
-    next: 'B7_RUECKFALL',
-  },
-  
-  D1_ART16_N_B7: {
-    id: 'D1_ART16_N_B7',
-    type: 'leaf',
-    cluster: 'DORA',
-    label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
-    reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
-    referenceUrl: DORA_LINKS.ART_4,
-    obligations: ['DORA_BASIS_PROPORTIONAL'],
-    next: 'B7_RUECKFALL',
-  },
-  
-
   B7_RUECKFALL: {
     id: 'B7_RUECKFALL',
     type: 'question',
