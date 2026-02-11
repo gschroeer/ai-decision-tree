@@ -37,6 +37,7 @@ export const DORA_LINKS = {
   ART_6:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_6',
   ART_8:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_8',
   ART_9:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_9',
+  ART_10:  'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_10',
   ART_11: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_11',
   ART_12: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_12',
   ART_13: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554#art_13',
@@ -1931,7 +1932,7 @@ export const obligationsCatalog = {
           'Gibt es einen dokumentierten Änderungsprozess, der Modelländerungen nur nach Risiko- und Auswirkungsanalyse freigibt?',
         todo:
           'Änderungsprozess für Modelländerungen etablieren und dokumentieren, der Freigaben nur nach Risiko- und Auswirkungsanalyse erlaubt.',
-        reference: 'DORA (2022), Art. 6–9',
+        reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
         info:
           'Der Prozess sollte Auslöser definieren (z. B. Neutraining/Feinabstimmung, neue Features, neue Datenquelle) und Re-Tests/Überwachungsauflagen enthalten.',
@@ -1976,8 +1977,8 @@ export const obligationsCatalog = {
           'Gibt es Sicherheitsüberwachung für KI-relevante Komponenten?',
         todo:
           'Sicherheitsüberwachung für KI-relevante Komponenten einrichten und betreiben (APIs, Modellendpunkte, Datenzugriffe, Secrets) inkl. Alarmierung und Nachverfolgung.',
-        reference: 'DORA (2022), Art. 9',
-        referenceUrl: DORA_LINKS.ART_9,
+        reference: 'DORA (2022), Art. 10',
+        referenceUrl: DORA_LINKS.ART_10,
         info:
           'Sicherheitsüberwachung sollte relevante Angriffsflächen abdecken (APIs, Modellendpunkte, Datenzugriffe, Secrets) und nachvollziehbar auswertbar sein.',
         examples: [
@@ -1988,13 +1989,13 @@ export const obligationsCatalog = {
       {
         id: 'DORA_BETRIEBSHANDBUCH_MODELLVORFAELLE',
         question:
-          'Gibt es Betriebshandbücher für Modellfehler inklusive Eskalationskette?',
+          'Gibt es Notbetriebshandbücher für Modellfehler inklusive Eskalationskette?',
         todo:
-          'Betriebshandbücher für Modellfehler erstellen, testen und pflegen (Diagnose, Abschalten/Rückfall/Rücksetzung) inkl. klarer Eskalationskette und Entscheidungsbefugnissen.',
+          'Notbetriebshandbücher für Modellfehler erstellen, testen und pflegen (Diagnose, Abschalten/Rückfall/Rücksetzung) inkl. klarer Eskalationskette und Entscheidungsbefugnissen.',
         reference: 'DORA (2022), Art. 17',
         referenceUrl: DORA_LINKS.ART_17,
         info:
-          'Betriebshandbücher sollten klare Diagnose- und Entscheidungswege haben (z. B. Abschalten, Rückfall, Rücksetzung) und Verantwortlichkeiten je Stufe.',
+          'Notbetriebshandbücher sollten klare Diagnose- und Entscheidungswege haben (z. B. Abschalten, Rückfall, Rücksetzung) und Verantwortlichkeiten je Stufe.',
         examples: [
           'Betriebshandbuch enthält Checkliste: Symptome, Ursachen, Maßnahmen, Kommunikationsvorlage.',
           'Eskalationsmatrix benennt Level 1/2/3 und Entscheidungsbefugnisse.',
@@ -2003,13 +2004,13 @@ export const obligationsCatalog = {
       {
         id: 'DORA_BETRIEBSHANDBUCH_CYBER_IKT_VORFAELLE',
         question:
-          'Gibt es Betriebshandbücher für Cyber- und IKT-Vorfälle in den KI-Komponenten inklusive Eskalationskette?',
+          'Gibt es Notbetriebshandbücher für Cyber- und IKT-Vorfälle in den KI-Komponenten inklusive Eskalationskette?',
         todo:
-          'Betriebshandbücher für Cyber- und IKT-Vorfälle in KI-Komponenten erstellen, üben und pflegen (Erkennung, Eindämmung, Wiederherstellung, Kommunikation/Meldepflichten).',
+          'Notbetriebshandbücher für Cyber- und IKT-Vorfälle in KI-Komponenten erstellen, üben und pflegen (Erkennung, Eindämmung, Wiederherstellung, Kommunikation/Meldepflichten).',
         reference: 'DORA (2022), Art. 17',
         referenceUrl: DORA_LINKS.ART_17,
         info:
-          'Cyber-Betriebshandbücher sollten Erkennung, Eindämmung, Wiederherstellung sowie Kommunikations- und Meldepflichten berücksichtigen.',
+          'Cyber-Notbetriebshandbücher sollten Erkennung, Eindämmung, Wiederherstellung sowie Kommunikations- und Meldepflichten berücksichtigen.',
         examples: [
           'Betriebshandbuch beschreibt Eindämmung, Forensik, Wiederanlauf und Lessons Learned.',
           'Übungen sind dokumentiert, Feststellungen werden nachverfolgt.',
@@ -2189,9 +2190,9 @@ export const obligationsCatalog = {
         id: 'DORA_ART16_VORFALLBEHANDLUNG',
         canonicalId: 'DORA_ART16_VORFALLBEHANDLUNG',
         question:
-          'Ist ein minimaler Vorfallprozess inkl. Eskalation/Betriebshandbuch/Verantwortlichkeiten definiert?',
+          'Ist ein minimaler Vorfallprozess inkl. Eskalation/Notbetriebshandbuch/Verantwortlichkeiten definiert?',
         todo:
-          'Minimalen Vorfallprozess definieren: Schweregrade/Eskalation, Betriebshandbücher, Rollen, Lessons Learned und Nachverfolgung.',
+          'Minimalen Vorfallprozess definieren: Schweregrade/Eskalation, Notbetriebshandbücher, Rollen, Lessons Learned und Nachverfolgung.',
         reference: 'DORA (2022), Art. 16',
         referenceUrl: DORA_LINKS.ART_16,
         info:
@@ -2539,9 +2540,7 @@ export const obligationsCatalog = {
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
         info:
-          'Art. 6 verlangt einen gut dokumentierten IKT-Risikomanagementrahmen, der u. a. Strategien/Richtlinien, Verfahren sowie Protokolle/Tools umfasst, ' +
-          'um Informations- und IKT-Assets angemessen zu schützen. „Proportional“ bedeutet: Mindestkontrollen müssen zur Kritikalität passen, ' +
-          'dürfen aber nicht beliebig sein – sie müssen standardisiert, wiederholbar und auditfähig nachweisbar sein (inkl. regelmäßiger Überprüfung und Weiterentwicklung).',
+          'Art. 6 verlangt einen gut dokumentierten IKT-Risikomanagementrahmen, der u. a. Strategien/Richtlinien, Verfahren sowie Protokolle/Tools umfasst, um Informations- und IKT-Assets angemessen zu schützen.',
         examples: [
           'Es gibt einen versionierten „Baseline-Control-Katalog“ mit Kritikalitätsstufen und Muss-Kontrollen pro Stufe.',
           'Jede KI-relevante Komponente (Modell, Pipeline, Schnittstelle, Infrastruktur) ist einer Kritikalitätsstufe zugeordnet und begründet.',
@@ -4341,8 +4340,8 @@ export const decisionTree = {
     type: 'question',
     cluster: 'DORA',
     label: 'Verändert sich das Modell im Betrieb?',
-    reference: 'DORA (2022), Art. 6',
-    referenceUrl: DORA_LINKS.ART_6,
+    reference: 'DORA (2022), Art. 9',
+    referenceUrl: DORA_LINKS.ART_9,
     yes: 'B8_D',
     no: 'B8_S',
     info:
