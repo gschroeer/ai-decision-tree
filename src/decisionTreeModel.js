@@ -2915,16 +2915,19 @@ export const decisionTree = {
     type: 'question',
     cluster: 'AI Act',
     label:
-      'Betreiben/Hosten Sie die produktive KI-Komponente selbst oder steuern wesentliche Betriebsparameter?',
+      'Haben Sie die operative Kontrolle über die produktive KI-Komponente oder steuern Sie wesentliche Betriebsparameter, unabhängig davon, wo sie gehostet wird?',
     yes: 'A2_ROLLE_KONFORMITAETSARTEFAKTE',
     no: 'A2_ROLLE_KONFORMITAETSARTEFAKTE',
     reference: 'EU AI Act (2024)',
     info:
-      'Diese Frage trennt typische SaaS-Nutzung von eigenem Einsatz. „Ja“ ist häufig ein Hinweis auf Mischrollen.',
+      '„Hosting“ (wo läuft es) ist nicht gleich „Betrieb“ (wer steuert es). ' + 
+      'Antworten Sie mit „Ja“, wenn Sie im Produktivbetrieb die Kontrolle haben oder Parameter festlegen, die Verhalten und Risikoprofil wesentlich beeinflussen.' + 
+      'Das ist ein starker Indikator, dass Sie Betreiberpflichten tragen und in bestimmten Konstellationen auch in die Anbieterrolle rutschen können.',
     examples: [
-      'Sie betreiben den Modellservice selbst (VM/Managed Endpoint).',
-      'Sie kontrollieren Releases/Überwachung/Umgang mit Vorfälle für die KI-Komponente.',
-      'Nein: Vollständiger SaaS-Betrieb durch externen Anbieter, Sie nutzen nur die Oberfläche/API.',
+      'Ja: Sie entscheiden über produktive Rollouts/Freigaben, setzen Schwellwerte und Regeln, ändern Prompt-/Richtlinien-Vorlagen oder konfigurieren die Datenquellen.',
+      'Ja: Sie überwachen den Betrieb (Monitoring/Logging), bearbeiten Störungen, spielen Updates oder Modellwechsel ein oder steuern Neutraininge/Feintuning-Zyklen.',
+      'Nein: Der Dienstleister betreibt und konfiguriert die KI vollständig; Sie nutzen sie nur als fest definierten Service und können lediglich die Nutzung an-/abschalten oder fachliche Eingaben liefern.',
+      'Grenzfall (eher Ja): Sie können produktive Betriebsparameter ändern (z. B. Schwellwerte, Feature-Flags), obwohl Hosting und technische Betriebsführung beim Anbieter liegen.',
     ],
   },
 
@@ -2935,7 +2938,7 @@ export const decisionTree = {
     label:
       'Liefern Sie selbst die zentralen Konformitäts-/Sicherheitsartefakte, oder beziehen Sie diese vom Anbieter?',
     yes: 'A2_ROLLE_SCOPE_ANBIETER',
-    no: 'A2_ROLLE_SCOPE_ANBIETER',
+    no: 'A2_ROLLE_SCOPE_BETREIBER',
     yesLabel: 'Wir liefern selbst',
     noLabel: 'Wir beziehen vom Anbieter',
     reference: 'EU AI Act (2024)',
@@ -3226,8 +3229,7 @@ export const decisionTree = {
     id: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BILDUNG_ARBEIT_DIENSTE',
     type: 'question',
     cluster: 'AI Act',
-    label:
-      'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/HR oder Zugang zu wesentlichen Dienstleistungen?',
+    label: 'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/HR oder Zugang zu wesentlichen Dienstleistungen?',
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
@@ -3245,8 +3247,7 @@ export const decisionTree = {
     id: 'A3_HR_FIN_KREDIT_ANBIETER',
     type: 'question',
     cluster: 'AI Act',
-    label:
-      'Wird das KI-System bestimmungsgemäß für Kreditwürdigkeitsprüfung/Bonitätsbewertung natürlicher Personen verwendet (außer reine Finanzbetrugserkennung)?',
+    label: 'Wird das KI-System bestimmungsgemäß für Kreditwürdigkeitsprüfung/Bonitätsbewertung natürlicher Personen verwendet (außer reine Finanzbetrugserkennung)?',
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
@@ -3265,8 +3266,7 @@ export const decisionTree = {
     id: 'A3_HR_FIN_VERSICHERUNGS_ANBIETER',
     type: 'question',
     cluster: 'AI Act',
-    label:
-      'Wird das KI-System bestimmungsgemäß für Risikobewertung und Preisbildung bei Lebens-/Krankenversicherung natürlicher Personen verwendet?',
+    label: 'Wird das KI-System bestimmungsgemäß für Risikobewertung und Preisbildung bei Lebens-/Krankenversicherung natürlicher Personen verwendet?',
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
@@ -3283,15 +3283,13 @@ export const decisionTree = {
     id: 'A3_ANBIETER',
     type: 'question',
     cluster: 'AI Act',
-    label:
-      'Keiner der vorherigen Anhang-III/Art.-6-Auslöser hat eindeutig gegriffen: Liegt trotzdem ein Hochrisiko-Fall vor, der dokumentiert werden muss?',
+    label:'Keiner der vorherigen Anhang-III/Art.-6-Auslöser hat eindeutig gegriffen: Liegt trotzdem ein Hochrisiko-Fall vor, der dokumentiert werden muss?',
     reference: 'EU AI Act (2024), Art. 6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
-    yes: 'W_AI_HR_UEBERPRUEFUNG',
+    yes: 'A3_HR_ANBIETER',
     no: 'A3_KEIN_HR_PRUEFUNG',
     info:
-      'Rest-Check nach der Domänenkette: Wenn die vordefinierten Auslöser (Anhang-III-Bereiche + Art. 6 Sicherheitsbauteil) nicht gegriffen haben, ' +
-      'soll ein potenzieller Hochrisiko-Fall nicht per Klick klassifiziert werden. Bei Ja wird daher ein Review-Checkpoint ausgelöst.',
+      'Bei Ja wird konservativ als Hochrisiko weitergegangen. Die Begründung/Abgrenzung (Anhang III/Art. 6) ist auditfähig zu dokumentieren.',
     examples: [
       'Der Anwendungsfall fällt möglicherweise in einen Anhang-III-Bereich, die im Fragebaum nicht explizit abgebildet ist.',
       'Compliance stuft den Fall (vorläufig) als Hochrisiko ein, die Begründung muss aber noch formalisiert werden.',
@@ -3445,11 +3443,10 @@ export const decisionTree = {
     label: 'Keiner der vorherigen Anhang-III/Art.-6-Trigger hat eindeutig gegriffen: Liegt trotzdem ein Hochrisiko-Fall vor (z. B. andere Anhang-III-Bereiche), der dokumentiert werden muss?',
     reference: 'EU AI Act (2024), Art. 6',
     referenceUrl: EU_AI_ACT_LINKS.ART_6,
-    yes: 'W_AI_HR_UEBERPRUEFUNG',
+    yes: 'A3_GRFA_TRIGGER_BETREIBER',
     no: 'A3_KEIN_HR_PRUEFUNG',
     info:
-      'Rest-Check nach der Domänenkette: Wenn die vordefinierten Trigger (Anhang-III-Bereiche + Art. 6 Sicherheitsbauteil) nicht gegriffen haben, ' +
-      'soll ein potenzieller Hochrisiko-Fall nicht per Klick klassifiziert werden. Bei Ja wird daher ein Review-Checkpoint ausgelöst.',
+      'Bei Ja wird konservativ als Hochrisiko weitergegangen. Die Begründung/Abgrenzung (Anhang III/Art. 6) ist auditfähig zu dokumentieren.',
     examples: [
       'Der Einsatzkontext könnte trotz negativer Auslöser in eine Hochrisiko-Kategorie fallen (z. B. nicht abgedeckte Anhang-III-Bereiche).',
       'Interne Vorprüfung sieht Hochrisiko-Indizien, aber die formale Einstufung fehlt noch.',
@@ -4473,39 +4470,23 @@ function deriveConsistencyLocks({ pathIds }) {
 export function validateNextNode({ currentId, answer, nextId, answers, pathIds }) {
   const locks = deriveConsistencyLocks({ answers, pathIds });
 
-  if (!nextId || !decisionTree[nextId]) {
-    const isHighRiskClassificationContext =
-      typeof currentId === 'string' &&
-      (
-        currentId.startsWith('A2_GPAI_SYSTEMRISIKO') ||
-        currentId.startsWith('A3_HR_') ||
-        currentId === 'A3_ANBIETER' ||
-        currentId === 'A3_BETREIBER' ||
-        currentId === 'A3_KEIN_HR_PRUEFUNG'
-      );
-
-    return { nextId: isHighRiskClassificationContext ? 'W_AI_HR_UEBERPRUEFUNG' : 'W_KI_WIDERSPRUCH' };
-  }
-
   if (currentId === 'A2') {
-    if (answer === 'yes') return { nextId: 'A2_Y' };
-    if (answer === 'no') return { nextId: 'A2_ROLLE' };
+    if (answer === 'yes') nextId = 'A2_Y';
+    else if (answer === 'no') nextId = 'A2_ROLLE';
   }
 
-  if (locks.has(CONSISTENCY_LOCKS.KI_HOCHRISIKO)) {
-    const isA3Decision =
-      currentId === 'A3_ANBIETER' || currentId === 'A3_BETREIBER';
-
-    const isTryingToDeescalate =
-      (isA3Decision && answer === 'no') ||
-      nextId === 'A3_KEIN_HR_PRUEFUNG';
-
-    if (isTryingToDeescalate) {
-      return { nextId: 'W_KI_WIDERSPRUCH' };
-    }
+  if (currentId === 'A3_ANBIETER') {
+    nextId = answer === 'yes' ? 'A3_HR_ANBIETER' : 'A3_KEIN_HR_PRUEFUNG';
   }
 
-  // Mischrollen-Detektor (Art. 3 / Art. 25 Kontext)
+  if (currentId === 'A3_BETREIBER') {
+    nextId = answer === 'yes' ? 'A3_GRFA_TRIGGER_BETREIBER' : 'A3_KEIN_HR_PRUEFUNG';
+  }
+
+  if (currentId === 'A3_KEIN_HR_PRUEFUNG') {
+    nextId = 'A4_TRANSPARENZ_ANWENDBAR';
+  }
+
   if (currentId === 'A2_ROLLE_KONFORMITAETSARTEFAKTE') {
     const initialRole = answers?.A2_ROLLE === 'yes' ? 'anbieter' : 'betreiber';
 
@@ -4529,8 +4510,6 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
     if (score >= 2) recommended = 'anbieter';
     else if (score === 0) recommended = 'betreiber';
 
-    // Konservativ:
-    // Sobald jemand "Betreiber" gewählt hat, aber irgendein Anbieter-Indikator "ja" ist Unsicher
     const conservativeReview =
       (initialRole === 'betreiber' && score >= 1) ||
       (initialRole === 'anbieter' && score === 0) ||
@@ -4539,8 +4518,8 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
     if (conservativeReview) return { nextId: 'A2_ROLLE_SCOPE_UNSICHER' };
     if (recommended === 'anbieter') return { nextId: 'A2_ROLLE_SCOPE_ANBIETER' };
     return { nextId: 'A2_ROLLE_SCOPE_BETREIBER' };
-  }  
-  //  GRFA-Heuristik: konservativ = Ja
+  }
+
   if (currentId === 'A3_GRFA_TRIGGER_BETREIBER' && answer === 'no') {
     const heurIds = [
       'A3_GRFA_HEUR_ZUGANG_WESENTLICHE_DIENSTE',
@@ -4553,8 +4532,40 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
     if (anyTriggerYes) return { nextId: 'W_KI_GRFA_REVIEW' };
   }
 
+  // 4) Wenn nextId fehlt oder ungültig ist: erst aus dem aktuellen Node ableiten, sonst Widerspruch
+  if (!nextId || !decisionTree[nextId]) {
+    const node = decisionTree?.[currentId];
+
+    let derivedNextId;
+    if (node?.type === 'question') {
+      derivedNextId = answer === 'yes' ? node.yes : node.no;
+    } else if (node?.type === 'leaf') {
+      derivedNextId = node.next;
+    }
+
+    if (derivedNextId && decisionTree[derivedNextId]) {
+      nextId = derivedNextId;
+    } else {
+      return { nextId: 'W_KI_WIDERSPRUCH' };
+    }
+  }
+
+  // 5) Konsistenz-Lock: Deeskalation blocken
+  if (locks.has(CONSISTENCY_LOCKS.KI_HOCHRISIKO)) {
+    const isA3Decision = currentId === 'A3_ANBIETER' || currentId === 'A3_BETREIBER';
+
+    const isTryingToDeescalate =
+      (isA3Decision && answer === 'no') ||
+      nextId === 'A3_KEIN_HR_PRUEFUNG';
+
+    if (isTryingToDeescalate) {
+      return { nextId: 'W_KI_WIDERSPRUCH' };
+    }
+  }
+
   return { nextId };
 }
+
 
 /**
  * Leitet für eine konkrete Requirement-Instanz (leafId__req__...) die canonicalId ab
