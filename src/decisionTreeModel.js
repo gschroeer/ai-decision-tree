@@ -4500,7 +4500,7 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
       (acc, k) => acc + (answers?.[k] === 'yes' ? 1 : 0),
       0
     );
-
+    
     // Heuristik:
     // - score >= 2 => starker Anbieter-Indikator
     // - score == 0 => starker Betreiber-Indikator
@@ -4510,13 +4510,13 @@ export function validateNextNode({ currentId, answer, nextId, answers, pathIds }
     else if (score === 0) recommended = 'betreiber';
 
     const conservativeReview =
-      (initialRole === 'betreiber' && score >= 1) ||
-      (initialRole === 'anbieter' && score === 0) ||
-      (recommended === 'mixed');
-
+      (recommended === 'mixed') ||
+      (initialRole === 'anbieter' && score == 0 && answers?.A2_ROLLE_KONFORMITAETSARTEFAKTE !== 'no') ||
+      (initialRole === 'betreiber' && score == 1);
+      
     if (conservativeReview) return { nextId: 'A2_ROLLE_SCOPE_UNSICHER' };
     if (recommended === 'anbieter') return { nextId: 'A2_ROLLE_SCOPE_ANBIETER' };
-    return { nextId: 'A2_ROLLE_SCOPE_BETREIBER' };
+    return { nextId: 'A2_ROLLE_SCOPE_BETREIBER' }; 
   }
 
   if (currentId === 'A3_GRFA_TRIGGER_BETREIBER' && answer === 'no') {
