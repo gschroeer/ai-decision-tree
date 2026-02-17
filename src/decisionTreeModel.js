@@ -290,7 +290,7 @@ export const obligationsCatalog = {
       {
         id: 'GPAI_SCR_TRAINING_COMPUTE',
         question:
-          'Sind Angaben zu Training dokumentiert, um systemisches Risiko plausibilisieren zu können?',
+          'Sind ausreichende Trainings-Informationen dokumentiert, um beurteilen zu können, ob das GPAI ein systemisches Risiko haben könnte?',
         todo:
           'Training-Indikatoren dokumentieren (falls verfügbar); ansonsten Info + Ersatzindikatoren begründen.',
         reference: 'EU AI Act (2024), Art. 51–52',
@@ -348,7 +348,7 @@ export const obligationsCatalog = {
         info:
           'Der Testumfang sollte Risiken aus dem konkreten Einsatzkontext abdecken und eine Wiederholungstest-Strategie enthalten.',
         examples: [
-          'Prompt-Injection, Datenexfiltration, Jailbreaks, Umgehung von Richtlinien, Missbruach von Tools.',
+          'Prompt-Injection, Datenexfiltration, Jailbreaks, Umgehung von Richtlinien, Missbrauch von Tools.',
         ],
       },
       {
@@ -689,7 +689,7 @@ export const obligationsCatalog = {
       {
         id: 'KI_TP_INTERAKTIONSHINWEIS',
         question:
-          'Erhalten Nutzende einen klaren Hinweis, dass sie mit einem KI-System interagieren?',
+          'Erhalten Nutzer einen klaren Hinweis, dass sie mit einem KI-System interagieren?',
         todo: 'Einen klaren, sichtbaren Hinweis zur KI-Interaktion in der Benutzeroberfläche bereitstellen und formal freigeben lassen.',
         reference: 'EU AI Act (2024), Art. 50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
@@ -703,8 +703,8 @@ export const obligationsCatalog = {
       {
         id: 'KI_TP_GENERATIVE_OUTPUTS',
         question:
-          'Erzeugt das System Inhalte (Text, Bild, Audio oder Video), die an Nutzende ausgegeben werden?',
-        todo: 'Prüfen und dokumentieren, ob das System Inhalte generiert, die an Nutzende ausgegeben werden (Text/Bild/Audio/Video).',
+          'Erzeugt das System Inhalte (Text, Bild, Audio oder Video), die an Nutzer ausgegeben werden?',
+        todo: 'Prüfen und dokumentieren, ob das System Inhalte generiert, die an Nutzer ausgegeben werden (Text/Bild/Audio/Video).',
         reference: 'EU AI Act (2024), Art. 50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
         info:
@@ -730,12 +730,12 @@ export const obligationsCatalog = {
       },
       {
         id: 'KI_TP_ZWECKINFO',
-        question: 'Ist der Zweck des KI-Systems für Nutzende dokumentiert und verfügbar?',
-        todo: 'Zweck des KI-Systems für Nutzende dokumentieren und leicht zugänglich bereitstellen (UI/Handbuch/Intranet).',
+        question: 'Ist der Zweck des KI-Systems für Nutzer dokumentiert und verfügbar?',
+        todo: 'Zweck des KI-Systems für Nutzer dokumentieren und leicht zugänglich bereitstellen (UI/Handbuch/Intranet).',
         reference: 'EU AI Act (2024), Art. 50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
         info:
-          'Der Zweck sollte nicht nur intern beschrieben sein, sondern dort verfügbar sein, wo Nutzende Entscheidungen treffen.',
+          'Der Zweck sollte nicht nur intern beschrieben sein, sondern dort verfügbar sein, wo Nutzer Entscheidungen treffen.',
         examples: [
           'Kurzbeschreibung im UI plus detaillierter Abschnitt im Handbuch.',
           'Intranet-Seite mit Zweck, Kontakt und Verantwortlichen.',
@@ -744,7 +744,7 @@ export const obligationsCatalog = {
       {
         id: 'KI_TP_GRENZEN_INFO',
         question: 'Sind bekannte Grenzen und Limitierungen des Systems dokumentiert und verfügbar?',
-        todo: 'Bekannte Grenzen und Limitierungen des Systems dokumentieren und für Nutzende verfügbar machen (inkl. Aktualisierung bei Änderungen).',
+        todo: 'Bekannte Grenzen und Limitierungen des Systems dokumentieren und für Nutzer verfügbar machen (inkl. Aktualisierung bei Änderungen).',
         reference: 'EU AI Act (2024), Art. 50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
         info:
@@ -757,7 +757,7 @@ export const obligationsCatalog = {
       {
         id: 'KI_TP_ZULAESSIGE_NUTZUNG',
         question: 'Sind Vorgaben zur zulässigen Nutzung (erlaubt/unzulässig) dokumentiert und verfügbar?',
-        todo: 'Vorgaben zur zulässigen und unzulässigen Nutzung dokumentieren und für Nutzende bereitstellen (inkl. Beispiele).',
+        todo: 'Vorgaben zur zulässigen und unzulässigen Nutzung dokumentieren und für Nutzer bereitstellen (inkl. Beispiele).',
         reference: 'EU AI Act (2024), Art. 50',
         referenceUrl: EU_AI_ACT_LINKS.ART_50,
         info:
@@ -1198,7 +1198,7 @@ export const obligationsCatalog = {
       {
         id: 'DORA_IKT_RMF',
         question:
-          'Gibt es ein dokumentiertes IKT-Risikomanagement-Rahmenwerk inklusive Rollen, Kontrollen und Risikoappetit?',
+          'Gibt es ein dokumentiertes IKT-Risikomanagement-Rahmenwerk inklusive Rollen, Kontrollen und akzeptablem Risikoniveau?',
         todo:
           'IKT-Risikomanagement-Rahmenwerk dokumentieren und verabschieden (Rollen, Kontrollen) und KI-relevante Risiken explizit abdecken.',
         reference: 'DORA (2022), Art. 6',
@@ -1222,7 +1222,7 @@ export const obligationsCatalog = {
         info:
           'Auditfähig wird es durch klare Governance (Genehmigung/Review) und Konsistenz zur tatsächlichen IKT-Risikolage (inkl. KI-relevanter Abhängigkeiten).',
         examples: [
-          'Strategie enthält Ziele, Prioritäten, Risikoappetit, Verantwortlichkeiten und Ressourcen.',
+          'Strategie enthält Ziele, Prioritäten, akzeptables Risikoniveau, Verantwortlichkeiten und Ressourcen.',
           'Protokoll belegt Genehmigung und periodischen Review inkl. Entscheidungen/Nachverfolgungen.',
         ],
       },
@@ -2526,17 +2526,17 @@ export const obligationsCatalog = {
     ],
   },
 
-  DORA_BASIS_PROPORTIONAL: {
-    label: 'DORA: IKT-Risikomanagement – Proportionale Basis',
+  DORA_BASIS_KRITIKALITAET: {
+    label: 'DORA: IKT-Risikomanagement – Basisanforderungen nach Kritikalität',
     regulation: 'DORA',
-    articles: ['DORA (2022), Art. 5–16 (proportional)'],
+    articles: ['DORA (2022), Art. 5–16'],
     items: [
       {
         id: 'DORA_LIGHT_MINDESTKONTROLLEN',
         question:
           'Sind risikobasierte Mindestkontrollen definiert und dokumentiert?',
         todo:
-          'Risikobasierte Mindestkontrollen proportional zur Kritikalität definieren, dokumentieren und in den Betrieb übernehmen (Zugriff, Protokollierung, Backup).',
+          'Risikobasierte Mindestkontrollen passsend zur Kritikalität definieren, dokumentieren und in den Betrieb übernehmen (Zugriff, Protokollierung, Backup).',
         reference: 'DORA (2022), Art. 6',
         referenceUrl: DORA_LINKS.ART_6,
         info:
@@ -2570,12 +2570,12 @@ export const obligationsCatalog = {
         question:
           'Gibt es eine digitale operationelle Resilienzstrategie mit Genehmigung/Review durch das Leitungsorgan?',
         todo:
-          'Resilienzstrategie proportional dokumentieren: Ziele/Prioritäten, wesentliche IKT-/KI-Abhängigkeiten, Risikoappetit und Maßnahmenplan. Genehmigung/Review durch Leitungsorgan nachweisen (mind. jährlich bzw. anlassbezogen).',
+          'Resilienzstrategie in angemessenem Umfang dokumentieren: Ziele/Prioritäten, wesentliche IKT-/KI-Abhängigkeiten, akzeptiertes Risikoniveau und Maßnahmenplan. Genehmigung/Review durch Leitungsorgan nachweisen (mind. jährlich bzw. anlassbezogen).',
         reference: 'DORA (2022), Art. 5 i. V. m. Art. 6',
         referenceUrl: DORA_LINKS.ART_5,
         info:
           'Die digitale operationelle Resilienzstrategie ist die Leitplanke für den Umgang mit IKT-/KI-Risiken: ' +
-          'Sie legt fest, welche Resilienz-Ziele und Prioritäten gelten, welche kritischen Abhängigkeiten berücksichtigt werden und wie Risikoappetit sowie Maßnahmen gesteuert werden.',
+          'Sie legt Resilienz-Ziele und Prioritäten fest, benennt kritische Abhängigkeiten und beschreibt, welches Risikoniveau akzeptiert wird (Risikotoleranz) sowie welche Maßnahmen (Prävention, Erkennung, Reaktion, Wiederherstellung) zur Steuerung und Verbesserung vorgesehen sind.',
         examples: [
           '1–3 Seiten Strategie + Maßnahmenliste, genehmigt und versioniert.',
         ],
@@ -2584,9 +2584,9 @@ export const obligationsCatalog = {
         id: 'DORA_LIGHT_IKT_AUDITPLAN',
         canonicalId: 'DORA_GOV_IKT_AUDITPLAN',
         question:
-          'Gibt es einen proportionalen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und Nachverfolgung der Feststellungen?',
+          'Gibt es einen angemessenen IKT-Audit-/Prüfplan mit Genehmigung durch das Leitungsorgan und Nachverfolgung der Feststellungen?',
         todo:
-          'Proportionalen Prüfplan definieren (Scope/Frequenz), genehmigen lassen und Feststellungen/Maßnahmen nachverfolgen (Owner/Frist/Wirkung).',
+          'Angemessenen Prüfplan definieren (Scope/Frequenz), genehmigen lassen und Feststellungen/Maßnahmen nachverfolgen (Owner/Frist/Wirkung).',
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
         info:
@@ -2636,10 +2636,11 @@ export const obligationsCatalog = {
         reference: 'DORA (2022), Art. 5',
         referenceUrl: DORA_LINKS.ART_5,
         info:
-          'Das reduziert Schleichbetrieb: wesentliche Änderungen werden vorab beurteilt und formal freigegeben.',
+          'Management-Freigaben stellen sicher, dass Produktivsetzungen und wesentliche Änderungen nicht informell durchrutschen, sondern vorab anhand klarer Kriterien geprüft werden und eine nachvollziehbare Entscheidung durch das zuständige Management/Gremium erhalten.',
         examples: [
-          'Produktivsetzung-Entscheidung ist protokolliert inkl. Risikoabwägung.',
-          'Wesentliche Modell-/Datenänderungen laufen über ein Freigabegate im Änderungsmanagement.',
+          'Vor Produktivsetzung liegt eine dokumentierte Freigabe vor (Entscheidung, Verantwortliche, Go/No-Go-Kriterien, Risikobewertung, ggf. Auflagen).',
+          'Wesentliche Änderungen (z. B. Modellwechsel, neue Datenquelle, geänderte Schnittstellen, neue Subdienstleister) laufen verpflichtend über einen Change-Prozess.',
+          'Ausnahmen/Notfalländerungen sind geregelt (wer darf entscheiden, nachträgliche Dokumentation/Review, Fristen für Nacharbeiten).',
         ],
       },
     ],
@@ -2867,7 +2868,7 @@ export const decisionTree = {
     yesLabel: 'Anbieter',
     noLabel: 'Betreiber',
     info: 
-    'Hier wird die Rolle des Unternehmens im konkreten Anwendungsfall geklärt.' +
+    'Hier wird die Rolle des Unternehmens im konkreten Anwendungsfall geklärt. ' +
     'Die konkreten Begriffsbestimmungen sind in Art. 3 Abs. 3-4 zu finden.',
     examples: [
       'Anbieter: Sie entwickeln/bringen das KI-System in Verkehr oder stellen es bereit.',
@@ -2920,7 +2921,7 @@ export const decisionTree = {
     reference: 'EU AI Act (2024)',
     info:
       '„Hosting“ (wo läuft es) ist nicht gleich „Betrieb“ (wer steuert es). ' + 
-      'Antworten Sie mit „Ja“, wenn Sie im Produktivbetrieb die Kontrolle haben oder Parameter festlegen, die Verhalten und Risikoprofil wesentlich beeinflussen.' + 
+      'Antworten Sie mit „Ja“, wenn Sie im Produktivbetrieb die Kontrolle haben oder Parameter festlegen, die Verhalten und Risikoprofil wesentlich beeinflussen. ' + 
       'Das ist ein starker Indikator, dass Sie Betreiberpflichten tragen und in bestimmten Konstellationen auch in die Anbieterrolle rutschen können.',
     examples: [
       'Ja: Sie entscheiden über produktive Rollouts/Freigaben, setzen Schwellwerte und Regeln, ändern Prompt-/Richtlinien-Vorlagen oder konfigurieren die Datenquellen.',
@@ -2993,11 +2994,11 @@ export const decisionTree = {
     yes: 'A2_GPAI_SCREENING_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Ein GPAI ist ein Modell, das für viele unterschiedliche Aufgaben einsetzbar ist und nicht auf einen eng abgegrenzten Zweck beschränkt ist. ' +
       'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
-      'Externe LLM/API.',
-      'Extern gehostetes Basismodell.',
+      'Nutzung eines großen Sprachmodells (LLM) über eine externe API für Chat, Zusammenfassung oder Entwurf von Texten.',
+      'Einsatz eines vortrainierten Basis-Modells in einer eigenen Anwendung (z. B. für Klassifikation, Extraktion oder Generierung).',
     ],
   },
 
@@ -3018,16 +3019,19 @@ export const decisionTree = {
     id: 'A2_GPAI_SYSTEMRISIKO_ANBIETER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Ist ein systemisches Risiko betroffen (GPAI mit systemischem Risiko)?',
+    label: 'Handelt es sich um ein GPAI mit systemischem Risiko?',
     reference: 'EU AI Act (2024), Art. 55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_ANBIETER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      '„Systemisches Risiko“ liegt vor, wenn ein GPAI aufgrund seiner hohen Fähigkeiten und breiten Einsatzmöglichkeiten erhebliche, weitreichende Auswirkungen verursachen kann. ' +
-      'Typische Indikatoren sind sehr hohe Leistungsfähigkeit/Skalierung, breite Verfügbarkeit/Integration, und ein erhöhtes Potenzial für schwere Schäden über einzelne Einzelfälle hinaus.',
+      'Ein GPAI mit systemischem Risiko ist ein Modell mit sehr hoher Leistungsfähigkeit und breiter Einsetzbarkeit, dessen Einsatz potenziell großflächige, schwerwiegende Auswirkungen über einzelne Einzelfälle hinaus haben kann. ' +
+      'Indikatoren sind u. a. sehr große Reichweite/Verbreitung, hohe Skalierbarkeit, zentrale Abhängigkeit vieler Prozesse/Produkte sowie ein erhöhtes Potenzial für erhebliche Schäden.',
     examples: [
-      'Unklare Einstufung -> konservativ Ja wählen und Review-Gate dokumentieren.'
+      'Ja: Ein sehr leistungsfähiges Basismodell wird unternehmensweit in vielen Produkten/Prozessen eingesetzt und ist kritisch für den Betrieb.',
+      'Ja: Das Modell ist breit in Drittprodukte integriert und kann bei Fehlverhalten/Missbrauch skaliert Schaden verursachen.',
+      'Eher nein: Ein eng begrenztes, spezialisiertes Modell für einen klar abgegrenzten Zweck mit geringer Reichweite und ohne breite Wiederverwendung.',
+      'Unklar: Wenn die Reichweite/Leistungsfähigkeit oder die potenziellen Auswirkungen nicht sauber belegt sind, wählen Sie konservativ „Ja“ und dokumentieren Sie die Einstufung.',
     ],
   },
 
@@ -3052,11 +3056,11 @@ export const decisionTree = {
     yes: 'A2_GPAI_SCREENING_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
     info:
-      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Ein GPAI ist ein Modell, das für viele unterschiedliche Aufgaben einsetzbar ist und nicht auf einen eng abgegrenzten Zweck beschränkt ist. ' +
       'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
-      'Externe LLM/API.',
-      'Extern gehostetes Basismodell.',
+      'Nutzung eines großen Sprachmodells (LLM) über eine externe API für Chat, Zusammenfassung oder Entwurf von Texten.',
+      'Einsatz eines vortrainierten Basis-Modells in einer eigenen Anwendung (z. B. für Klassifikation, Extraktion oder Generierung).',
     ],
   },
 
@@ -3077,15 +3081,19 @@ export const decisionTree = {
     id: 'A2_GPAI_SYSTEMRISIKO_BETREIBER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Ist ein systemisches Risiko betroffen?',
+    label: 'Handelt es sich um ein GPAI mit systemischem Risiko?',
     reference: 'EU AI Act (2024), Art. 55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_BETREIBER',
     no: 'A3_HR_ANHANG_III_DOMAENE_BETREIBER_FINANZ',
     info:
-      'Wenn ein systemisches Risiko betroffen ist, gelten zusätzliche Pflichten.',
+      'Ein GPAI mit systemischem Risiko ist ein Modell mit sehr hoher Leistungsfähigkeit und breiter Einsetzbarkeit, dessen Einsatz potenziell großflächige, schwerwiegende Auswirkungen über einzelne Einzelfälle hinaus haben kann. ' +
+      'Indikatoren sind u. a. sehr große Reichweite/Verbreitung, hohe Skalierbarkeit, zentrale Abhängigkeit vieler Prozesse/Produkte sowie ein erhöhtes Potenzial für erhebliche Schäden.',
     examples: [
-      'Unklare Einstufung -> konservativ Ja wählen und Review-Gate dokumentieren.'
+      'Ja: Ein sehr leistungsfähiges Basismodell wird unternehmensweit in vielen Produkten/Prozessen eingesetzt und ist kritisch für den Betrieb.',
+      'Ja: Das Modell ist breit in Drittprodukte integriert und kann bei Fehlverhalten/Missbrauch skaliert Schaden verursachen.',
+      'Eher nein: Ein eng begrenztes, spezialisiertes Modell für einen klar abgegrenzten Zweck mit geringer Reichweite und ohne breite Wiederverwendung.',
+      'Unklar: Wenn die Reichweite/Leistungsfähigkeit oder die potenziellen Auswirkungen nicht sauber belegt sind, wählen Sie konservativ „Ja“ und dokumentieren Sie die Einstufung.',
     ],
   },
 
@@ -3110,11 +3118,11 @@ export const decisionTree = {
     yes: 'A2_GPAI_SCREENING_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-      'Wenn ein GPAI genutzt wird, sind Screening- und Lieferkettenpflichten zu prüfen. ' +
+      'Ein GPAI ist ein Modell, das für viele unterschiedliche Aufgaben einsetzbar ist und nicht auf einen eng abgegrenzten Zweck beschränkt ist. ' +
       'Der Begriff KI mit allgemeinem Verwendungszweck ist in Art. 3 Abs. 63 definiert.',
     examples: [
-      'Externe LLM/API.',
-      'Extern gehostetes Basismodell.',
+      'Nutzung eines großen Sprachmodells (LLM) über eine externe API für Chat, Zusammenfassung oder Entwurf von Texten.',
+      'Einsatz eines vortrainierten Basis-Modells in einer eigenen Anwendung (z. B. für Klassifikation, Extraktion oder Generierung).',
     ],
   },
 
@@ -3135,16 +3143,19 @@ export const decisionTree = {
     id: 'A2_GPAI_SYSTEMRISIKO_UNSICHER',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Ist ein systemisches Risiko betroffen (GPAI mit systemischem Risiko)?',
+    label: 'Handelt es sich um ein GPAI mit systemischem Risiko?',
     reference: 'EU AI Act (2024), Art. 55',
     referenceUrl: EU_AI_ACT_LINKS.ART_55,
     yes: 'A2_GPAI_SYSTEMRISIKO_Y_UNSICHER',
     no: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_FINANZ',
     info:
-    '„Systemisches Risiko“ liegt vor, wenn ein GPAI aufgrund seiner hohen Fähigkeiten und breiten Einsatzmöglichkeiten erhebliche, weitreichende Auswirkungen verursachen kann. ' +
-    'Typische Indikatoren sind sehr hohe Leistungsfähigkeit/Skalierung, breite Verfügbarkeit/Integration, und ein erhöhtes Potenzial für schwere Schäden über einzelne Einzelfälle hinaus.',
+      'Ein GPAI mit systemischem Risiko ist ein Modell mit sehr hoher Leistungsfähigkeit und breiter Einsetzbarkeit, dessen Einsatz potenziell großflächige, schwerwiegende Auswirkungen über einzelne Einzelfälle hinaus haben kann. ' +
+      'Indikatoren sind u. a. sehr große Reichweite/Verbreitung, hohe Skalierbarkeit, zentrale Abhängigkeit vieler Prozesse/Produkte sowie ein erhöhtes Potenzial für erhebliche Schäden.',
     examples: [
-      'Unklare Einstufung -> konservativ Ja wählen und Review-Gate dokumentieren.'
+      'Ja: Ein sehr leistungsfähiges Basismodell wird unternehmensweit in vielen Produkten/Prozessen eingesetzt und ist kritisch für den Betrieb.',
+      'Ja: Das Modell ist breit in Drittprodukte integriert und kann bei Fehlverhalten/Missbrauch skaliert Schaden verursachen.',
+      'Eher nein: Ein eng begrenztes, spezialisiertes Modell für einen klar abgegrenzten Zweck mit geringer Reichweite und ohne breite Wiederverwendung.',
+      'Unklar: Wenn die Reichweite/Leistungsfähigkeit oder die potenziellen Auswirkungen nicht sauber belegt sind, wählen Sie konservativ „Ja“ und dokumentieren Sie die Einstufung.',
     ],
   },
 
@@ -3228,7 +3239,7 @@ export const decisionTree = {
     id: 'A3_HR_ANHANG_III_DOMAENE_ANBIETER_BILDUNG_ARBEIT_DIENSTE',
     type: 'question',
     cluster: 'AI Act',
-    label: 'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/HR oder Zugang zu wesentlichen Dienstleistungen?',
+    label: 'Trifft einer der Anhang-III-Bereiche zu: Bildung, Beschäftigung/Personalmanagement oder Zugang zu wesentlichen Dienstleistungen?',
     reference: 'EU AI Act (2024), Anhang III',
     referenceUrl: EU_AI_ACT_LINKS.ANHANG_III,
     yes: 'A3_HR_ANBIETER',
@@ -3747,8 +3758,8 @@ export const decisionTree = {
     yes: 'D1_ART16_Y_B4',
     no: 'D1_ART16_N_B4',
     info:
-      'Art. 16 ist eine besondere Ausnahme (vereinfachter IKT-RMF) und nicht identisch mit proportional. ' +
-      'Wenn unklar: konservativ Nein wählen und die Begründung dokumentieren (Audit-Sicherheit).',
+      'Art. 16 ist keine generelle Abstufung nach Größe, sondern eine ausdrücklich geregelte Ausnahme für bestimmte, meist kleinere bzw. ausgenommene Finanzunternehmen. ' +
+      'Für diese gelten die detaillierten Anforderungen der Art. 5–15 nicht, stattdessen ist ein vereinfachter IKT-Risikomanagementrahmen zulässig.',
     examples: [
       'Kleine und nicht verflochtene Wertpapierfirma nach den einschlägigen MiFID/IFR-Kriterien.',
       'Zahlungsinstitut, das nach nationaler Umsetzung der PSD2 als „ausgenommenes Zahlungsinstitut“ gilt (z. B. begrenzte Produktpalette / sonstige PSD2-Ausnahmefälle).',
@@ -3775,13 +3786,13 @@ export const decisionTree = {
     id: 'D1_ART16_N_B4',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Art. 16 nicht anwendbar -> proportionale Basis.',
-    reference: 'DORA (2022), Art. 4 (Proportionalität) i. V. m. Art. 5–15',
+    label: 'Art. 16 nicht anwendbar -> abgestufte Basisanforderungen.',
+    reference: 'DORA (2022), Art. 4 i. V. m. Art. 5–15',
     referenceUrl: DORA_LINKS.ART_4,
-    obligations: ['DORA_BASIS_PROPORTIONAL'],
+    obligations: ['DORA_BASIS_KRITIKALITAET'],
     next: 'B1',
     info:
-      'Proportional ist zulässig, aber die Begründung muss klar sein: Art. 16 ist NICHT der Rechtsgrund.',
+    'Eine abgestufte Umsetzung ist zulässig, aber die Begründung muss nachvollziehbar sein: Art. 16 ist NICHT der Rechtsgrund.',
   },
 
   B1: {
@@ -3904,11 +3915,12 @@ export const decisionTree = {
     yes: 'B2_M_ENH',
     no: 'B2_M',
     info:
-      'Bei compliance-nahen Prozessen kann eine proportionale Basis zu kurz greifen. ' +
-      'Hier ist oft eine verstärkte Anwendung angemessen.',
+      'Wenn der KI-Einsatz Compliance, Risikosteuerung oder Prüf-/Nachweisprozesse beeinflusst, sind die Anforderungen in der Regel strenger umzusetzen: ' +
+      'Kontrollen und Nachweise müssen besonders belastbar sein. In solchen Fällen reicht ein schlankes Kontroll-Setup häufig nicht aus.',
     examples: [
-      'KI unterstützt Compliance-Warnungen oder regulatorische Berichterstattung.',
-      'KI beeinflusst Prüfpfade oder Kontrollnachweise.',
+      'KI erstellt oder beeinflusst regulatorische Meldungen/Reports (z. B. Aufsichtsreporting, interne Risikoberichte mit Außenwirkung).',
+      'KI beeinflusst Kontrollen oder Kontrollnachweise (z. B. welche Fälle geprüft werden, wie Ausnahmen begründet werden, welche Nachweise erzeugt werden).',
+      'KI wird in internen Prüfungen/Audits genutzt oder verändert Prüfpfade (z. B. Stichprobenlogik, Risikobewertungen).',
     ],
   },
 
@@ -3916,14 +3928,14 @@ export const decisionTree = {
     id: 'B2_M',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Mittlere Kritikalität -> proportionale DORA-Basis.',
+    label: 'Mittlere Kritikalität -> DORA-Basis nach Kritikalität.',
     reference: 'DORA (2022), Art. 6',
     referenceUrl: DORA_LINKS.ART_6,
-    obligations: ['DORA_BASIS_PROPORTIONAL'],
+    obligations: ['DORA_BASIS_KRITIKALITAET'],
     next: 'B4',
     info:
       'Das System ist für wichtige Funktionen relevant, trifft aber keine vollautomatischen Entscheidungen. ' +
-      'Die DORA-Basis kann proportional und risikoangemessen umgesetzt werden.',
+      'Die DORA-Basis kann abgestuft nach Kritikalität und risikoangemessen umgesetzt werden.',
     examples: [
       'Scoring-Modell, dessen Ergebnisse durch Sachbearbeitende regelmäßig plausibilisiert werden.',
       'Überwachungs-Dashboards, die Warnungen liefern, ohne automatische Aktionen auszulösen.',
@@ -3971,10 +3983,10 @@ export const decisionTree = {
     id: 'B3_N',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Nicht-kritische KI-Unterstützung -> proportionale DORA-Basis.',
+    label: 'Nicht-kritische KI-Unterstützung -> DORA-Basis nach Kritikalität.',
     reference: 'DORA (2022), Art. 6',
     referenceUrl: DORA_LINKS.ART_6,
-    obligations: ['DORA_BASIS_PROPORTIONAL'],
+    obligations: ['DORA_BASIS_KRITIKALITAET'],
     next: 'B4',
     info:
       'Die KI wird nur unterstützend und nicht in kritischen Kernprozessen eingesetzt. ' +
@@ -4177,7 +4189,7 @@ export const decisionTree = {
     next: 'B5_KRITIKALITAETS_UEBERPRUEFUNG',
     info:
       'Der IKT-Dienstleister wird nicht als kritisch eingestuft. Es gelten die normalen DORA-Anforderungen ' +
-      'für IKT-Drittanbieter, proportional zum Risiko.',
+      'für IKT-Drittanbieter, angemessen zum Risiko.',
     examples: [
       'Externe KI-Komponente für nicht-entscheidungsrelevante Auswertungen.',
       'Dienstleister für vorverarbeitete Datenfeeds ohne direkten Kundenauswirkung.',
@@ -4275,7 +4287,7 @@ export const decisionTree = {
     id: 'B7_N',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Keine sensiblen Daten -> proportionale Basis.',
+    label: 'Keine sensiblen Daten -> Basismaßnahmen ausreichend.',
     reference: 'DORA (2022), Art. 6',
     referenceUrl: DORA_LINKS.ART_6,
     obligations: [],
@@ -4294,7 +4306,7 @@ export const decisionTree = {
     type: 'question',
     cluster: 'DORA',
     label:
-      'Gibt es einen getesteten Ausweichverfahren (Rückfall) inkl. RTO/RPO, Rollen, Betriebshandbuch und Entscheidungskriterien?',
+      'Gibt es ein getestetes Ausweichverfahren inkl. RTO/RPO, Rollen, Betriebshandbuch und Entscheidungskriterien?',
     reference: 'DORA (2022), Art. 11–12',
     referenceUrl: DORA_LINKS.ART_11,
     yes: 'B7_RUECKFALL_OK',
@@ -4376,14 +4388,15 @@ export const decisionTree = {
     id: 'B8_S',
     type: 'leaf',
     cluster: 'DORA',
-    label: 'Statisches Modell -> proportionale Basis + Vorfallanagement.',
+    label: 'Statisches Modell -> Basismaßnahmen + Vorfallanagement.',
     reference: 'DORA (2022), Art. 17',
     referenceUrl: DORA_LINKS.ART_17,
-    obligations: ['DORA_BASIS_PROPORTIONAL', 'DORA_VORFALLMANAGEMENT', 'DORA_MELDUNG_ERHEBLICHER_CYBERBEDROHUNGEN'],
+    obligations: ['DORA_BASIS_KRITIKALITAET', 'DORA_VORFALLMANAGEMENT', 'DORA_MELDUNG_ERHEBLICHER_CYBERBEDROHUNGEN'],
     next: 'C1_KOMMUNIKATION_BENOETIGT',
     info:
-      'Statische Modelle erfordern zwar ebenfalls Prozesse für Änderungsmanagement und Freigaben, diese können aber ' +
-      'proportional und weniger häufig ausgestaltet werden.',
+      'Auch bei statischen Modellen sind Freigaben und Änderungsmanagement erforderlich. ' +
+      'Da Updates typischerweise seltener stattfinden, können Prüf- und Release-Aktivitäten in der Regel mit geringerer Taktung geplant werden, ' +
+      'wichtig ist aber, dass jede Änderung nachvollziehbar dokumentiert und vor Produktivsetzung geprüft wird. Zusätzlich muss ein funktionierendes Vorfallmanagement etabliert sein.',
     examples: [
       'Ein einmal trainiertes Scorecard-Modell, das nur bei Bedarf (z. B. jährlich) aktualisiert wird.',
       'Ein statisches Regel-/ML-Modell mit klar definierten Release-Zyklen.',
@@ -4429,7 +4442,8 @@ export const decisionTree = {
     label: 'Analyse beendet.',
     obligations: [],
     checkpointText:
-      'Sie können nun einen PDF-Export herunterladen. Er enthält den Pfad (Schritte/Antworten), die fehlenden Anforderungen (falls vorhanden) und offene Pflichtenpakete.',
+      'Sie können nun einen PDF-Export herunterladen. Er enthält den Pfad (Schritte/Antworten), die noch nicht umgesetzten Anforderungen (falls vorhanden) und offene Pflichtenpakete. ' +
+      'Setzen Sie die noch offenen Anforderungen zuerst um, damit das KI-System sicher und kontrolliert in Ihre Prozesse und Systeme integriert werden kann.',
   },
 };
 
