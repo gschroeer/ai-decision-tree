@@ -1980,7 +1980,7 @@ function Wizard({ createdBy }) {
 
       if (id.includes('__req__summary')) {
         const leafId = id.split('__req__')[0];
-        label = `Summary – ${decisionTree[leafId]?.label ?? leafId}`;
+        label = `Zusammenfasung – ${decisionTree[leafId]?.label ?? leafId}`;
         kind = 'summary';
       } else if (id.includes('__req__')) {
         const [leafId] = id.split('__req__');
@@ -2260,7 +2260,7 @@ function Wizard({ createdBy }) {
         </div>
 
         <div className="app-header-right app-actions">
-          <span className="rf-meta">Letzte Änderung: {updatedAtLabel}</span>
+          <span className="rf-meta">Bearbeitungszeitpunkt: {updatedAtLabel}</span>
 
           <button
             type="button"
@@ -2299,7 +2299,7 @@ function Wizard({ createdBy }) {
   
               if (id.includes('__req__summary')) {
                 const leafId = id.split('__req__')[0];
-                label = `Summary – ${decisionTree[leafId]?.label ?? leafId}`;
+                label = `Zusammenfassung – ${decisionTree[leafId]?.label ?? leafId}`;
               } else if (id.includes('__req__')) {
                 const [leafId] = id.split('__req__');
                 const { reqs } = getRequirementChain(leafId);

@@ -1749,13 +1749,13 @@ export const obligationsCatalog = {
       {
         id: 'DORA_DLP_KONTROLLEN',
         question:
-          'Sind DLP-Kontrollen für relevante Kanäle aktiv, um Datenabfluss bei Nutzung externer KI zu verhindern?',
+          'Sind Kontrollen zur Verhinderung von Datenverlust für relevante Kanäle aktiv, um Datenabfluss bei Nutzung externer KI zu verhindern?',
         todo:
-          'DLP-Kontrollen für relevante Kanäle aktivieren, testen und überwachen, um Datenabfluss bei Nutzung externer KI zu verhindern (inkl. Ausnahmen/Freigaben).',
+          'Kontrollen zur Verhinderung von Datenverlust für relevante Kanäle aktivieren, testen und überwachen, um Datenabfluss bei Nutzung externer KI zu verhindern (inkl. Ausnahmen/Freigaben).',
         reference: 'DORA (2022), Art. 9',
         referenceUrl: DORA_LINKS.ART_9,
         info:
-          'DLP sollte insbesondere Upload-/Prompt-Kanäle, Exporte (E-Mail/Download/API) und Ausnahmen/Freigaben berücksichtigen.',
+          'Die Verhinderung von Datenverlust sollte insbesondere Upload-/Prompt-Kanäle, Exporte (E-Mail/Download/API) und Ausnahmen/Freigaben berücksichtigen.',
         examples: [
           'Regelsets blockieren/warnen bei sensiblen Datenmustern (z. B. IBAN, Kundendaten).',
           'Testprotokoll dokumentiert Wirksamkeit inkl. Faslch Positiv/Negativ.',
@@ -2031,7 +2031,7 @@ export const obligationsCatalog = {
           'Gibt es einen Kommunikationsplan für schwerwiegende IKT-Vorfälle/Schwachstellen?',
         todo:
           'Kommunikationsplan erstellen/aktualisieren: Schweregrade, Auslöser, Freigabeprozess, Kundeninformation, verantwortungsbewusste Offenlegung gegenüber Öffentlichkeit/anderen Finanzunternehmen; inkl. Kontaktlisten und Eskalationswegen.',
-        reference: 'DORA (2022), Art. 14(1)',
+        reference: 'DORA (2022), Art. 14',
         referenceUrl: DORA_LINKS.ART_14,
         info:
           'Der Plan muss Auslöser, Freigaben, Zielgruppen, Inhalte und Kanäle je Schweregrad nachvollziehbar festlegen.',
@@ -2047,7 +2047,7 @@ export const obligationsCatalog = {
           'Gibt es eine Kommunikationsstrategie für interne Mitarbeitende und externe Stakeholder?',
         todo:
           'Kommunikationsstrategie umsetzen: interne/externe Zielgruppen definieren, Rollen und Verantwortlichkeiten festlegen, Informationskanäle und Inhalte je Zielgruppe standardisieren.',
-        reference: 'DORA (2022), Art. 14(2)',
+        reference: 'DORA (2022), Art. 14',
         referenceUrl: DORA_LINKS.ART_14,
         info:
           'Die Strategie muss Zielgruppen, Rollen, Kanäle sowie Mindestinhalte pro Lagebild definieren und versioniert pflegen.',
@@ -2062,7 +2062,7 @@ export const obligationsCatalog = {
           'Ist mindestens eine verantwortliche Person für die Umsetzung der Kommunikationsstrategie benannt?',
         todo:
           'Kommunikationsverantwortung festlegen: benannte Rolle/Person (inkl. Stellvertretung) für externe Kommunikation/Medien, eingebettet in Vorfalls- und Krisenorganisation.',
-        reference: 'DORA (2022), Art. 14(3)',
+        reference: 'DORA (2022), Art. 14',
         referenceUrl: DORA_LINKS.ART_14,
         info:
           'Benennung muss Rolle, Stellvertretung, Erreichbarkeit und Freigabebefugnisse eindeutig dokumentieren.',
@@ -2811,7 +2811,7 @@ export const decisionTree = {
       'Bei verbotenen Praktiken ist der Einsatz grundsätzlich nicht erlaubt.',
     examples: [
       'Systeme, die Menschen verdeckt manipulieren, um Entscheidungen zu beeinflussen.',
-      'Bestimmte Social-Scoring-Konstellationen.',
+      'KI, die die Verwundbarkeit bestimmter Personengruppen (z. B. Kinder oder Personen in Abhängigkeitssituationen) gezielt ausnutzt, um deren Verhalten wesentlich zu beeinflussen.',
     ],
   },
 
@@ -3249,7 +3249,7 @@ export const decisionTree = {
     examples: [
       'Bildung: Bewertung/Zulassung/Prüfungsentscheidungen.',
       'Beschäftigung: Recruiting, Beförderung, Leistungsbewertung.',
-      'Wesentliche Dienste: Zugang zu Leistungen oder Scoring mit erheblichen Auswirkungen.',
+      'Wesentliche Dienste: Zugang zu Leistungen oder Einstufungen mit erheblichen Auswirkungen.',
     ],
   },
 
@@ -3266,7 +3266,7 @@ export const decisionTree = {
       'Wenn das System für Kreditwürdigkeits-/Bonitätsbewertung bestimmt ist, ist das ein expliziter Hochrisiko-Anwendungsfall. ' +
       'Ausnahme: reine Finanzbetrugserkennung ist hiervon ausgenommen.',
     examples: [
-      'Scoring für Kreditvergabe / Limit / Konditionen für natürliche Personen.',
+      'KI berechnet eine Bonitätskennzahl und schlägt auf dieser Basis Kreditlimit oder Zinssatz für Privatkunden vor.',
       'Automatisierte Bonitätsentscheidungsvorschläge, die faktisch übernommen werden.',
       'Nur Betrugserkennung (z. B. Transaktionsanomalien) -> eher Nein hier.',
     ],
@@ -3319,7 +3319,7 @@ export const decisionTree = {
     info:
       'Das System ist als Hochrisiko-KI eingestuft. Damit greifen die umfangreichen Pflichten (u. a. Risiko-, Daten- und Governance-Anforderungen).',
     examples: [
-      'Scoring-Modell zur (teil-)automatisierten Kreditentscheidung.',
+      'KI-System zur Bewertung der Kreditwürdigkeit natürlicher Personen (z. B. für Kreditvergabe, Kreditlimit oder Konditionen).',
       'Modelle mit erheblicher Wirkung auf Zugang zu Finanzprodukten.',
     ],
   },
@@ -3404,7 +3404,7 @@ export const decisionTree = {
     examples: [
       'Bildung: Bewertung/Zulassung/Prüfungsentscheidungen.',
       'Beschäftigung: Recruiting, Beförderung, Leistungsbewertung.',
-      'Wesentliche Dienste: Zugang/Eligibility zu Leistungen oder Scoring mit erheblichen Auswirkungen.',
+      'WWesentliche Dienstleistungen: KI unterstützt oder beeinflusst maßgeblich Entscheidungen über Zugang/Anspruch zu zentralen Leistungen (z. B. Kredit/Versicherung, Wohnraum, Sozialleistungen) oder erstellt Einstufungen, die zu erheblichen Nachteilen führen können.',
     ],
   },
 
@@ -3422,7 +3422,7 @@ export const decisionTree = {
       'Wenn das System für Kreditwürdigkeits-/Bonitätsbewertung bestimmt ist, ist das ein expliziter Hochrisiko-Anwendungsfall. ' +
       'Ausnahme: reine Finanzbetrugserkennung ist hiervon ausgenommen.',
     examples: [
-      'Scoring für Kreditvergabe / Limit / Konditionen für natürliche Personen.',
+      'KI berechnet eine Bonitätskennzahl und schlägt auf dieser Basis Kreditlimit oder Zinssatz für Privatkunden vor.',
       'Automatisierte Bonitätsentscheidungsvorschläge, die faktisch übernommen werden.',
       'Nur Betrugserkennung (z. B. Transaktionsanomalien) -> eher Nein hier.',
     ],
@@ -3476,7 +3476,7 @@ export const decisionTree = {
     info:
       'Das System ist als Hochrisiko-KI eingestuft. Damit greifen die umfangreichen Pflichten (u. a. Risiko-, Daten- und Governance-Anforderungen).',
     examples: [
-      'Scoring-Modell zur (teil-)automatisierten Kreditentscheidung.',
+      'KI-System zur Bewertung der Kreditwürdigkeit natürlicher Personen (z. B. für Kreditvergabe, Kreditlimit oder Konditionen).',
       'Modelle mit erheblicher Wirkung auf Zugang zu Finanzprodukten.',
     ],
   },
@@ -3826,7 +3826,7 @@ export const decisionTree = {
     no: 'W_DORA_KRITISCHE_FUNKTION_SCOPE_UEBERPRUEFUNG',
     info:
       'Damit die Einstufung auditfähig ist, braucht es eine saubere Herleitung des Geltungsbereichs: ' +
-      'welcher Prozess ist betroffen, welche Abhängigkeiten bestehen und welche Auswirkungs-/Zeit-Toleranzen gelten.',
+      'Welcher Prozess ist betroffen, welche Abhängigkeiten bestehen und welche Auswirkungs-/Zeit-Toleranzen gelten.',
     examples: [
       'Auswirkungsanalyse inkl. betroffener Services/Prozesse und Business-Verantwortlicher.',
       'RTO/RPO bzw. Stoßtoleranzen (z. B. MTPD) sind dokumentiert und abgestimmt.',
@@ -3898,7 +3898,7 @@ export const decisionTree = {
       'Auch wenn formell ein Mensch entscheidet, kann die KI faktisch entscheidungsleitend sein. ' +
       'Wenn Vorschläge typischerweise übernommen/automatisiert werden, sind stärkere Kontrollen sinnvoll.',
     examples: [
-      'Score wird in >80% der Fälle ohne Abweichung übernommen.',
+      'Empfehlung wird in >80% der Fälle ohne Abweichung übernommen.',
       'Workflows setzen KI-Vorschläge automatisch um.',
       'Sachbearbeitung prüft systematisch und dokumentiert Abweichungen (Antwort: Nein).',
     ],
@@ -3937,7 +3937,7 @@ export const decisionTree = {
       'Das System ist für wichtige Funktionen relevant, trifft aber keine vollautomatischen Entscheidungen. ' +
       'Die DORA-Basis kann abgestuft nach Kritikalität und risikoangemessen umgesetzt werden.',
     examples: [
-      'Scoring-Modell, dessen Ergebnisse durch Sachbearbeitende regelmäßig plausibilisiert werden.',
+      'Ein Assistenzsystem, das Empfehlungen oder Vorschläge liefert, die von Sachbearbeitenden geprüft und freigegeben werden, bevor sie umgesetzt werden.',
       'Überwachungs-Dashboards, die Warnungen liefern, ohne automatische Aktionen auszulösen.',
     ],
   },
@@ -4072,7 +4072,7 @@ export const decisionTree = {
     cluster: 'DORA',
     label:
       'Wird ein Dienst für generative KI/LLM/Grundlagenmodell (API) genutzt oder ein vergleichbarer externer Dienst für generative KI?',
-    reference: 'DORA (2022), Art. 9 (IKT-Kontrollen) / Art. 28–30 (Drittanbieter)',
+    reference: 'DORA (2022), Art. 9 / Art. 28–30',
     referenceUrl: DORA_LINKS.ART_9,
     yes: 'W_DORA_GENAI_LLM_KONTROLLEN',
     no: 'B5',
@@ -4276,7 +4276,7 @@ export const decisionTree = {
     next: 'B7_RUECKFALL',
     info:
       'Werden produktive oder sensible Daten an externe KI übertragen, sind starke Schutzmaßnahmen erforderlich: ' +
-      'Datenklassifizierung, Verschlüsselung, DLP, Protokollierung und klare vertragliche Regelungen.',
+      'Datenklassifizierung, Verschlüsselung, Verhinderung von Datenverlust, Protokollierung und klare vertragliche Regelungen.',
     examples: [
       'Übermittlung von Transaktionsdaten an eine externe Anomalie-Erkennung.',
       'Verarbeitung von personenbezogenen Daten über ein externes KI-Modul.',
@@ -4398,7 +4398,7 @@ export const decisionTree = {
       'Da Updates typischerweise seltener stattfinden, können Prüf- und Release-Aktivitäten in der Regel mit geringerer Taktung geplant werden, ' +
       'wichtig ist aber, dass jede Änderung nachvollziehbar dokumentiert und vor Produktivsetzung geprüft wird. Zusätzlich muss ein funktionierendes Vorfallmanagement etabliert sein.',
     examples: [
-      'Ein einmal trainiertes Scorecard-Modell, das nur bei Bedarf (z. B. jährlich) aktualisiert wird.',
+      'Ein einmal trainiertes Klassifikationsmodell, das nur bei Bedarf (z. B. jährlich) aktualisiert wird.',
       'Ein statisches Regel-/ML-Modell mit klar definierten Release-Zyklen.',
     ],
   },
